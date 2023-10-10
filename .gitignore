@@ -1,0 +1,9 @@
+# Cache and compilation DB
+.cache
+compile_commands.json
+
+# Binaries:
+build
+
+# Documentation
+docs
