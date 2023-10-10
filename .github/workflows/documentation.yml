@@ -1,0 +1,32 @@
+name: Documentation
+run-name: Generating documentation for ${{ github.actor }}'s ${{ github.event_name }} to ${{ github.ref_name }}
+on:
+  push:
+    tags:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  Build-and-Deploy-Documentation:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Make Latex docs
+        uses: mattnotmitt/doxygen-action@v1.9.5
+        with:
+          enable-latex: true
+
+      - name: Archive Latex Documentation Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: Artifact-Documentation-Latex-Pdf-Build
+          path: ./docs/latex/refman.pdf
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs/html
