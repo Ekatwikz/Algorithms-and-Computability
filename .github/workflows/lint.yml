@@ -27,8 +27,11 @@ jobs:
 
       - name: Check Lint
         run: |
-          make check-lint
+          ./lint-helper.sh -c lint
 
       - name: Check Format
         run: |
-          make check-format
+          ./lint-helper.sh -c format
+
+      - name: Test-Build Documentation
+        uses: mattnotmitt/doxygen-action@v1.9.5
