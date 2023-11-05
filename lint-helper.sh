@@ -1,22 +1,26 @@
 #!/usr/bin/env sh
 
 USAGE="Usage: $0 [-c [format|lint]] [-a [format|lint|all]]"
+
 STARTDIR=$(dirname "$0")
 FORMAT_PATHS="$(echo "$STARTDIR"/src/*.cpp) $(echo "$STARTDIR"/lib/*.cpp) $(echo "$STARTDIR"/include/*.hpp)"
-
+RET=0
 main() {
 	if [ "$1" = "format" ]; then
 		assert_exists "clang-format"
 
 		# shellcheck disable=SC2086
-		clang-format $FORMAT_ARGS $FORMAT_PATHS
+		clang-format $FORMAT_ARGS $FORMAT_PATHS && say_ok
+		RET=$((RET | $?))
 	elif [ "$1" = "lint" ]; then
 		assert_exists "clang-tidy"
 
 		# shellcheck disable=SC2086
-		clang-tidy $TIDY_ARGS $FORMAT_PATHS
+		clang-tidy $TIDY_ARGS $FORMAT_PATHS && say_ok
+		RET=$((RET | $?))
 	elif [ "$1" = "all" ]; then
 		main "format"
+		echo
 		main "lint"
 	fi
 }
@@ -58,6 +62,7 @@ check_opts() {
 	done
 
 	shift $((OPTIND-1)) # unnecessary?
+	exit $RET
 }
 
 assert_exists() {
@@ -68,6 +73,10 @@ assert_exists() {
 fail_msg() {
 	printf "%s\n" "$1" >&2
 	exit 1
+}
+
+say_ok() {
+	printf "\n\033[0;30;42mOKAY!\033[0m\n"
 }
 
 check_opts "$@"

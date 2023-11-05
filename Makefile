@@ -40,16 +40,6 @@ $(OUTPUTDIR)/%$(EXTENSION): $(SOURCEDIR)/%.cpp $(OBJECTS) $(LIBHEADERS)
 	@printf "=== %s -> %s ===\n" "$<" "$@"
 	@$(CXX) $(CFLAGS) $(OBJECTS) $< -o $@
 
-check-format:
-	@clang-format --verbose --dry-run --Werror $(SOURCES) $(LIBSOURCES) $(LIBHEADERS)
-
-check-lint:
-	@clang-tidy $(SOURCES) $(LIBSOURCES) $(LIBHEADERS) -- $(CFLAGS)
-
-auto-lint:
-	@clang-format --verbose -i $(SOURCES) $(LIBSOURCES) $(LIBHEADERS)
-	@clang-tidy --fix $(SOURCES) $(LIBSOURCES) $(LIBHEADERS) -- $(CFLAGS)
-
 docs:
 	@doxygen
 	@make -C $(DOCSDIR)/latex
