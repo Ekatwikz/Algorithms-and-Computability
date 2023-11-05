@@ -12,9 +12,7 @@
 using std::cerr;
 using std::cout;
 using std::exception;
-using std::ifstream;
 using std::span;
-using std::string;
 
 /**
  * @brief Isomorphism checker

@@ -29,7 +29,7 @@ OBJECTS:=$(patsubst $(LIBDIR)/%.cpp, $(OBJECTDIR)/%.o, $(LIBSOURCES))
 
 CFLAGS=-I$(INCLUDEDIR) $(WARNINGS:%=-W%) $(FFLAGS:%=-f%) $(DEBUGFLAGS) -std=$(STANDARD)
 
-.PHONY: all clean docs docs-clean check-format check-lint auto-lint
+.PHONY: all clean docs docs-clean
 
 $(OBJECTDIR)/%.o: $(LIBDIR)/%.cpp $(LIBHEADERS)
 	@mkdir -pv $(OBJECTDIR)

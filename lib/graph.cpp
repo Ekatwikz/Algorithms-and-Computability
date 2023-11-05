@@ -4,7 +4,9 @@
  */
 #include "graph.hpp"
 
+#include <algorithm>
 #include <iostream>
+#include <numeric>
 #include <sstream>
 #include <stdexcept>
 
@@ -99,75 +101,30 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     // TODO: Mayybe create hashset of degrees for each graph and compare,
     // would catch a lot more non-isomorphisms earlier, and only costs O(n^2)
 
-    // Check for trivial equality:
-    bool foundPermutation = true;
-    for (size_t j = 1; foundPermutation && j < lhs.vertexCount; ++j) {
-        // We only need to check left of the diagonal because our matrices
-        // should have symmetry along it, and the diagonal is also assumed to
-        // strictly contain 0s, so we can do j=1 and check onl k<j
-        for (size_t k = 0; k < j; ++k) {
-            if (lhs[j][k] != rhs[j][k]) {
-                foundPermutation = false;
-                break;
-            }
-        }
-    }
+    vector<size_t> permutation(lhs.vertexCount);
+    std::iota(permutation.begin(), permutation.end(), 0);
+    auto isPermutationOf = [&permutation](const Graph& lhs, const Graph& rhs) {
+        return std::all_of(
+            permutation.begin(), permutation.end(), [&](size_t lhsPos) {
+                return std::all_of(
+                    permutation.begin(), permutation.end(), [&](size_t rhsPos) {
+                        return lhs[lhsPos][rhsPos] ==
+                               rhs[permutation[lhsPos]][permutation[rhsPos]];
+                    });
+            });
+    };
 
-    // pseudoStack is an encoding of the stack state. pseudoStack[i] encodes the
-    // loop counter for when generate(k-1, perm) is called
-    vector<size_t> pseudoStack(lhs.vertexCount, 0);
-    vector<size_t> perm(lhs.vertexCount);
-    for (size_t i = 0; i < lhs.vertexCount; ++i) {
-        perm[i] = i;
-    }
-
-    // TODO: Move the entire Heap's algorithm stuff to an iterator class?
-
-    // And then check if a permutation is necessary,
-    // I use a version of Heap's algorithm
-    // (https://en.wikipedia.org/wiki/Heap%27s_algorithm) to go through all n!
-    // permutations
-    // i acts similarly to a stack pointer for pseudoStack here
-    for (size_t i = 1; !foundPermutation && i < lhs.vertexCount;) {
-        if (pseudoStack[i] < i) {
-            if ((i % 2) != 0U) {
-                swap(perm[pseudoStack[i]], perm[i]);
-            } else {
-                swap(perm[0], perm[i]);
-            }
-
-            foundPermutation = true;
-            for (size_t j = 0; foundPermutation && j < lhs.vertexCount; ++j) {
-                for (size_t k = 0; k < lhs.vertexCount; ++k) {
-                    if (lhs[j][k] != rhs[perm[j]][perm[k]]) {
-                        foundPermutation = false;
-                        break;
-                    }
-                }
-            }
-
-            // Swap has occurred ending the loop. Simulate the increment of the
-            // loop counter
-            ++pseudoStack[i];
-
-            // Simulate recursive call reaching the base case by bringing the
-            // pointer to the base case analog in the array
-            i = 1;
-        } else {
-            // Calling generate(i+1, perm) has ended as the loop terminated.
-            // Reset the state and simulate popping the stack by incrementing
-            // the pointer.
-            // loop counter
-            pseudoStack[i] = 0;
-            ++i;
-        }
+    bool foundPermutation = isPermutationOf(lhs, rhs);
+    while (!foundPermutation &&
+           std::next_permutation(permutation.begin(), permutation.end())) {
+        foundPermutation = isPermutationOf(lhs, rhs);
     }
 
     // Show the permuation if we found it
 #if DEBUG
     if (foundPermutation) {
         for (size_t i = 0; i < lhs.vertexCount; ++i) {
-            std::cerr << i << "->" << perm[i] << ", ";
+            std::cerr << i << "->" << permutation[i] << ", ";
         }
 
         std::cerr << "\n";
