@@ -9,8 +9,8 @@ Initial boilerplate for our AaC groupwork
 - [clang-format](https://clang.llvm.org/docs/ClangFormat.html)  
 (Ubuntu: `sudo apt install clang-format`)
 - [graphviz](https://www.graphviz.org/download/#executable-packages) (optional)
-- [doxygen](https://www.doxygen.nl/manual/install.html) (optional)  
-(Ubuntu: `sudo apt install doxygen doxygen-latex`)  
+- [doxygen](https://www.doxygen.nl/manual/install.html)  
+(Ubuntu: `sudo apt install doxygen doxygen-latex`)
 - [texlive](https://tug.org/texlive/) (optional)  
 (Ubuntu: `sudo apt install texlive`)
 
@@ -28,7 +28,9 @@ beware: this will modify your code!
 ## Documentation
 - `make docs`  
 will generate refman.pdf in ./docs/latex and index.html in ./docs/html  
+Make sure you've documented any new functions.  
+If it says `OKAY!`, the CI checks will accept too :thumbsup:  
 - the CI also hosts the generated docs on [gh pages](https://ekatwikz.github.io/Algorithms-and-Computability)  
-    it also uploads the generated refman.pdf artifact, in the summary of the latest [Documentation action](https://github.com/Ekatwikz/Algorithms-and-Computability/actions/workflows/documentation.yml)
+it also uploads the generated refman.pdf artifact, in the summary of the latest [Documentation action](https://github.com/Ekatwikz/Algorithms-and-Computability/actions/workflows/documentation.yml)
 
 

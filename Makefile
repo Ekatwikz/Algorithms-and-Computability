@@ -7,8 +7,10 @@ LIBDIR:=./lib
 
 WARNINGS:=all extra pedantic
 
+# TODO: Add an option to toggle these:
+DEBUGFLAGS:=-g3 -O0 -DDEBUG
+
 FFLAGS:=no-omit-frame-pointer
-DEBUGFLAGS:=-g3 -O0
 STANDARD:=c++20
 
 ifeq ($(OS), Windows_NT)
@@ -43,8 +45,9 @@ $(OUTPUTDIR)/%$(EXTENSION): $(SOURCEDIR)/%.cpp $(OBJECTS) $(LIBHEADERS)
 docs:
 	@doxygen
 	@make -C $(DOCSDIR)/latex
+	@printf "\n\033[0;30;42mOKAY!\033[0m\n"
 
-# nukes instead of surgery:
+# nukes are simpler than surgeries:
 clean:
 	@rm -rfv $(OUTPUTDIR)
 

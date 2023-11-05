@@ -11,10 +11,17 @@
  */
 class Graph {
    private:
+    /**
+     * @brief Number of vertices in the graph
+     */
     size_t vertexCount;
-    std::vector<std::vector<int>>
-        adjacencyMatrix;  // size*size square adjacency matrix, should we use
-                          // this representation or something else?
+
+    /**
+     * @brief The adjacency matrix of the graph
+     *
+     * A size*size adjacency matrix representation of the graph
+     */
+    std::vector<std::vector<int>> adjacencyMatrix;
 
    public:
     /**
@@ -45,6 +52,8 @@ class Graph {
      * @param filename is the filename to stream from
      * if the filename is "-", this will read from stdin
      *
+     * @return A new graph
+     *
      * @warning throws <a
      * href="https://en.cppreference.com/w/cpp/error/invalid_argument">invalid_argument</a>
      * if it couldn't open the file
@@ -68,12 +77,14 @@ class Graph {
     /**
      * @brief subscript operator, for convenience
      *
-     * @param row the row in the adjacency matrix
+     * @param row the row number from the adjacency matrix
+     *
+     * @return the row xd
      */
     [[nodiscard]] auto operator[](size_t row) const -> std::vector<int>;
 
     /**
-     * @brief stream operator, for convenience
+     * @brief for debugging convenience
      *
      * @param outputStream the stream to write to
      * @param graph the graph. (<a
@@ -83,4 +94,14 @@ class Graph {
      */
     friend auto operator<<(std::ostream& outputStream, const Graph& graph)
         -> std::ostream&;
+
+    /**
+     * @brief checks *isomorphisms* between 2 graphs
+     *
+     * @param lhs the lhs of A == B
+     * @param rhs the rhs, lol
+     *
+     * @return `true` iff the two are isomorphic
+     */
+    friend auto operator==(const Graph& lhs, const Graph& rhs) -> bool;
 };
