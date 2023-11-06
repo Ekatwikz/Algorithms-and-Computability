@@ -17,6 +17,13 @@ class Graph {
     size_t vertexCount;
 
     /**
+     * @brief The size of the graph
+     *
+     * NB: This isn't necessarily == No. of vertices nor edges!
+     */
+    size_t vertexAndEdgeCount;
+
+    /**
      * @brief The adjacency matrix of the graph
      *
      * A size*size adjacency matrix representation of the graph
@@ -28,8 +35,9 @@ class Graph {
      * @brief Default constructor
      *
      * Not sure if this should actually be default-constructible tho...
+     * And even then, should it be =default?
      */
-    Graph() : vertexCount{0} {}
+    Graph() : vertexCount{0}, vertexAndEdgeCount{0} {}
 
     /**
      * @brief constructs graph from data in a stream
@@ -104,4 +112,29 @@ class Graph {
      * @return `true` iff the two are isomorphic
      */
     friend auto operator==(const Graph& lhs, const Graph& rhs) -> bool;
+
+    /**
+     * @brief Returns size
+     *
+     * NB: This is ***NOT*** necessarily == vertex count nor edge count
+     *
+     * @return The size of the graph, whichever way we end up defining it
+     */
+    [[nodiscard]] auto getSize() const -> size_t;
+
+    /**
+     * @brief Returns distance to another graph
+     *
+     * @param rhs is the second argument of the metric
+     *
+     * "Distance" in this case is defined by d(G1, G2),\n
+     * where d (for now) is
+     * \f$ max(\big| \big|  G1 \big|  - \big| G2 \big| \big|, 1)
+     * * (1 - (G1 \cong G2)) \f$\n
+     * and \f$\cong\f$ checks for isomorphism between graphs and converts the\n
+     * resulting bool to 0 or 1 respectively
+     *
+     * @return The distance to the RHS
+     */
+    [[nodiscard]] auto distanceTo(const Graph& rhs) const -> size_t;
 };

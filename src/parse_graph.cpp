@@ -23,7 +23,7 @@ using std::span;
  *
  * @param argc should be >=2
  * @param argv should have the filename to read at [1]\n
- * if this is "-", it will read stdin instead\n
+ * if this is "-", it will read stdin instead for that one\n
  * if [2] is "dot", it'll convert the output to DOT language\n
  * piping this to dot (from graphviz) can generate images\n
  * Eg:\n
