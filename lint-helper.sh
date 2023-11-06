@@ -4,6 +4,7 @@ USAGE="Usage: $0 [-c [format|lint]] [-a [format|lint|all]]"
 
 STARTDIR=$(dirname "$0")
 FORMAT_PATHS="$(echo "$STARTDIR"/src/*.cpp) $(echo "$STARTDIR"/lib/*.cpp) $(echo "$STARTDIR"/include/*.hpp)"
+CFLAGS="-I./include -std=c++20"
 RET=0
 main() {
 	if [ "$1" = "format" ]; then
@@ -16,7 +17,7 @@ main() {
 		assert_exists "clang-tidy"
 
 		# shellcheck disable=SC2086
-		clang-tidy $TIDY_ARGS $FORMAT_PATHS && say_ok
+		clang-tidy $TIDY_ARGS $FORMAT_PATHS -- $CFLAGS && say_ok
 		RET=$((RET | $?))
 	elif [ "$1" = "all" ]; then
 		main "format"
