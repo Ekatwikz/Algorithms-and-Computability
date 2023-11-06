@@ -1,6 +1,6 @@
 /**
- * @file isomorphism_check.cpp
- * @brief Tool to check for isomorphisms between .homenda.txt graphs
+ * @file graph_distance.cpp
+ * @brief Tool to calculate distance between .homenda.txt graphs
  */
 #include <cstring>
 #include <exception>
@@ -15,11 +15,9 @@ using std::exception;
 using std::span;
 
 /**
- * @brief Isomorphism checker
+ * @brief Computes distance between two graphs
  *
- * Takes 2 graphs and checks whether they're isomorphic\n
- * Also prints the mapping that represents the isomorphism to stderr
- * if DEBUG is set
+ * Uses the metric we've defined on graphs
  *
  * @param argc should be ==3
  * @param argv should have the filename to read at [1] and [2]\n
@@ -47,5 +45,5 @@ auto main(int argc, char* argv[]) -> int {
     }
 
     // NB: This is an overriden operator
-    cout << (lhs == rhs ? "" : "NOT ") << "Isomorphic.\n";
+    cout << lhs.distanceTo(rhs) << "\n";
 }

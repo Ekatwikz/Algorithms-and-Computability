@@ -25,6 +25,7 @@ Graph::Graph(std::istream& graphStream) : Graph{} {
     }
 
     // Initialize the matrix with the specified size
+    vertexAndEdgeCount = vertexCount;
     adjacencyMatrix.resize(vertexCount, std::vector<int>(vertexCount));
 
     // Read the matrix data from the file
@@ -34,6 +35,8 @@ Graph::Graph(std::istream& graphStream) : Graph{} {
                 // TODO: add info about which i,j to this string mebbe?
                 throw invalid_argument("Failed to read matrix data");
             }
+
+            vertexAndEdgeCount += adjacencyMatrix[i][j];
         }
     }
 }
@@ -44,6 +47,7 @@ auto Graph::toDotLang() const -> string {
 
     for (size_t i = 0; i < vertexCount; ++i) {
         for (size_t j = 0; j < vertexCount; ++j) {
+            // TODO: use some modern c++ iteration over the matrix here?
             for (int k = 0; k < adjacencyMatrix[i][j]; ++k) {
                 dotStream << "  " << i << " -> " << j << "\n";
             }
@@ -56,21 +60,18 @@ auto Graph::toDotLang() const -> string {
 }
 
 auto Graph::fromFilename(const string& filename) -> Graph {
-    Graph graph;
     if ("-" == filename) {
-        graph = Graph{cin};
-    } else {
-        ifstream file{filename};
-
-        if (!file.is_open()) {
-            // TODO: add info about filename?
-            throw invalid_argument("Failed to open file");
-        }
-
-        graph = Graph{file};
-        file.close();
+        return Graph{cin};
     }
 
+    ifstream file{filename};
+    if (!file.is_open()) {
+        // TODO: add info about filename?
+        throw invalid_argument("Failed to open file");
+    }
+
+    Graph graph = Graph{file};
+    file.close();
     return graph;
 }
 
@@ -132,4 +133,22 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
 #endif
 
     return foundPermutation;
+}
+
+[[nodiscard]] auto Graph::getSize() const -> size_t {
+    return vertexAndEdgeCount;
+}
+
+[[nodiscard]] auto Graph::distanceTo(const Graph& rhs) const -> size_t {
+    // No idea why std::abs is ambiguous here tbh
+    auto absSizeDiff =
+        getSize() > rhs.getSize()
+            ? std::abs(static_cast<int64_t>(getSize() - rhs.getSize()))
+            : std::abs(static_cast<int64_t>(rhs.getSize() - getSize()));
+
+    // Ternary might be slightly less readble than just doing
+    // (1 - ...) * max(sizeDiff, 1) but it's important to note that the compiler
+    // can't actually optimize for the case of sizeDiff>1, and that little
+    // operator== for graphs is extremely expensive
+    return absSizeDiff == 0 ? static_cast<size_t>(*this != rhs) : absSizeDiff;
 }

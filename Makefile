@@ -8,7 +8,7 @@ LIBDIR:=./lib
 WARNINGS:=all extra pedantic
 
 # TODO: Add an option to toggle these:
-DEBUGFLAGS:=-g3 -O0 -DDEBUG
+DEBUGFLAGS:=-g3 -O0
 
 FFLAGS:=no-omit-frame-pointer
 STANDARD:=c++20
