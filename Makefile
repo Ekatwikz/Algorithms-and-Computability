@@ -7,8 +7,10 @@ LIBDIR:=./lib
 
 WARNINGS:=all extra pedantic
 
-FFLAGS:=no-omit-frame-pointer
+# TODO: Add an option to toggle these:
 DEBUGFLAGS:=-g3 -O0
+
+FFLAGS:=no-omit-frame-pointer
 STANDARD:=c++20
 
 ifeq ($(OS), Windows_NT)
@@ -27,7 +29,7 @@ OBJECTS:=$(patsubst $(LIBDIR)/%.cpp, $(OBJECTDIR)/%.o, $(LIBSOURCES))
 
 CFLAGS=-I$(INCLUDEDIR) $(WARNINGS:%=-W%) $(FFLAGS:%=-f%) $(DEBUGFLAGS) -std=$(STANDARD)
 
-.PHONY: all clean docs docs-clean check-format check-lint auto-lint
+.PHONY: all clean docs docs-clean
 
 $(OBJECTDIR)/%.o: $(LIBDIR)/%.cpp $(LIBHEADERS)
 	@mkdir -pv $(OBJECTDIR)
@@ -40,21 +42,12 @@ $(OUTPUTDIR)/%$(EXTENSION): $(SOURCEDIR)/%.cpp $(OBJECTS) $(LIBHEADERS)
 	@printf "=== %s -> %s ===\n" "$<" "$@"
 	@$(CXX) $(CFLAGS) $(OBJECTS) $< -o $@
 
-check-format:
-	@clang-format --verbose --dry-run --Werror $(SOURCES) $(LIBSOURCES) $(LIBHEADERS)
-
-check-lint:
-	@clang-tidy $(SOURCES) $(LIBSOURCES) $(LIBHEADERS) -- $(CFLAGS)
-
-auto-lint:
-	@clang-format --verbose -i $(SOURCES) $(LIBSOURCES) $(LIBHEADERS)
-	@clang-tidy --fix $(SOURCES) $(LIBSOURCES) $(LIBHEADERS) -- $(CFLAGS)
-
 docs:
 	@doxygen
 	@make -C $(DOCSDIR)/latex
+	@printf "\n\033[0;30;42mOKAY!\033[0m\n"
 
-# nukes instead of surgery:
+# nukes are simpler than surgeries:
 clean:
 	@rm -rfv $(OUTPUTDIR)
 

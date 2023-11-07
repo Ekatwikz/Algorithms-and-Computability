@@ -10,6 +10,7 @@ on:
       - main
 
 env:
+  # Might be too new tho lol
   CLANG_TIDY_VERSION: "16.0.4"
   VERBOSE: 1
 
@@ -19,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # slighty repetitive... ?
+      # TODO: CACHE?!
       - name: Setup Cpp
         uses: aminya/setup-cpp@v1
         with:
@@ -27,8 +28,8 @@ jobs:
 
       - name: Check Lint
         run: |
-          make check-lint
+          ./lint-helper.sh -c lint
 
       - name: Check Format
         run: |
-          make check-format
+          ./lint-helper.sh -c format

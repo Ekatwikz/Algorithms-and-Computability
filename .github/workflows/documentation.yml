@@ -5,6 +5,9 @@ on:
     tags:
     branches:
       - main
+concurrency:
+  group: "documentation"
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -15,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Make Latex docs
+      - name: Make HTML+Latex docs
         uses: mattnotmitt/doxygen-action@v1.9.5
         with:
           enable-latex: true

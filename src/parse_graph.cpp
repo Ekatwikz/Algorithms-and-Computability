@@ -12,23 +12,21 @@
 using std::cerr;
 using std::cout;
 using std::exception;
-using std::ifstream;
 using std::span;
-using std::string;
 
 /**
- * @brief Entrypoint of le graphin stuf
+ * @brief Graph parser
  *
- * Takes a graph, reads it, spits it back out
- * Decent for some simple sanity tests
- * Can also be used to generate visuals
+ * Takes a graph, reads it, spits it back out\n
+ * Decent for some simple sanity tests\n
+ * Can also be used to generate visuals\n
  *
  * @param argc should be >=2
- * @param argv should have the filename to read at [1]
- * if this is "-", it will read stdin instead
- * if [2] is "dot", it'll convert the output to DOT language
- * piping this to dot (from graphviz) can generate images
- * Eg:
+ * @param argv should have the filename to read at [1]\n
+ * if this is "-", it will read stdin instead for that one\n
+ * if [2] is "dot", it'll convert the output to DOT language\n
+ * piping this to dot (from graphviz) can generate images\n
+ * Eg:\n
  * <code>/path/to/[this-binary-name] /path/to/some-graph.homenda.txt | dot -Tpng
  * -o something.png</code>
  *
@@ -36,8 +34,6 @@ using std::string;
  * @see https://graphviz.org/#what-is-graphviz
  */
 auto main(int argc, char* argv[]) -> int {
-    // get filename superdupermodernly lol, probably might change this
-    // also, TODO: use getopt here?
     auto args = span(argv, static_cast<size_t>(argc));
     if (argc < 2) {
         cerr << "Usage: " << args[0] << " <filename>\n";
