@@ -1,4 +1,4 @@
 <map id="Graph::fromFilename" name="Graph::fromFilename">
 <area shape="rect" id="node1" title="constructs graph from data in specified filename" alt="" coords="104,5,247,31"/>
-<area shape="rect" id="node2" href="$parse__graph_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Entrypoint of le graphin stuf." alt="" coords="5,5,56,31"/>
+<area shape="rect" id="node2" href="$graph__distance_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Computes distance between two graphs." alt="" coords="5,5,56,31"/>
 </map>

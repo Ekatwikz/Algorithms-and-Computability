@@ -27,7 +27,7 @@
   <td id="projectalign">
    <div id="projectname">Algorithms and Computability Project<span id="projectnumber">&#160;0.0.1</span>
    </div>
-   <div id="projectbrief">Algorithms and Computability Project, we implement graph size, a graph metric (graph edit?), maximal clique search and maximal common subgraph search</div>
+   <div id="projectbrief">Algorithms and Computability Project, we implement graph size, a graph metric, maximum clique search and maximum common subgraph search</div>
   </td>
  </tr>
  </tbody>
@@ -99,7 +99,9 @@ $(document).ready(function(){initNavTree('graph_8cpp.html',''); initResizable();
 <p><a class="el" href="class_graph.html" title="Class that represents a graph as a matrix (vector of vectors) of adjacencies.">Graph</a> representation implementations.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="graph_8hpp_source.html">graph.hpp</a>&quot;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;numeric&gt;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
 <code>#include &lt;stdexcept&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -107,11 +109,13 @@ Include dependency graph for graph.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="graph_8cpp__incl.png" border="0" usemap="#alib_2graph_8cpp" alt=""/></div>
 <map name="alib_2graph_8cpp" id="alib_2graph_8cpp">
-<area shape="rect" title="Graph representation implementations." alt="" coords="181,5,275,31"/>
+<area shape="rect" title="Graph representation implementations." alt="" coords="279,5,374,31"/>
 <area shape="rect" href="graph_8hpp.html" title="Graph representation definitions." alt="" coords="42,79,121,104"/>
-<area shape="rect" title=" " alt="" coords="145,79,217,104"/>
-<area shape="rect" title=" " alt="" coords="241,79,311,104"/>
-<area shape="rect" title=" " alt="" coords="335,79,414,104"/>
+<area shape="rect" title=" " alt="" coords="145,79,220,104"/>
+<area shape="rect" title=" " alt="" coords="244,79,316,104"/>
+<area shape="rect" title=" " alt="" coords="341,79,409,104"/>
+<area shape="rect" title=" " alt="" coords="433,79,503,104"/>
+<area shape="rect" title=" " alt="" coords="527,79,606,104"/>
 <area shape="rect" title=" " alt="" coords="5,152,72,177"/>
 <area shape="rect" title=" " alt="" coords="96,152,155,177"/>
 </map>
@@ -119,13 +123,87 @@ Include dependency graph for graph.cpp:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2185e4319a8669d513e51c60ba9068cb"><td class="memItemLeft" align="right" valign="top"><a id="a2185e4319a8669d513e51c60ba9068cb" name="a2185e4319a8669d513e51c60ba9068cb"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (ostream &amp;outputStream, const <a class="el" href="class_graph.html">Graph</a> &amp;graph) -&gt; ostream &amp;</td></tr>
-<tr class="separator:a2185e4319a8669d513e51c60ba9068cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaebf240b339e17685a126d40b0fd1d9"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="graph_8cpp.html#adaebf240b339e17685a126d40b0fd1d9">operator&lt;&lt;</a> (std::ostream &amp;outputStream, const <a class="el" href="class_graph.html">Graph</a> &amp;graph) -&gt; std::ostream &amp;</td></tr>
+<tr class="separator:adaebf240b339e17685a126d40b0fd1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9927713caf394c5b86fca62a47e599c7"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="graph_8cpp.html#a9927713caf394c5b86fca62a47e599c7">operator==</a> (const <a class="el" href="class_graph.html">Graph</a> &amp;lhs, const <a class="el" href="class_graph.html">Graph</a> &amp;rhs) -&gt; bool</td></tr>
+<tr class="separator:a9927713caf394c5b86fca62a47e599c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p ><a class="el" href="class_graph.html" title="Class that represents a graph as a matrix (vector of vectors) of adjacencies.">Graph</a> representation implementations. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="adaebf240b339e17685a126d40b0fd1d9" name="adaebf240b339e17685a126d40b0fd1d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adaebf240b339e17685a126d40b0fd1d9">&#9670;&#160;</a></span>operator&lt;&lt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>outputStream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_graph.html">Graph</a> &amp;&#160;</td>
+          <td class="paramname"><em>graph</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; std::ostream&amp; </td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">outputStream</td><td>the stream to write to </td></tr>
+    <tr><td class="paramname">graph</td><td>the graph. (<a href="https://www.youtube.com/watch?v=0mfJn604GT4">?</a>)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the outputStream </dd></dl>
+
+</div>
+</div>
+<a id="a9927713caf394c5b86fca62a47e599c7" name="a9927713caf394c5b86fca62a47e599c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9927713caf394c5b86fca62a47e599c7">&#9670;&#160;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_graph.html">Graph</a> &amp;&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_graph.html">Graph</a> &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; bool </td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lhs</td><td>the lhs of A == B </td></tr>
+    <tr><td class="paramname">rhs</td><td>the rhs, lol</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> iff the two are isomorphic </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

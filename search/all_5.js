@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['todotlang_0',['toDotLang',['../class_graph.html#a1f7062bac466472f4821f46c0d572de8',1,'Graph']]]
+  ['operator_3c_3c_0',['operator&lt;&lt;',['../class_graph.html#adaebf240b339e17685a126d40b0fd1d9',1,'Graph::operator&lt;&lt;()'],['../graph_8cpp.html#adaebf240b339e17685a126d40b0fd1d9',1,'operator&lt;&lt;():&#160;graph.cpp']]],
+  ['operator_3d_3d_1',['operator==',['../class_graph.html#a9927713caf394c5b86fca62a47e599c7',1,'Graph::operator==()'],['../graph_8cpp.html#a9927713caf394c5b86fca62a47e599c7',1,'operator==():&#160;graph.cpp']]],
+  ['operator_5b_5d_2',['operator[]',['../class_graph.html#a3dc4bfc47771619240533ea5729eae9a',1,'Graph']]]
 ];

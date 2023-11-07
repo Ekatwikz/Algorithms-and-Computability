@@ -27,7 +27,7 @@
   <td id="projectalign">
    <div id="projectname">Algorithms and Computability Project<span id="projectnumber">&#160;0.0.1</span>
    </div>
-   <div id="projectbrief">Algorithms and Computability Project, we implement graph size, a graph metric (graph edit?), maximal clique search and maximal common subgraph search</div>
+   <div id="projectbrief">Algorithms and Computability Project, we implement graph size, a graph metric, maximum clique search and maximum common subgraph search</div>
   </td>
  </tr>
  </tbody>
@@ -122,7 +122,7 @@ Include dependency graph for parse_graph.cpp:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a7114aa2dd6837734db57667a298dfcc4"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parse__graph_8cpp.html#a7114aa2dd6837734db57667a298dfcc4">main</a> (int argc, char *argv[]) -&gt; int</td></tr>
-<tr class="memdesc:a7114aa2dd6837734db57667a298dfcc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entrypoint of le graphin stuf.  <a href="parse__graph_8cpp.html#a7114aa2dd6837734db57667a298dfcc4">More...</a><br /></td></tr>
+<tr class="memdesc:a7114aa2dd6837734db57667a298dfcc4"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_graph.html" title="Class that represents a graph as a matrix (vector of vectors) of adjacencies.">Graph</a> parser.  <a href="parse__graph_8cpp.html#a7114aa2dd6837734db57667a298dfcc4">More...</a><br /></td></tr>
 <tr class="separator:a7114aa2dd6837734db57667a298dfcc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -154,12 +154,19 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Entrypoint of le graphin stuf. </p>
-<p >Takes a graph, reads it, spits it back out Decent for some simple sanity tests Can also be used to generate visuals</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p><a class="el" href="class_graph.html" title="Class that represents a graph as a matrix (vector of vectors) of adjacencies.">Graph</a> parser. </p>
+<p >Takes a graph, reads it, spits it back out<br  />
+Decent for some simple sanity tests<br  />
+Can also be used to generate visuals<br  />
+ </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">argc</td><td>should be &gt;=2 </td></tr>
-    <tr><td class="paramname">argv</td><td>should have the filename to read at [1] if this is "-", it will read stdin instead if [2] is "dot", it'll convert the output to DOT language piping this to dot (from graphviz) can generate images Eg: <code>/path/to/[this-binary-name] /path/to/some-graph.homenda.txt | dot -Tpng -o something.png</code></td></tr>
+    <tr><td class="paramname">argv</td><td>should have the filename to read at [1]<br  />
+if this is "-", it will read stdin instead for that one<br  />
+if [2] is "dot", it'll convert the output to DOT language<br  />
+piping this to dot (from graphviz) can generate images<br  />
+Eg:<br  />
+<code>/path/to/[this-binary-name] /path/to/some-graph.homenda.txt | dot -Tpng -o something.png</code></td></tr>
   </table>
   </dd>
 </dl>
@@ -170,7 +177,7 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="parse__graph_8cpp_a7114aa2dd6837734db57667a298dfcc4_cgraph.png" border="0" usemap="#aparse__graph_8cpp_a7114aa2dd6837734db57667a298dfcc4_cgraph" alt=""/></div>
 <map name="aparse__graph_8cpp_a7114aa2dd6837734db57667a298dfcc4_cgraph" id="aparse__graph_8cpp_a7114aa2dd6837734db57667a298dfcc4_cgraph">
-<area shape="rect" title="Entrypoint of le graphin stuf." alt="" coords="5,31,56,56"/>
+<area shape="rect" title="Graph parser." alt="" coords="5,31,56,56"/>
 <area shape="rect" href="class_graph.html#a80f5eebdf01db3f5be5e3def18706d35" title="constructs graph from data in specified filename" alt="" coords="104,5,247,31"/>
 <area shape="rect" href="class_graph.html#a1f7062bac466472f4821f46c0d572de8" title="returns string in DOT language" alt="" coords="114,55,237,80"/>
 </map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fromfilename_0',['fromFilename',['../class_graph.html#a80f5eebdf01db3f5be5e3def18706d35',1,'Graph']]]
+  ['distanceto_0',['distanceTo',['../class_graph.html#ab7775274e98483c2bc9db5397424cbe7',1,'Graph']]]
 ];

@@ -27,7 +27,7 @@
   <td id="projectalign">
    <div id="projectname">Algorithms and Computability Project<span id="projectnumber">&#160;0.0.1</span>
    </div>
-   <div id="projectbrief">Algorithms and Computability Project, we implement graph size, a graph metric (graph edit?), maximal clique search and maximal common subgraph search</div>
+   <div id="projectbrief">Algorithms and Computability Project, we implement graph size, a graph metric, maximum clique search and maximum common subgraph search</div>
   </td>
  </tr>
  </tbody>
@@ -99,31 +99,39 @@ $(document).ready(function(){initNavTree('graph_8hpp_source.html',''); initResiz
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_graph.html">   12</a></span><span class="keyword">class </span><a class="code hl_class" href="class_graph.html">Graph</a> {</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>   <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keywordtype">size_t</span> vertexCount;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    std::vector&lt;std::vector&lt;int&gt;&gt;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        adjacencyMatrix;  <span class="comment">// size*size square adjacency matrix, should we use</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>                          <span class="comment">// this representation or something else?</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keywordtype">size_t</span> vertexCount;</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>   <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_graph.html#ae4c72b8ac4d693c49800a4c7e273654f">   25</a></span>    <a class="code hl_function" href="class_graph.html#ae4c72b8ac4d693c49800a4c7e273654f">Graph</a>() : vertexCount{0} {}</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="class_graph.html#a181250c124af8f543292385fc2878fcb">   38</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_graph.html#a181250c124af8f543292385fc2878fcb">Graph</a>(std::istream&amp; graphStream);</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    [[nodiscard]] <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="class_graph.html#a80f5eebdf01db3f5be5e3def18706d35">fromFilename</a>(<span class="keyword">const</span> std::string&amp; filename)</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        -&gt; <a class="code hl_function" href="class_graph.html#ae4c72b8ac4d693c49800a4c7e273654f">Graph</a>;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="class_graph.html#a1f7062bac466472f4821f46c0d572de8">toDotLang</a>() const -&gt; std::<span class="keywordtype">string</span>;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    [[nodiscard]] auto operator[](<span class="keywordtype">size_t</span> row) const -&gt; std::vector&lt;<span class="keywordtype">int</span>&gt;;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="class_graph.html#adaebf240b339e17685a126d40b0fd1d9">   84</a></span>    friend auto operator&lt;&lt;(std::ostream&amp; outputStream, const <a class="code hl_class" href="class_graph.html">Graph</a>&amp; graph)</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        -&gt; std::ostream&amp;;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>};</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordtype">size_t</span> vertexAndEdgeCount;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    std::vector&lt;std::vector&lt;int&gt;&gt; adjacencyMatrix;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>   <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="class_graph.html#ae4c72b8ac4d693c49800a4c7e273654f">   40</a></span>    <a class="code hl_function" href="class_graph.html#ae4c72b8ac4d693c49800a4c7e273654f">Graph</a>() : vertexCount{0}, vertexAndEdgeCount{0} {}</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_graph.html#ae4c72b8ac4d693c49800a4c7e273654f">Graph</a>(std::istream&amp; graphStream);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    [[nodiscard]] <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="class_graph.html#a80f5eebdf01db3f5be5e3def18706d35">fromFilename</a>(<span class="keyword">const</span> std::string&amp; filename)</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        -&gt; <a class="code hl_function" href="class_graph.html#ae4c72b8ac4d693c49800a4c7e273654f">Graph</a>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_function" href="class_graph.html#a1f7062bac466472f4821f46c0d572de8">toDotLang</a>() const -&gt; std::<span class="keywordtype">string</span>;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    [[nodiscard]] auto operator[](<span class="keywordtype">size_t</span> row) const -&gt; std::vector&lt;<span class="keywordtype">int</span>&gt;;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    friend auto operator&lt;&lt;(std::ostream&amp; outputStream, const <a class="code hl_class" href="class_graph.html">Graph</a>&amp; graph)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        -&gt; std::ostream&amp;;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    friend auto operator==(const <a class="code hl_class" href="class_graph.html">Graph</a>&amp; lhs, const <a class="code hl_class" href="class_graph.html">Graph</a>&amp; rhs) -&gt; <span class="keywordtype">bool</span>;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    [[nodiscard]] auto <a class="code hl_function" href="class_graph.html#a16b711f850fcb2d5468373ae813e3e5b">getSize</a>() const -&gt; <span class="keywordtype">size_t</span>;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    [[nodiscard]] auto <a class="code hl_function" href="class_graph.html#ab7775274e98483c2bc9db5397424cbe7">distanceTo</a>(const <a class="code hl_class" href="class_graph.html">Graph</a>&amp; rhs) const -&gt; <span class="keywordtype">size_t</span>;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>};</div>
 <div class="ttc" id="aclass_graph_html"><div class="ttname"><a href="class_graph.html">Graph</a></div><div class="ttdoc">Class that represents a graph as a matrix (vector of vectors) of adjacencies.</div><div class="ttdef"><b>Definition:</b> graph.hpp:12</div></div>
-<div class="ttc" id="aclass_graph_html_a181250c124af8f543292385fc2878fcb"><div class="ttname"><a href="class_graph.html#a181250c124af8f543292385fc2878fcb">Graph::Graph</a></div><div class="ttdeci">Graph(std::istream &amp;graphStream)</div><div class="ttdoc">constructs graph from data in a stream</div></div>
-<div class="ttc" id="aclass_graph_html_a1f7062bac466472f4821f46c0d572de8"><div class="ttname"><a href="class_graph.html#a1f7062bac466472f4821f46c0d572de8">Graph::toDotLang</a></div><div class="ttdeci">auto toDotLang() const -&gt; std::string</div><div class="ttdoc">returns string in DOT language</div><div class="ttdef"><b>Definition:</b> graph.cpp:39</div></div>
-<div class="ttc" id="aclass_graph_html_a80f5eebdf01db3f5be5e3def18706d35"><div class="ttname"><a href="class_graph.html#a80f5eebdf01db3f5be5e3def18706d35">Graph::fromFilename</a></div><div class="ttdeci">static auto fromFilename(const std::string &amp;filename) -&gt; Graph</div><div class="ttdoc">constructs graph from data in specified filename</div><div class="ttdef"><b>Definition:</b> graph.cpp:56</div></div>
-<div class="ttc" id="aclass_graph_html_ae4c72b8ac4d693c49800a4c7e273654f"><div class="ttname"><a href="class_graph.html#ae4c72b8ac4d693c49800a4c7e273654f">Graph::Graph</a></div><div class="ttdeci">Graph()</div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition:</b> graph.hpp:25</div></div>
+<div class="ttc" id="aclass_graph_html_a16b711f850fcb2d5468373ae813e3e5b"><div class="ttname"><a href="class_graph.html#a16b711f850fcb2d5468373ae813e3e5b">Graph::getSize</a></div><div class="ttdeci">auto getSize() const -&gt; size_t</div><div class="ttdoc">Returns size.</div><div class="ttdef"><b>Definition:</b> graph.cpp:138</div></div>
+<div class="ttc" id="aclass_graph_html_a1f7062bac466472f4821f46c0d572de8"><div class="ttname"><a href="class_graph.html#a1f7062bac466472f4821f46c0d572de8">Graph::toDotLang</a></div><div class="ttdeci">auto toDotLang() const -&gt; std::string</div><div class="ttdoc">returns string in DOT language</div><div class="ttdef"><b>Definition:</b> graph.cpp:44</div></div>
+<div class="ttc" id="aclass_graph_html_a80f5eebdf01db3f5be5e3def18706d35"><div class="ttname"><a href="class_graph.html#a80f5eebdf01db3f5be5e3def18706d35">Graph::fromFilename</a></div><div class="ttdeci">static auto fromFilename(const std::string &amp;filename) -&gt; Graph</div><div class="ttdoc">constructs graph from data in specified filename</div><div class="ttdef"><b>Definition:</b> graph.cpp:62</div></div>
+<div class="ttc" id="aclass_graph_html_ab7775274e98483c2bc9db5397424cbe7"><div class="ttname"><a href="class_graph.html#ab7775274e98483c2bc9db5397424cbe7">Graph::distanceTo</a></div><div class="ttdeci">auto distanceTo(const Graph &amp;rhs) const -&gt; size_t</div><div class="ttdoc">Returns distance to another graph.</div><div class="ttdef"><b>Definition:</b> graph.cpp:142</div></div>
+<div class="ttc" id="aclass_graph_html_ae4c72b8ac4d693c49800a4c7e273654f"><div class="ttname"><a href="class_graph.html#ae4c72b8ac4d693c49800a4c7e273654f">Graph::Graph</a></div><div class="ttdeci">Graph()</div><div class="ttdoc">Default constructor.</div><div class="ttdef"><b>Definition:</b> graph.hpp:40</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
