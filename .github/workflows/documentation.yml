@@ -5,6 +5,9 @@ on:
     tags:
     branches:
       - main
+concurrency:
+  group: "documentation"
+  cancel-in-progress: true
 
 permissions:
   contents: write

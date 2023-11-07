@@ -33,11 +33,3 @@ jobs:
       - name: Check Format
         run: |
           ./lint-helper.sh -c format
-
-  Docs-Test-Build:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Test-Build Documentation
-        uses: mattnotmitt/doxygen-action@v1.9.5
