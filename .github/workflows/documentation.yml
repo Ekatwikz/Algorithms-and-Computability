@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Use sed magic on the Doxyfile, so we don't stop for no reason
-        uses: sed -i --debug 's/WARN_AS_ERROR\(.*\)=\(.*\)YES/WARN_AS_ERROR\1=\2NO/' Doxyfile
+        run: sed -i --debug 's/WARN_AS_ERROR\(.*\)=\(.*\)YES/WARN_AS_ERROR\1=\2NO/' Doxyfile
 
       - name: Make HTML+Latex docs
         uses: mattnotmitt/doxygen-action@v1.9.5

@@ -24,51 +24,46 @@ TEST_CASE("Graph construction, isomorphism and distance sanity checks") {
                       std::invalid_argument);
 
     REQUIRE_NOTHROW(nullGraph = Graph{std::istringstream{"0"}});
-    REQUIRE_NOTHROW(pentagon1 =
-                        Graph{std::istringstream{"5\n"
-                                                "0 1 0 0 1\n"
-                                                "0 0 3 0 0\n"
-                                                "0 1 0 1 0\n"
-                                                "0 0 1 0 1\n"
-                                                "1 0 0 1 0"}});
-    REQUIRE_NOTHROW(pentagon2 =
-                        Graph{std::istringstream{"5\n"
-                                                "0 0 1 1 0\n"
-                                                "0 0 0 1 1\n"
-                                                "0 0 0 0 3\n"
-                                                "1 1 0 0 0\n"
-                                                "0 1 1 0 0"}});
-    REQUIRE_NOTHROW(squareWithOutcast =
-                        Graph{std::istringstream{"5\n"
-                                                 "0 2 0 1 0\n"
-                                                 "1 0 1 0 0\n"
-                                                 "0 1 0 1 0\n"
-                                                 "1 0 1 0 0\n"
-                                                 "0 0 0 0 0"}});
-    REQUIRE_NOTHROW(strangeStar =
-                        Graph{std::istringstream{"5\n"
-                                                "0 2 1 1 1\n"
-                                                "1 0 0 0 0\n"
-                                                "1 0 0 0 0\n"
-                                                "1 0 0 0 0\n"
-                                                "1 0 0 0 0"}});
-    REQUIRE_NOTHROW(multiHexagon =
-                        Graph{std::istringstream{"6\n"
-                                                "0 1 0 3 0 1\n"
-                                                "1 0 1 0 0 0\n"
-                                                "0 1 0 1 0 0\n"
-                                                "0 0 1 0 1 0\n"
-                                                "0 0 0 1 0 1\n"
-                                                "1 0 0 0 1 0"}});
+    REQUIRE_NOTHROW(pentagon1 = Graph{std::istringstream{"5\n"
+                                                         "0 1 0 0 1\n"
+                                                         "0 0 3 0 0\n"
+                                                         "0 1 0 1 0\n"
+                                                         "0 0 1 0 1\n"
+                                                         "1 0 0 1 0"}});
+    REQUIRE_NOTHROW(pentagon2 = Graph{std::istringstream{"5\n"
+                                                         "0 0 1 1 0\n"
+                                                         "0 0 0 1 1\n"
+                                                         "0 0 0 0 3\n"
+                                                         "1 1 0 0 0\n"
+                                                         "0 1 1 0 0"}});
+    REQUIRE_NOTHROW(squareWithOutcast = Graph{std::istringstream{"5\n"
+                                                                 "0 2 0 1 0\n"
+                                                                 "1 0 1 0 0\n"
+                                                                 "0 1 0 1 0\n"
+                                                                 "1 0 1 0 0\n"
+                                                                 "0 0 0 0 0"}});
+    REQUIRE_NOTHROW(strangeStar = Graph{std::istringstream{"5\n"
+                                                           "0 2 1 1 1\n"
+                                                           "1 0 0 0 0\n"
+                                                           "1 0 0 0 0\n"
+                                                           "1 0 0 0 0\n"
+                                                           "1 0 0 0 0"}});
+    REQUIRE_NOTHROW(multiHexagon = Graph{std::istringstream{"6\n"
+                                                            "0 1 0 3 0 1\n"
+                                                            "1 0 1 0 0 0\n"
+                                                            "0 1 0 1 0 0\n"
+                                                            "0 0 1 0 1 0\n"
+                                                            "0 0 0 1 0 1\n"
+                                                            "1 0 0 0 1 0"}});
 
     REQUIRE_NOTHROW(pairOfMultitriangles =
                         Graph{std::istringstream{"6\n"
-                                                "0 1 1 3 0 0\n"
-                                                "1 0 1 0 0 0\n"
-                                                "1 1 0 0 0 0\n"
-                                                "0 0 0 0 1 1\n"
-                                                "0 0 0 1 0 1\n"
-                                                "0 0 0 1 1 0"}});
+                                                 "0 1 1 3 0 0\n"
+                                                 "1 0 1 0 0 0\n"
+                                                 "1 1 0 0 0 0\n"
+                                                 "0 0 0 0 1 1\n"
+                                                 "0 0 0 1 0 1\n"
+                                                 "0 0 0 1 1 0"}});
 
     // interesting note: squareWithOutcast and strangeStar are cospectral mates
 
@@ -124,10 +119,12 @@ TEST_CASE("Graph construction, isomorphism and distance sanity checks") {
 
     SECTION(
         "pair-of-multitriangles and multi-hexagon are approx isomorphic to "
-        "each other, have approx distance 0 to each other (but not exactly), but are NOT "
+        "each other, have approx distance 0 to each other (but not exactly), "
+        "but are NOT "
         "isomorphic") {
         REQUIRE(pairOfMultitriangles.approxIsomorphicTo(multiHexagon));
-        REQUIRE(pairOfMultitriangles.metricDistanceTo(multiHexagon, AlgorithmAccuracy::APPROXIMATE) == 0);
+        REQUIRE(pairOfMultitriangles.metricDistanceTo(
+                    multiHexagon, AlgorithmAccuracy::APPROXIMATE) == 0);
         REQUIRE(pairOfMultitriangles.metricDistanceTo(multiHexagon) > 0);
         REQUIRE(pairOfMultitriangles != multiHexagon);
     }
