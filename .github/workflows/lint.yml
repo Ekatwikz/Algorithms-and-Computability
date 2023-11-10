@@ -1,13 +1,13 @@
 name: Lint
 run-name: Linting ${{ github.actor }}'s ${{ github.event_name }} to ${{ github.ref_name }}
 on:
+  workflow_dispatch:
   pull_request:
   release:
     types: [published]
   push:
     tags:
     branches:
-      - main
 
 env:
   # Might be too new tho lol
