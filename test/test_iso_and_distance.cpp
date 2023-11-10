@@ -65,34 +65,46 @@ TEST_CASE("Graph construction, isomorphism and distance sanity checks") {
     }
 
     SECTION("pentagon1 and pentagon2 have distance 0") {
-        REQUIRE(pentagon1.distanceTo(pentagon2) == 0);
+        REQUIRE(pentagon1.metricDistanceTo(pentagon2) == 0);
     }
 
     SECTION("squareWithOutcast and strangeStar have distance 1 ") {
-        REQUIRE(squareWithOutcast.distanceTo(strangeStar) == 1);
+        REQUIRE(squareWithOutcast.metricDistanceTo(strangeStar) == 1);
     }
 
     SECTION(
         "nullgraph, squareWithOutcast and strangeStar each have same distance "
         "to pentagon1 as they do to pentagon2") {
-        REQUIRE(nullGraph.distanceTo(pentagon1) ==
-                nullGraph.distanceTo(pentagon2));
-        REQUIRE(squareWithOutcast.distanceTo(pentagon1) ==
-                squareWithOutcast.distanceTo(pentagon2));
-        REQUIRE(strangeStar.distanceTo(pentagon1) ==
-                strangeStar.distanceTo(pentagon2));
+        REQUIRE(nullGraph.metricDistanceTo(pentagon1) ==
+                nullGraph.metricDistanceTo(pentagon2));
+        REQUIRE(squareWithOutcast.metricDistanceTo(pentagon1) ==
+                squareWithOutcast.metricDistanceTo(pentagon2));
+        REQUIRE(strangeStar.metricDistanceTo(pentagon1) ==
+                strangeStar.metricDistanceTo(pentagon2));
     }
 
     // I'm actually not sure if this is slightly redundant tbh
     SECTION(
         "nullg, penta1 and penta2 each have same distance to square as they do "
         "to star") {
-        REQUIRE(nullGraph.distanceTo(squareWithOutcast) ==
-                nullGraph.distanceTo(strangeStar));
-        REQUIRE(pentagon1.distanceTo(squareWithOutcast) ==
-                pentagon1.distanceTo(strangeStar));
-        REQUIRE(pentagon2.distanceTo(squareWithOutcast) ==
-                pentagon2.distanceTo(strangeStar));
+        REQUIRE(nullGraph.metricDistanceTo(squareWithOutcast) ==
+                nullGraph.metricDistanceTo(strangeStar));
+        REQUIRE(pentagon1.metricDistanceTo(squareWithOutcast) ==
+                pentagon1.metricDistanceTo(strangeStar));
+        REQUIRE(pentagon2.metricDistanceTo(squareWithOutcast) ==
+                pentagon2.metricDistanceTo(strangeStar));
+    }
+
+    SECTION(
+        "isomorphic graphs are also approximately isomorphic to each other") {
+        // TODO
+    }
+
+    SECTION(
+        "pair-of-multitriangles and multi-hexagon are approx isomorphic to "
+        "each other, have approx distance 0 to each other, but are NOT "
+        "isomorphic") {
+        // TODO
     }
 
     // TODO: Maybe we'll also check basic stuff like Graph::operator<< and the
