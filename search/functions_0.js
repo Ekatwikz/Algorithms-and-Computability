@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['distanceto_0',['distanceTo',['../class_graph.html#ab7775274e98483c2bc9db5397424cbe7',1,'Graph']]]
+  ['approxisomorphicto_0',['approxIsomorphicTo',['../class_graph.html#a4196d717d61adcf708fbd33698af0740',1,'Graph']]]
 ];

@@ -112,18 +112,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a181250c124af8f543292385fc2878fcb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a181250c124af8f543292385fc2878fcb">Graph</a> (std::istream &amp;graphStream)</td></tr>
 <tr class="memdesc:a181250c124af8f543292385fc2878fcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructs graph from data in a stream  <a href="class_graph.html#a181250c124af8f543292385fc2878fcb">More...</a><br /></td></tr>
 <tr class="separator:a181250c124af8f543292385fc2878fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15096e1bfeb998b97152f35b6b3201bb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a15096e1bfeb998b97152f35b6b3201bb">Graph</a> (std::istream &amp;&amp;graphStream)</td></tr>
+<tr class="memdesc:a15096e1bfeb998b97152f35b6b3201bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructs graph from data in a stream  <a href="class_graph.html#a15096e1bfeb998b97152f35b6b3201bb">More...</a><br /></td></tr>
+<tr class="separator:a15096e1bfeb998b97152f35b6b3201bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f7062bac466472f4821f46c0d572de8"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a1f7062bac466472f4821f46c0d572de8">toDotLang</a> () const -&gt; std::string</td></tr>
 <tr class="memdesc:a1f7062bac466472f4821f46c0d572de8"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns string in DOT language  <a href="class_graph.html#a1f7062bac466472f4821f46c0d572de8">More...</a><br /></td></tr>
 <tr class="separator:a1f7062bac466472f4821f46c0d572de8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3dc4bfc47771619240533ea5729eae9a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a3dc4bfc47771619240533ea5729eae9a">operator[]</a> (size_t row) const -&gt; std::vector&lt; int &gt;</td></tr>
 <tr class="memdesc:a3dc4bfc47771619240533ea5729eae9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">subscript operator, for convenience  <a href="class_graph.html#a3dc4bfc47771619240533ea5729eae9a">More...</a><br /></td></tr>
 <tr class="separator:a3dc4bfc47771619240533ea5729eae9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4196d717d61adcf708fbd33698af0740"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a4196d717d61adcf708fbd33698af0740">approxIsomorphicTo</a> (const <a class="el" href="class_graph.html">Graph</a> &amp;rhs) const -&gt; bool</td></tr>
+<tr class="memdesc:a4196d717d61adcf708fbd33698af0740"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks for <em>approximate</em> isomorphism between 2 graphs  <a href="class_graph.html#a4196d717d61adcf708fbd33698af0740">More...</a><br /></td></tr>
+<tr class="separator:a4196d717d61adcf708fbd33698af0740"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16b711f850fcb2d5468373ae813e3e5b"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a16b711f850fcb2d5468373ae813e3e5b">getSize</a> () const -&gt; size_t</td></tr>
 <tr class="memdesc:a16b711f850fcb2d5468373ae813e3e5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns size.  <a href="class_graph.html#a16b711f850fcb2d5468373ae813e3e5b">More...</a><br /></td></tr>
 <tr class="separator:a16b711f850fcb2d5468373ae813e3e5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7775274e98483c2bc9db5397424cbe7"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#ab7775274e98483c2bc9db5397424cbe7">distanceTo</a> (const <a class="el" href="class_graph.html">Graph</a> &amp;rhs) const -&gt; size_t</td></tr>
-<tr class="memdesc:ab7775274e98483c2bc9db5397424cbe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns distance to another graph.  <a href="class_graph.html#ab7775274e98483c2bc9db5397424cbe7">More...</a><br /></td></tr>
-<tr class="separator:ab7775274e98483c2bc9db5397424cbe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc93756c1b649190bb03781d2b7aa691"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#acc93756c1b649190bb03781d2b7aa691">metricDistanceTo</a> (const <a class="el" href="class_graph.html">Graph</a> &amp;rhs, <a class="el" href="graph_8hpp.html#a0954a5c4d6c206eddbc6c921e2d71070">AlgorithmAccuracy</a> accuracy=AlgorithmAccuracy::EXACT) const -&gt; size_t</td></tr>
+<tr class="memdesc:acc93756c1b649190bb03781d2b7aa691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns distance to another graph.  <a href="class_graph.html#acc93756c1b649190bb03781d2b7aa691">More...</a><br /></td></tr>
+<tr class="separator:acc93756c1b649190bb03781d2b7aa691"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -144,7 +150,7 @@ Friends</h2></td></tr>
 <div class="textblock"><p >Class that represents a graph as a matrix (vector of vectors) of adjacencies. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae4c72b8ac4d693c49800a4c7e273654f" name="ae4c72b8ac4d693c49800a4c7e273654f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae4c72b8ac4d693c49800a4c7e273654f">&#9670;&#160;</a></span>Graph() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4c72b8ac4d693c49800a4c7e273654f">&#9670;&#160;</a></span>Graph() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -172,7 +178,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a id="a181250c124af8f543292385fc2878fcb" name="a181250c124af8f543292385fc2878fcb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a181250c124af8f543292385fc2878fcb">&#9670;&#160;</a></span>Graph() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a181250c124af8f543292385fc2878fcb">&#9670;&#160;</a></span>Graph() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -206,43 +212,75 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a15096e1bfeb998b97152f35b6b3201bb" name="a15096e1bfeb998b97152f35b6b3201bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15096e1bfeb998b97152f35b6b3201bb">&#9670;&#160;</a></span>Graph() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Graph::Graph </td>
+          <td>(</td>
+          <td class="paramtype">std::istream &amp;&amp;&#160;</td>
+          <td class="paramname"><em>graphStream</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>constructs graph from data in a stream </p>
+<p >NB: This directly just calls the lvalue reference constructor<br  />
+I can't remember if that's okay tbh</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graphStream</td><td>is the stream to be read from </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab7775274e98483c2bc9db5397424cbe7" name="ab7775274e98483c2bc9db5397424cbe7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7775274e98483c2bc9db5397424cbe7">&#9670;&#160;</a></span>distanceTo()</h2>
+<a id="a4196d717d61adcf708fbd33698af0740" name="a4196d717d61adcf708fbd33698af0740"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4196d717d61adcf708fbd33698af0740">&#9670;&#160;</a></span>approxIsomorphicTo()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">auto Graph::distanceTo </td>
+          <td class="memname">auto Graph::approxIsomorphicTo </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="class_graph.html">Graph</a> &amp;&#160;</td>
           <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const -&gt; size_t</td>
+          <td> const -&gt; bool</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns distance to another graph. </p>
+<p>checks for <em>approximate</em> isomorphism between 2 graphs </p>
+<p >The current implementation <em>always returns true for isomorphic graphs</em>, but will return true for graphs with equal multisets of vertex degrees anyway</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rhs</td><td>is the second argument of the metric</td></tr>
+    <tr><td class="paramname">rhs</td><td>the rhs of A approx== B</td></tr>
   </table>
   </dd>
 </dl>
-<p>"Distance" in this case is defined by d(G1, G2),<br  />
-where d (for now) is  <picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ max(\big| \big|  G1 \big|  - \big| G2 \big| \big|, 1)
-* (1 - (G1 \cong G2)) $" src="form_0.png" width="220" height="16"/></picture><br  />
-and <picture><source srcset="form_1_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$\cong$" src="form_1.png" width="9" height="8"/></picture> checks for isomorphism between graphs and converts the<br  />
-resulting bool to 0 or 1 respectively</p>
-<dl class="section return"><dt>Returns</dt><dd>The distance to the RHS </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> iff the pair is "approximately isomorphic" </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="class_graph_ab7775274e98483c2bc9db5397424cbe7_icgraph.png" border="0" usemap="#aclass_graph_ab7775274e98483c2bc9db5397424cbe7_icgraph" alt=""/></div>
-<map name="aclass_graph_ab7775274e98483c2bc9db5397424cbe7_icgraph" id="aclass_graph_ab7775274e98483c2bc9db5397424cbe7_icgraph">
-<area shape="rect" title="Returns distance to another graph." alt="" coords="104,5,231,31"/>
-<area shape="rect" href="graph__distance_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Computes distance between two graphs." alt="" coords="5,5,56,31"/>
+<div class="center"><img src="class_graph_a4196d717d61adcf708fbd33698af0740_icgraph.png" border="0" usemap="#aclass_graph_a4196d717d61adcf708fbd33698af0740_icgraph" alt=""/></div>
+<map name="aclass_graph_a4196d717d61adcf708fbd33698af0740_icgraph" id="aclass_graph_a4196d717d61adcf708fbd33698af0740_icgraph">
+<area shape="rect" title="checks for approximate isomorphism between 2 graphs" alt="" coords="104,5,284,31"/>
+<area shape="rect" href="isomorphism__check_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Isomorphism checker." alt="" coords="5,5,56,31"/>
 </map>
 </div>
 
@@ -312,6 +350,59 @@ Here is the caller graph for this function:</div>
 <p>Returns size. </p>
 <p >NB: This is <em><b>NOT</b></em> necessarily == vertex count nor edge count</p>
 <dl class="section return"><dt>Returns</dt><dd>The size of the graph, whichever way we end up defining it </dd></dl>
+
+</div>
+</div>
+<a id="acc93756c1b649190bb03781d2b7aa691" name="acc93756c1b649190bb03781d2b7aa691"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc93756c1b649190bb03781d2b7aa691">&#9670;&#160;</a></span>metricDistanceTo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Graph::metricDistanceTo </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_graph.html">Graph</a> &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="graph_8hpp.html#a0954a5c4d6c206eddbc6c921e2d71070">AlgorithmAccuracy</a>&#160;</td>
+          <td class="paramname"><em>accuracy</em> = <code>AlgorithmAccuracy::EXACT</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const -&gt; size_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns distance to another graph. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>is the second argument of the metric </td></tr>
+    <tr><td class="paramname">accuracy</td><td>is whether we should approximate the slower parts of the calculation,<br  />
+this parameter is optional</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>"Distance" in this case is defined by d(G1, G2),<br  />
+where d (for now) is  <picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ max(\big| \big|  G1 \big|  - \big| G2 \big| \big|, 1)
+* (1 - (G1 \cong G2)) $" src="form_0.png" width="220" height="16"/></picture><br  />
+and <picture><source srcset="form_1_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$\cong$" src="form_1.png" width="9" height="8"/></picture> checks for isomorphism between graphs and converts the<br  />
+resulting bool to 0 or 1 respectively</p>
+<dl class="section return"><dt>Returns</dt><dd>The distance to the RHS </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_graph_acc93756c1b649190bb03781d2b7aa691_icgraph.png" border="0" usemap="#aclass_graph_acc93756c1b649190bb03781d2b7aa691_icgraph" alt=""/></div>
+<map name="aclass_graph_acc93756c1b649190bb03781d2b7aa691_icgraph" id="aclass_graph_acc93756c1b649190bb03781d2b7aa691_icgraph">
+<area shape="rect" title="Returns distance to another graph." alt="" coords="104,5,269,31"/>
+<area shape="rect" href="graph__distance_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Computes distance between two graphs." alt="" coords="5,5,56,31"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -462,7 +553,7 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> iff the two are isomorphic </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> iff the pair is isomorphic </dd></dl>
 
 </div>
 </div>

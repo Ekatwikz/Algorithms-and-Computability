@@ -1,4 +1,5 @@
 <map id="main" name="main">
-<area shape="rect" id="node1" title="Isomorphism checker." alt="" coords="5,5,56,31"/>
-<area shape="rect" id="node2" href="$class_graph.html#a80f5eebdf01db3f5be5e3def18706d35" title="constructs graph from data in specified filename" alt="" coords="104,5,247,31"/>
+<area shape="rect" id="node1" title="Isomorphism checker." alt="" coords="5,31,56,56"/>
+<area shape="rect" id="node2" href="$class_graph.html#a4196d717d61adcf708fbd33698af0740" title="checks for approximate isomorphism between 2 graphs" alt="" coords="104,5,284,31"/>
+<area shape="rect" id="node3" href="$class_graph.html#a80f5eebdf01db3f5be5e3def18706d35" title="constructs graph from data in specified filename" alt="" coords="123,55,265,80"/>
 </map>
