@@ -27,6 +27,8 @@ main() {
 }
 
 check_opts() {
+	[ $# -eq 0 ] && fail_msg "$USAGE"
+
 	while getopts ":c:a:h" opt; do
 		case "${opt}" in
 			c)

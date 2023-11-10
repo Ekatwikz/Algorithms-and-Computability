@@ -73,7 +73,7 @@ run-tests: tests
 	@RESULT=0 ; \
 	for test in $(TESTTARGETS) ; do \
 		printf "===\n\033[0;30;46mTESTING\033[0m %s\n===\n\n" "$$test" ; \
-		command ./$$test $(TESTFLAGS) ; \
+		./$$test $(TESTFLAGS) ; \
 		RESULT=$$((RESULT | $$?)) ; \
 	done ; \
 	exit $$RESULT
