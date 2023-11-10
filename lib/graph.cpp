@@ -9,6 +9,7 @@
 #include <numeric>
 #include <sstream>
 #include <stdexcept>
+#include <unordered_map>
 
 using std::cin;
 using std::cout;
@@ -96,15 +97,52 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     return outputStream;
 }
 
+[[nodiscard]] auto Graph::approxIsomorphicTo(const Graph& rhs) const -> bool {
+    // Lambda function to generate degree frequency map
+    auto generateDegreeSequenceMap = [](const Graph& graph) {
+        std::unordered_map<int, int> freqMap;
+
+        auto graphAdjacencies = graph.adjacencyMatrix;
+        for (size_t i = 0; i < graph.vertexCount; ++i) {
+            int rowSum = std::accumulate(graphAdjacencies[i].begin(),
+                                         graphAdjacencies[i].end(), 0);
+            int colSum = std::accumulate(
+                graphAdjacencies.begin(), graphAdjacencies.end(), 0,
+                [i](int accumulator, const std::vector<int>& row) {
+                    return accumulator + row[i];
+                });
+
+            ++freqMap[rowSum + colSum];
+        }
+        return freqMap;
+    };
+
+    std::unordered_map<int, int> freqMap1 = generateDegreeSequenceMap(*this);
+    std::unordered_map<int, int> freqMap2 = generateDegreeSequenceMap(rhs);
+
+#if DEBUG
+    for (const auto& entry : freqMap1) {
+        std::cerr << '(' << entry.first << ": " << entry.second << ") ";
+    }
+    std::cerr << '\n';
+
+    for (const auto& entry : freqMap2) {
+        std::cerr << '(' << entry.first << ": " << entry.second << ") ";
+    }
+    std::cerr << '\n';
+#endif
+
+    // Compare the frequency maps
+    return freqMap1 == freqMap2;
+}
+
 // We say that Graph equality is true for isomorphisms
 [[nodiscard]] auto operator==(const Graph& lhs, const Graph& rhs) -> bool {
-    if (lhs.vertexCount != rhs.vertexCount) {
-        // Can't have an isomorphism between differently sized graphs
+    // Right now the implementation of approxIsomorphism will always return true
+    // for isomorphic graphs
+    if (!lhs.approxIsomorphicTo(rhs)) {
         return false;
     }
-
-    // TODO: Mayybe create hashset of degrees for each graph and compare,
-    // would catch a lot more non-isomorphisms earlier, and only costs O(n^2)
 
     vector<size_t> permutation(lhs.vertexCount);
     std::iota(permutation.begin(), permutation.end(), 0);
@@ -119,15 +157,15 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
             });
     };
 
-    bool foundPermutation = isPermutationOf(lhs, rhs);
-    while (!foundPermutation &&
+    bool permutationWasFound = isPermutationOf(lhs, rhs);
+    while (!permutationWasFound &&
            std::next_permutation(permutation.begin(), permutation.end())) {
-        foundPermutation = isPermutationOf(lhs, rhs);
+        permutationWasFound = isPermutationOf(lhs, rhs);
     }
 
     // Show the permuation if we found it
 #if DEBUG
-    if (foundPermutation) {
+    if (permutationWasFound) {
         for (size_t i = 0; i < lhs.vertexCount; ++i) {
             std::cerr << i << "->" << permutation[i] << ", ";
         }
@@ -136,12 +174,7 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     }
 #endif
 
-    return foundPermutation;
-}
-
-[[nodiscard]] auto Graph::approxIsomorphicTo(const Graph& rhs) const -> bool {
-    // TODO: flesh out
-    return getSize() == rhs.getSize();
+    return permutationWasFound;
 }
 
 [[nodiscard]] auto Graph::metricDistanceTo(const Graph& rhs,
