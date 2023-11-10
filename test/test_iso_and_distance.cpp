@@ -120,8 +120,7 @@ TEST_CASE("Graph construction, isomorphism and distance sanity checks") {
     SECTION(
         "pair-of-multitriangles and multi-hexagon are approx isomorphic to "
         "each other, have approx distance 0 to each other (but not exactly), "
-        "but are NOT "
-        "isomorphic") {
+        "but are NOT isomorphic") {
         REQUIRE(pairOfMultitriangles.approxIsomorphicTo(multiHexagon));
         REQUIRE(pairOfMultitriangles.metricDistanceTo(
                     multiHexagon, AlgorithmAccuracy::APPROXIMATE) == 0);

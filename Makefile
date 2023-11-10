@@ -21,6 +21,7 @@ STANDARD:=c++20
 
 ifeq ($(OS), Windows_NT)
 	EXTENSION:=.exe
+	CFLAGS+=-static-libstdc++
 else
 	# Gucci stuff onli on linix
 	FFLAGS+=sanitize=address,undefined
@@ -40,7 +41,7 @@ TESTLIBSOURCES:=$(wildcard $(TESTLIBDIR)/*.cpp)
 TESTLIBHEADERS:=$(wildcard $(TESTLIBDIR)/*.hpp)
 TESTOBJECTS:=$(patsubst $(TESTLIBDIR)/%.cpp, $(TESTOBJECTDIR)/%.o, $(TESTLIBSOURCES))
 
-CFLAGS:=-I$(INCLUDEDIR) -I$(TESTLIBDIR) $(WARNINGS:%=-W%) $(FFLAGS:%=-f%) $(DEBUGFLAGS) -std=$(STANDARD)
+CFLAGS+=-I$(INCLUDEDIR) -I$(TESTLIBDIR) $(WARNINGS:%=-W%) $(FFLAGS:%=-f%) $(DEBUGFLAGS) -std=$(STANDARD)
 
 .PHONY: all clean docs docs-clean tests run-tests
 .SECONDARY: $(TESTOBJECTS)
@@ -73,7 +74,7 @@ run-tests: tests
 	@RESULT=0 ; \
 	for test in $(TESTTARGETS) ; do \
 		printf "===\n\033[0;30;46mTESTING\033[0m %s\n===\n\n" "$$test" ; \
-		./$$test $(TESTFLAGS) ; \
+		command ./$$test $(TESTFLAGS) ; \
 		RESULT=$$((RESULT | $$?)) ; \
 	done ; \
 	exit $$RESULT

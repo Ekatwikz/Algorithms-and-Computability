@@ -50,10 +50,7 @@ jobs:
           clangtidy: ${{ env.CLANG_TIDY_VERSION }}
 
       - name: Building tests
-        run: make tests
-
-      - name: Bruh
-        run: pwd && ls && ls ./test/build
+        run: make all tests
 
       - name: Running Tests
         run: make run-tests TESTFLAGS="-sv high"
