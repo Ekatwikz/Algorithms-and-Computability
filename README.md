@@ -22,9 +22,9 @@ Initial boilerplate for our AaC groupwork
 If they pass, the CI checks will accept too :thumbsup:  
 
 ## Lint
-- Run `./lint-helper.sh -c format` and `./lint-helper -c lint`  
+- Run `./lint-helper.sh -c format` and `./lint-helper.sh -c lint`  
 If they all say `OKAY!`, the CI checks will accept too :thumbsup:  
-You can also do `./lint-helper -a all` to try automatically fix formatting and linting issues  
+You can also do `./lint-helper.sh -a all` to try automatically fix formatting and linting issues  
 beware: this will modify your code!  
 
 ![Deployment Script demo](./extra_stuff/lint-helper-demo.gif)
