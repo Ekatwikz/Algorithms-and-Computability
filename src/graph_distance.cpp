@@ -19,17 +19,17 @@ using std::span;
  *
  * Uses the metric we've defined on graphs
  *
- * @param argc should be ==3
+ * @param argc should be >=3
  * @param argv should have the filename to read at [1] and [2]\n
- * if either are "-", stdin will be read instead for that one
+ * if either are "-", stdin will be read instead for that one\n
+ * if [3] == "approx", an approximate algorithm will be used for the check
+ * instead
  *
  * @return 0, or 1 for parse errors
  */
 auto main(int argc, char* argv[]) -> int {
-    // get filename superdupermodernly lol, probably might change this
-    // also, TODO: use getopt here?
     auto args = span(argv, static_cast<size_t>(argc));
-    if (argc != 3) {
+    if (argc < 3) {
         cerr << "Usage: " << args[0] << " <filenam1> <filename2>\n";
         return 1;
     }
@@ -45,5 +45,8 @@ auto main(int argc, char* argv[]) -> int {
     }
 
     // NB: This is an overriden operator
-    cout << lhs.distanceTo(rhs) << "\n";
+    auto accuracy = argc >= 4 && strcmp(args[3], "approx") == 0
+                        ? AlgorithmAccuracy::APPROXIMATE
+                        : AlgorithmAccuracy::EXACT;
+    cout << lhs.metricDistanceTo(rhs, accuracy) << "\n";
 }

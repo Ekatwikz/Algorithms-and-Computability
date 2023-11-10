@@ -6,6 +6,11 @@
 #include <vector>
 
 /**
+ * @brief Little enum for choosing between approximate and exact algorithms
+ */
+enum class AlgorithmAccuracy { APPROXIMATE, EXACT };
+
+/**
  * @brief Class that represents a graph as a matrix (vector of vectors) of
  * adjacencies
  */
@@ -49,6 +54,16 @@ class Graph {
      * if it fails to read the stream at any point
      */
     explicit Graph(std::istream& graphStream);
+
+    /**
+     * @brief constructs graph from data in a stream
+     *
+     * NB: This directly just calls the lvalue reference constructor\n
+     * I can't remember if that's okay tbh
+     *
+     * @param graphStream is the stream to be read from
+     */
+    explicit Graph(std::istream&& graphStream) : Graph{graphStream} {}
 
     /**
      * @brief constructs graph from data in specified filename
@@ -107,9 +122,22 @@ class Graph {
      * @param lhs the lhs of A == B
      * @param rhs the rhs, lol
      *
-     * @return `true` iff the two are isomorphic
+     * @return `true` iff the pair is isomorphic
      */
     friend auto operator==(const Graph& lhs, const Graph& rhs) -> bool;
+
+    /**
+     * @brief checks for *approximate* isomorphism between 2 graphs
+     *
+     * The current implementation *always returns true for isomorphic graphs*,
+     * but will return true for graphs with equal multisets of vertex degrees
+     * anyway
+     *
+     * @param rhs the rhs of A approx== B
+     *
+     * @return `true` iff the pair is "approximately isomorphic"
+     */
+    [[nodiscard]] auto approxIsomorphicTo(const Graph& rhs) const -> bool;
 
     /**
      * @brief Returns size
@@ -124,6 +152,9 @@ class Graph {
      * @brief Returns distance to another graph
      *
      * @param rhs is the second argument of the metric
+     * @param accuracy is whether we should approximate the slower parts of the
+     * calculation,\n
+     * this parameter is optional
      *
      * "Distance" in this case is defined by d(G1, G2),\n
      * where d (for now) is
@@ -134,5 +165,7 @@ class Graph {
      *
      * @return The distance to the RHS
      */
-    [[nodiscard]] auto distanceTo(const Graph& rhs) const -> size_t;
+    [[nodiscard]] auto metricDistanceTo(
+        const Graph& rhs,
+        AlgorithmAccuracy accuracy = AlgorithmAccuracy::EXACT) const -> size_t;
 };

@@ -34,6 +34,8 @@ using std::span;
  * @see https://graphviz.org/#what-is-graphviz
  */
 auto main(int argc, char* argv[]) -> int {
+    // get filename superdupermodernly lol, probably might change this
+    // also, TODO: use getopt here?
     auto args = span(argv, static_cast<size_t>(argc));
     if (argc < 2) {
         cerr << "Usage: " << args[0] << " <filename>\n";
