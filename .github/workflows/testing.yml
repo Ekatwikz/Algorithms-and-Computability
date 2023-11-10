@@ -49,9 +49,11 @@ jobs:
           ccache: true # but are we even using it tho, lmao
           clangtidy: ${{ env.CLANG_TIDY_VERSION }}
 
-      - name: Testiiiing!
-        run: |
-          make run-tests
+      - name: Building tests
+        run: make tests
+
+      - name: Running Tests
+        run: make run-tests TESTFLAGS="-sv high"
 
       - name: Archive gcc Build Output
         # Once for each OS, and only if on main branch?

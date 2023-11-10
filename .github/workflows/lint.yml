@@ -26,10 +26,6 @@ jobs:
         with:
           clangtidy: ${{ env.CLANG_TIDY_VERSION }}
 
-      - name: Check Lint
+      - name: Check Formatting and Lint
         run: |
-          ./lint-helper.sh -c lint
-
-      - name: Check Format
-        run: |
-          ./lint-helper.sh -c format
+          ./lint-helper.sh -c format -c lint

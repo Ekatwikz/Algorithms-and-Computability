@@ -33,7 +33,8 @@ beware: this will modify your code!
 - `make docs`  
 will automatically generate ./docs/latex/refman.pdf and ./docs/html/index.html
 from the doxy comments  
-It'd be nice if you could document your new functions. :smile:
+It'd be nice if you could keep `make docs` final output as `OKAY!` as well,
+you only have to write some brief documentation for new function definitions
 - the CI also hosts the generated docs on [gh pages](https://ekatwikz.github.io/Algorithms-and-Computability)  
 it also uploads the generated refman.pdf artifact, in the summary of the latest [Documentation action](https://github.com/Ekatwikz/Algorithms-and-Computability/actions/workflows/documentation.yml)
 

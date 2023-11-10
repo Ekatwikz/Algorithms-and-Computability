@@ -13,18 +13,18 @@ TESTLIBDIR:=./test/catch2
 
 WARNINGS:=all extra pedantic
 
-# TODO: Add an option to toggle these:
-DEBUGFLAGS:=-g3 -O0
+# A little hacky but what can we dooo
+override DEBUGFLAGS:=-g3 -O0 $(DEBUGFLAGS)
 
 FFLAGS:=no-omit-frame-pointer
 STANDARD:=c++20
 
 ifeq ($(OS), Windows_NT)
-	EXTENSION=.exe
+	EXTENSION:=.exe
 else
 	# Gucci stuff onli on linix
 	FFLAGS+=sanitize=address,undefined
-	EXTENSION=
+	EXTENSION:=
 endif
 
 SOURCES:=$(wildcard $(SOURCEDIR)/*.cpp)
@@ -40,7 +40,7 @@ TESTLIBSOURCES:=$(wildcard $(TESTLIBDIR)/*.cpp)
 TESTLIBHEADERS:=$(wildcard $(TESTLIBDIR)/*.hpp)
 TESTOBJECTS:=$(patsubst $(TESTLIBDIR)/%.cpp, $(TESTOBJECTDIR)/%.o, $(TESTLIBSOURCES))
 
-CFLAGS=-I$(INCLUDEDIR) -I$(TESTLIBDIR) $(WARNINGS:%=-W%) $(FFLAGS:%=-f%) $(DEBUGFLAGS) -std=$(STANDARD)
+CFLAGS:=-I$(INCLUDEDIR) -I$(TESTLIBDIR) $(WARNINGS:%=-W%) $(FFLAGS:%=-f%) $(DEBUGFLAGS) -std=$(STANDARD)
 
 .PHONY: all clean docs docs-clean tests run-tests
 .SECONDARY: $(TESTOBJECTS)
@@ -63,19 +63,19 @@ $(TESTOBJECTDIR)/%.o: $(TESTLIBDIR)/%.cpp $(TESTLIBHEADERS)
 	@$(CXX) $(CFLAGS) -c $< -o $@
 
 tests: $(TESTTARGETS)
-$(TESTOUTPUTDIR)/%$(EXTENSION): $(TESTSOURCEDIR)/%.cpp $(SOURCES) $(OBJECTS) $(LIBHEADERS) $(TESTOBJECTS)
+$(TESTOUTPUTDIR)/%$(EXTENSION): $(TESTSOURCEDIR)/%.cpp $(OBJECTS) $(TESTOBJECTS)
 	@mkdir -pv $(TESTOUTPUTDIR)
 	@printf "=== %s -> %s ===\n" "$<" "$@"
 	@$(CXX) $(CFLAGS) $(OBJECTS) $(TESTOBJECTS) $< -o $@
 
 # slightly goofy
 run-tests: tests
-	@RESULT=0; \
-	for test in $(TESTTARGETS); do \
-		printf "===\n\033[0;30;46mTESTING:\033[0m %s\n===\n\n" "$$test"; \
-		command ./$$test -sv high; \
-		RESULT=$$((RESULT | $$?)); \
-	done; \
+	@RESULT=0 ; \
+	for test in $(TESTTARGETS) ; do \
+		printf "===\n\033[0;30;46mTESTING\033[0m %s\n===\n\n" "$$test" ; \
+		command ./$$test $(TESTFLAGS) ; \
+		RESULT=$$((RESULT | $$?)) ; \
+	done ; \
 	exit $$RESULT
 
 docs:
