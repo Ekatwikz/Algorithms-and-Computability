@@ -41,6 +41,10 @@ Graph::Graph(std::istream& graphStream) : Graph{} {
     }
 }
 
+[[nodiscard]] auto Graph::getSize() const -> size_t {
+    return vertexAndEdgeCount;
+}
+
 auto Graph::toDotLang() const -> string {
     std::stringstream dotStream;
     dotStream << "digraph {\n";
@@ -135,20 +139,28 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     return foundPermutation;
 }
 
-[[nodiscard]] auto Graph::getSize() const -> size_t {
-    return vertexAndEdgeCount;
+[[nodiscard]] auto Graph::approxIsomorphicTo(const Graph& rhs) const -> bool {
+    // TODO: flesh out
+    return getSize() == rhs.getSize();
 }
 
-[[nodiscard]] auto Graph::distanceTo(const Graph& rhs) const -> size_t {
+[[nodiscard]] auto Graph::metricDistanceTo(const Graph& rhs,
+                                           AlgorithmAccuracy accuracy) const
+    -> size_t {
     // No idea why std::abs is ambiguous here tbh
-    auto absSizeDiff =
-        getSize() > rhs.getSize()
-            ? std::abs(static_cast<int64_t>(getSize() - rhs.getSize()))
-            : std::abs(static_cast<int64_t>(rhs.getSize() - getSize()));
+    auto absSizeDiff = std::abs(static_cast<int64_t>(
+        getSize() > rhs.getSize() ? getSize() - rhs.getSize()
+                                  : rhs.getSize() - getSize()));
 
-    // Ternary might be slightly less readble than just doing
-    // (1 - ...) * max(sizeDiff, 1) but it's important to note that the compiler
-    // can't actually optimize for the case of sizeDiff>1, and that little
-    // operator== for graphs is extremely expensive
-    return absSizeDiff == 0 ? static_cast<size_t>(*this != rhs) : absSizeDiff;
+    // it's (maybe?) important to note that the compiler
+    // can't actually optimize for the case of sizeDiff>0, and that little
+    // isomorphism check for graphs is extremely expensive
+    if (absSizeDiff > 0) {
+        return absSizeDiff;
+    }
+
+    // 0 for ismorphisms, 1 otherwise if we get to this point
+    return 1 - static_cast<size_t>(accuracy == AlgorithmAccuracy::EXACT
+                                       ? *this == rhs
+                                       : approxIsomorphicTo(rhs));
 }
