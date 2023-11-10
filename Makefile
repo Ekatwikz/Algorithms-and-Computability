@@ -5,6 +5,12 @@ OBJECTDIR:=$(OUTPUTDIR)/obj
 INCLUDEDIR:=./include
 LIBDIR:=./lib
 
+# blgh
+TESTSOURCEDIR:=./test
+TESTOUTPUTDIR:=./test/build
+TESTOBJECTDIR:=$(TESTOUTPUTDIR)/obj
+TESTLIBDIR:=./test/catch2
+
 WARNINGS:=all extra pedantic
 
 # TODO: Add an option to toggle these:
@@ -27,9 +33,16 @@ LIBSOURCES:=$(wildcard $(LIBDIR)/*.cpp)
 LIBHEADERS:=$(wildcard $(INCLUDEDIR)/*.hpp)
 OBJECTS:=$(patsubst $(LIBDIR)/%.cpp, $(OBJECTDIR)/%.o, $(LIBSOURCES))
 
-CFLAGS=-I$(INCLUDEDIR) $(WARNINGS:%=-W%) $(FFLAGS:%=-f%) $(DEBUGFLAGS) -std=$(STANDARD)
+# kinda repetitve...
+TESTSOURCES:=$(wildcard $(TESTSOURCEDIR)/*.cpp)
+TESTTARGETS:=$(patsubst $(TESTSOURCEDIR)/%.cpp, $(TESTOUTPUTDIR)/%$(EXTENSION), $(TESTSOURCES))
+TESTLIBSOURCES:=$(wildcard $(TESTLIBDIR)/*.cpp)
+TESTLIBHEADERS:=$(wildcard $(TESTLIBDIR)/*.hpp)
+TESTOBJECTS:=$(patsubst $(TESTLIBDIR)/%.cpp, $(TESTOBJECTDIR)/%.o, $(TESTLIBSOURCES))
 
-.PHONY: all clean docs docs-clean
+CFLAGS=-I$(INCLUDEDIR) -I$(TESTLIBDIR) $(WARNINGS:%=-W%) $(FFLAGS:%=-f%) $(DEBUGFLAGS) -std=$(STANDARD)
+
+.PHONY: all clean docs docs-clean tests run-tests
 
 $(OBJECTDIR)/%.o: $(LIBDIR)/%.cpp $(LIBHEADERS)
 	@mkdir -pv $(OBJECTDIR)
@@ -42,6 +55,27 @@ $(OUTPUTDIR)/%$(EXTENSION): $(SOURCEDIR)/%.cpp $(OBJECTS) $(LIBHEADERS)
 	@printf "=== %s -> %s ===\n" "$<" "$@"
 	@$(CXX) $(CFLAGS) $(OBJECTS) $< -o $@
 
+$(TESTOBJECTDIR)/%.o: $(TESTLIBDIR)/%.cpp $(TESTLIBHEADERS)
+	@mkdir -pv $(TESTOBJECTDIR)
+	@printf "=== %s -> %s ===\n" "$<" "$@"
+	@$(CXX) $(CFLAGS) -c $< -o $@
+
+tests: $(TESTTARGETS)
+$(TESTOUTPUTDIR)/%$(EXTENSION): $(TESTSOURCEDIR)/%.cpp $(SOURCES) $(OBJECTS) $(LIBHEADERS) $(TESTOBJECTS)
+	@mkdir -pv $(TESTOUTPUTDIR)
+	@printf "=== %s -> %s ===\n" "$<" "$@"
+	@$(CXX) $(CFLAGS) $(OBJECTS) $(TESTOBJECTS) $< -o $@
+
+# slightly goofy
+run-tests: tests
+	@RESULT=0; \
+	for test in $(TESTTARGETS); do \
+		printf "===\n\033[0;30;46mTESTING:\033[0m %s\n===\n\n" "$$test"; \
+		command ./$$test -sv high; \
+		RESULT=$$((RESULT | $$?)); \
+	done; \
+	exit $$RESULT
+
 docs:
 	@doxygen
 	@make -C $(DOCSDIR)/latex
@@ -49,7 +83,7 @@ docs:
 
 # nukes are simpler than surgeries:
 clean:
-	@rm -rfv $(OUTPUTDIR)
+	@rm -rfv $(OUTPUTDIR) $(TESTOUTPUTDIR)
 
 docs-clean:
 	@rm -rfv $(DOCSDIR)

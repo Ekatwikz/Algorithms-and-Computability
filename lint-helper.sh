@@ -3,8 +3,8 @@
 USAGE="Usage: $0 [-c [format|lint]] [-a [format|lint|all]]"
 
 STARTDIR=$(dirname "$0")
-FORMAT_PATHS="$(echo "$STARTDIR"/src/*.cpp) $(echo "$STARTDIR"/lib/*.cpp) $(echo "$STARTDIR"/include/*.hpp)"
-CFLAGS="-I./include -std=c++20"
+FORMAT_PATHS="$(echo "$STARTDIR"/src/*.cpp) $(echo "$STARTDIR"/lib/*.cpp) $(echo "$STARTDIR"/include/*.hpp) $(echo "$STARTDIR"/test/*.cpp)"
+CFLAGS="-I./include -I./test/catch2 -std=c++20"
 RET=0
 main() {
 	if [ "$1" = "format" ]; then

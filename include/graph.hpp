@@ -51,6 +51,16 @@ class Graph {
     explicit Graph(std::istream& graphStream);
 
     /**
+     * @brief constructs graph from data in a stream
+     *
+     * NB: This directly just calls the lvalue reference constructor\n
+     * I can't remember if that's okay tbh
+     *
+     * @param graphStream is the stream to be read from
+     */
+    explicit Graph(std::istream&& graphStream) : Graph{graphStream} {}
+
+    /**
      * @brief constructs graph from data in specified filename
      *
      * This maayybe should be a constructor somehow? not sure
