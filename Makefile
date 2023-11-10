@@ -43,6 +43,8 @@ TESTOBJECTS:=$(patsubst $(TESTLIBDIR)/%.cpp, $(TESTOBJECTDIR)/%.o, $(TESTLIBSOUR
 CFLAGS=-I$(INCLUDEDIR) -I$(TESTLIBDIR) $(WARNINGS:%=-W%) $(FFLAGS:%=-f%) $(DEBUGFLAGS) -std=$(STANDARD)
 
 .PHONY: all clean docs docs-clean tests run-tests
+.SECONDARY: $(TESTOBJECTS)
+.DELETE_ON_ERROR:
 
 $(OBJECTDIR)/%.o: $(LIBDIR)/%.cpp $(LIBHEADERS)
 	@mkdir -pv $(OBJECTDIR)
