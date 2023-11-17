@@ -19,6 +19,20 @@ using std::string;
 using std::swap;
 using std::vector;
 
+Graph::Graph(const std::vector<std::vector<int>>& adjacencyMatrix) : Graph{} {
+    size_t size = adjacencyMatrix.size();
+
+    vertexAndEdgeCount = vertexCount = size;
+    this->adjacencyMatrix.resize(vertexCount, std::vector<int>(vertexCount));
+
+    for (size_t i = 0; i < vertexCount; ++i) {
+        for (size_t j = 0; j < vertexCount; ++j) {
+            this->adjacencyMatrix[i][j] = adjacencyMatrix[i][j];
+            vertexAndEdgeCount += adjacencyMatrix[i][j];
+        }
+    }
+}
+
 Graph::Graph(std::istream& graphStream) : Graph{} {
     // Read the first line to get the number of rows/columns
     if (!(graphStream >> vertexCount)) {
@@ -196,4 +210,35 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     return 1 - static_cast<size_t>(accuracy == AlgorithmAccuracy::EXACT
                                        ? *this == rhs
                                        : approxIsomorphicTo(rhs));
+}
+
+[[nodiscard]] auto Graph::modularProduct(const Graph& rhs) -> Graph {
+    size_t rhsVertexCount = rhs.vertexCount;
+    size_t resultGraphVertexCount = vertexCount * rhsVertexCount;
+    size_t minVertexCount = std::min(vertexCount, rhsVertexCount);
+
+    vector<vector<int>> adjacencyMatrixOfResultGraph(resultGraphVertexCount, vector<int>(resultGraphVertexCount));
+
+    for (size_t lhsRow = 0; lhsRow < vertexCount; lhsRow++) {
+        for (size_t lhsCol = 0; lhsCol < vertexCount; lhsCol++) {
+
+            if (lhsRow == lhsCol) continue;
+
+            for (size_t rhsRow = 0; rhsRow < rhsVertexCount; rhsRow++) {
+                for (size_t rhsCol = 0; rhsCol < rhsVertexCount; rhsCol++) {
+
+                    if (rhsRow == rhsCol) continue;
+
+                    if (adjacencyMatrix[lhsRow][lhsCol] > 0 && rhs[rhsRow][rhsCol] > 0) {
+                        adjacencyMatrixOfResultGraph[lhsRow * minVertexCount + rhsRow][lhsCol * minVertexCount + rhsCol] = std::min(adjacencyMatrix[lhsRow][lhsCol], rhs[rhsRow][rhsCol]);
+                    }
+                    else if (adjacencyMatrix[lhsRow][lhsCol] == 0 && rhs[rhsRow][rhsCol] == 0) {
+                        adjacencyMatrixOfResultGraph[lhsRow * minVertexCount + rhsRow][lhsCol * minVertexCount + rhsCol] = 1;
+                    }
+                }
+            }
+        }
+    }
+
+    return Graph(adjacencyMatrixOfResultGraph);
 }
