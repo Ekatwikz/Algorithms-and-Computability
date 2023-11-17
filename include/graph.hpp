@@ -47,7 +47,8 @@ class Graph {
     /**
      * @brief constructs graph from provided adjacency matrix
      *
-     * @param adjacencyMatrix is the adjacencyMatrix from which graph will be constructed
+     * @param adjacencyMatrix is the adjacencyMatrix from which graph will be
+     * constructed
      */
     explicit Graph(const std::vector<std::vector<int>>& adjacencyMatrix);
 
@@ -183,6 +184,6 @@ class Graph {
      * product should be applied
      *
      * @return The modular product of the graphs
-    */
+     */
     [[nodiscard]] auto modularProduct(const Graph& rhs) -> Graph;
 };

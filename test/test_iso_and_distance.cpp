@@ -24,38 +24,44 @@ TEST_CASE("Graph construction, isomorphism and distance sanity checks") {
     Graph multiHexagon;
     Graph pairOfMultitriangles;
 
-    REQUIRE_NOTHROW(pentagonFromMatrix1 = Graph(std::vector<std::vector<int>>{{0, 1, 0, 0, 1},
-                                                                              {0, 0, 3, 0, 0},
-                                                                              {0, 1, 0, 1, 0},
-                                                                              {0, 0, 1, 0, 1},
-                                                                              {1, 0, 0, 1, 0}}));
-    REQUIRE_NOTHROW(pentagonFromMatrix2 = Graph(std::vector<std::vector<int>>{{0, 0, 1, 1, 0},
-                                                                              {0, 0, 3, 0, 0},
-                                                                              {0, 1, 0, 1, 0},
-                                                                              {1, 1, 0, 0, 0},
-                                                                              {0, 1, 1, 0, 0}}));
-    REQUIRE_NOTHROW(squareWithOutcastFromMatrix = Graph(std::vector<std::vector<int>>{{0, 2, 0, 1, 0},
-                                                                                      {1, 0, 1, 0, 0},
-                                                                                      {0, 1, 0, 1, 0},
-                                                                                      {1, 0, 1, 0, 0},
-                                                                                      {0, 0, 0, 0, 0}}));
-    REQUIRE_NOTHROW(strangeStarFromMatrix = Graph(std::vector<std::vector<int>>{{0, 2, 1, 1, 1},
-                                                                                {1, 0, 0, 0, 0},
-                                                                                {1, 0, 0, 0, 0},
-                                                                                {1, 0, 0, 0, 0},
-                                                                                {1, 0, 0, 0, 0}}));
-    REQUIRE_NOTHROW(multiHexagonFromMatrix = Graph(std::vector<std::vector<int>>{{0, 1, 0, 3, 0, 1},
-                                                                                 {1, 0, 1, 0, 0, 0},
-                                                                                 {0, 1, 0, 1, 0, 0},
-                                                                                 {0, 0, 1, 0, 1, 0},
-                                                                                 {0, 0, 0, 1, 0, 1},
-                                                                                 {1, 0, 0, 0, 1, 0}}));
-    REQUIRE_NOTHROW(pairOfMultitrianglesFromMatrix = Graph(std::vector<std::vector<int>>{{0, 1, 1, 3, 0, 0},
-                                                                                         {1, 0, 1, 0, 0, 0},
-                                                                                         {1, 1, 0, 0, 0, 0},
-                                                                                         {0, 0, 0, 0, 1, 1},
-                                                                                         {0, 0, 0, 1, 0, 1},
-                                                                                         {0, 0, 0, 1, 1, 0}}));
+    REQUIRE_NOTHROW(pentagonFromMatrix1 =
+                        Graph(std::vector<std::vector<int>>{{0, 1, 0, 0, 1},
+                                                            {0, 0, 3, 0, 0},
+                                                            {0, 1, 0, 1, 0},
+                                                            {0, 0, 1, 0, 1},
+                                                            {1, 0, 0, 1, 0}}));
+    REQUIRE_NOTHROW(pentagonFromMatrix2 =
+                        Graph(std::vector<std::vector<int>>{{0, 0, 1, 1, 0},
+                                                            {0, 0, 3, 0, 0},
+                                                            {0, 1, 0, 1, 0},
+                                                            {1, 1, 0, 0, 0},
+                                                            {0, 1, 1, 0, 0}}));
+    REQUIRE_NOTHROW(squareWithOutcastFromMatrix =
+                        Graph(std::vector<std::vector<int>>{{0, 2, 0, 1, 0},
+                                                            {1, 0, 1, 0, 0},
+                                                            {0, 1, 0, 1, 0},
+                                                            {1, 0, 1, 0, 0},
+                                                            {0, 0, 0, 0, 0}}));
+    REQUIRE_NOTHROW(strangeStarFromMatrix =
+                        Graph(std::vector<std::vector<int>>{{0, 2, 1, 1, 1},
+                                                            {1, 0, 0, 0, 0},
+                                                            {1, 0, 0, 0, 0},
+                                                            {1, 0, 0, 0, 0},
+                                                            {1, 0, 0, 0, 0}}));
+    REQUIRE_NOTHROW(multiHexagonFromMatrix = Graph(
+                        std::vector<std::vector<int>>{{0, 1, 0, 3, 0, 1},
+                                                      {1, 0, 1, 0, 0, 0},
+                                                      {0, 1, 0, 1, 0, 0},
+                                                      {0, 0, 1, 0, 1, 0},
+                                                      {0, 0, 0, 1, 0, 1},
+                                                      {1, 0, 0, 0, 1, 0}}));
+    REQUIRE_NOTHROW(pairOfMultitrianglesFromMatrix = Graph(
+                        std::vector<std::vector<int>>{{0, 1, 1, 3, 0, 0},
+                                                      {1, 0, 1, 0, 0, 0},
+                                                      {1, 1, 0, 0, 0, 0},
+                                                      {0, 0, 0, 0, 1, 1},
+                                                      {0, 0, 0, 1, 0, 1},
+                                                      {0, 0, 0, 1, 1, 0}}));
 
     REQUIRE_THROWS_AS(nullGraph = Graph{std::istringstream{""}},
                       std::invalid_argument);
