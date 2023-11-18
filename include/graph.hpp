@@ -197,18 +197,22 @@ class Graph {
     /**
      * @brief Checks if the given vertex is adjacent to all vertices in the
      * given clique.
+     * 
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
+     * 
      * @return True if the vertex is adjacent to all vertices in the clique,
      * false otherwise.
      */
     auto isAdjacentToAllNodesInClique(size_t vertex,
                                       std::vector<int>& currentClique) const -> bool;
     /**
-     * @brief Checks if the given vertex has some edge to all vertices in the
-     * given clique.
+     * @brief Checks if the given vertex has one sided edge to all vertices in
+     * the given clique.
+     * 
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
+     * 
      * @return True if the vertex has some edge to all vertices in the clique,
      * false otherwise.
      */
@@ -218,6 +222,7 @@ class Graph {
 
     /**
      * @brief Helper for maxClique, used for recursion.
+     * 
      * @param currentVertex Current vertex to check.
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
@@ -230,12 +235,14 @@ class Graph {
     /**
      * @brief Finds the maximum clique of the graph using Bron-Kerbosch
      * algorithm.
+     * 
      * @return Vector of vertices that form the maximum clique.
      */
     auto maxClique() const -> std::vector<int>;
 
     /**
      * @brief Helper for modifiedMaxClique, used for recursion.
+     * 
      * @param currentVertex Current vertex to check.
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
@@ -247,6 +254,7 @@ class Graph {
     /**
      * @brief modidfied max clique algorithm for finding maximum induced
      * subgraphs.
+     * 
      * @return Vector of vertices that form the maximum clique.
      */
     auto modifiedMaxClique() const -> std::vector<int>;
