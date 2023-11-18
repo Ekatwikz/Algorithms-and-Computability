@@ -200,7 +200,7 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
 
 [[nodiscard]] auto Graph::isAdjacentToAllNodesInClique(
     int vertex, std::vector<int>& currentClique) const -> bool {
-    for (int i = 0; i < currentClique.size(); ++i) {
+    for (size_t i = 0; i < currentClique.size(); ++i) {
         if (adjacencyMatrix[vertex][currentClique[i]] == 0 ||
             adjacencyMatrix[currentClique[i]][vertex] == 0) {
             return false;
@@ -211,7 +211,7 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
 
 [[nodiscard]] auto Graph::hasSomeEdgeToAllNodesInClique(
     int vertex, std::vector<int>& currentClique) const -> bool {
-    for (int i = 0; i < currentClique.size(); ++i) {
+    for (size_t i = 0; i < currentClique.size(); ++i) {
         if (adjacencyMatrix[vertex][currentClique[i]] == 0 &&
             adjacencyMatrix[currentClique[i]][vertex] == 0) {
             return false;
