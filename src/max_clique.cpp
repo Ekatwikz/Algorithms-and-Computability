@@ -44,7 +44,7 @@ auto main(int argc, char* argv[]) -> int {
     std::cout << "Max clique size: " << maxClique.size() << std::endl;
     std::cout << "Vertices of the max clique: {";
     std::for_each(maxClique.begin(), maxClique.end() - 1,
-                  [](int i) { std::cout << i << ", "; });
+                  [](int vertex) { std::cout << vertex << ", "; });
     std::cout << maxClique.back() << "}" << std::endl;
 
     std::cout << g.toDotLang() << std::endl;

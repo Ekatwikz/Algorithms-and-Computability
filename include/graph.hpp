@@ -248,7 +248,7 @@ class Graph {
     auto modifiedMaxCliqueHelper(size_t currentVertex,
                                  std::vector<int>& currentClique,
                                  std::vector<int>& maxClique) const -> void;
-                                 
+
     /**
      * @brief modidfied max clique algorithm for finding maximum induced
      * subgraphs.
