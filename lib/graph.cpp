@@ -262,7 +262,7 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     for (int i = currentVertex; i < vertexCount; ++i) {
         if (hasSomeEdgeToAllNodesInClique(i, currentClique)) {
             currentClique.push_back(i);
-            maxCliqueHelper(i + 1, currentClique, maxClique);
+            modifiedMaxCliqueHelper(i + 1, currentClique, maxClique);
             currentClique.pop_back();
         }
     }
