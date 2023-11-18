@@ -3,7 +3,6 @@
  * @brief Graph representation definitions
  */
 #include <fstream>
-#include <functional>
 #include <vector>
 
 /**
@@ -95,7 +94,7 @@ class Graph {
      * @brief Return vertex count.
      * @return Number of vertices in the graph.
      */
-    auto getVertexCount() const -> int { return vertexCount; }
+    [[nodiscard]] auto getVertexCount() const -> size_t { return vertexCount; }
 
     /**
      * @brief returns string in DOT language
@@ -197,57 +196,63 @@ class Graph {
     /**
      * @brief Checks if the given vertex is adjacent to all vertices in the
      * given clique.
+     *
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
+     *
      * @return True if the vertex is adjacent to all vertices in the clique,
      * false otherwise.
      */
-    auto isAdjacentToAllNodesInClique(size_t vertex,
-                                      std::vector<int>& currentClique) const -> bool;
+    [[nodiscard]] auto isAdjacentToAllNodesInClique(
+        size_t vertex, std::vector<size_t>& currentClique) const -> bool;
     /**
-     * @brief Checks if the given vertex has some edge to all vertices in the
-     * given clique.
+     * @brief Checks if the given vertex has one sided edge to all vertices in
+     * the given clique.
+     *
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
+     *
      * @return True if the vertex has some edge to all vertices in the clique,
      * false otherwise.
      */
-    auto hasSomeEdgeToAllNodesInClique(size_t vertex,
-                                       std::vector<int>& currentClique) const
-        -> bool;
+    [[nodiscard]] auto hasSomeEdgeToAllNodesInClique(
+        size_t vertex, std::vector<size_t>& currentClique) const -> bool;
 
     /**
      * @brief Helper for maxClique, used for recursion.
+     *
      * @param currentVertex Current vertex to check.
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
-     * @param function to check if vertex is adjacency. Can use
-     * isAdjacentToAllNodesInClique or hasSomeEdgeToAllNodesInClique.
      */
 
-    auto maxCliqueHelper(size_t currentVertex, std::vector<int>& currentClique,
-                         std::vector<int>& maxClique) const -> void;
+    auto maxCliqueHelper(size_t currentVertex,
+                         std::vector<size_t>& currentClique,
+                         std::vector<size_t>& maxClique) const -> void;
     /**
      * @brief Finds the maximum clique of the graph using Bron-Kerbosch
      * algorithm.
+     *
      * @return Vector of vertices that form the maximum clique.
      */
-    auto maxClique() const -> std::vector<int>;
+    [[nodiscard]] auto maxClique() const -> std::vector<size_t>;
 
     /**
      * @brief Helper for modifiedMaxClique, used for recursion.
+     *
      * @param currentVertex Current vertex to check.
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
      */
     auto modifiedMaxCliqueHelper(size_t currentVertex,
-                                 std::vector<int>& currentClique,
-                                 std::vector<int>& maxClique) const -> void;
+                                 std::vector<size_t>& currentClique,
+                                 std::vector<size_t>& maxClique) const -> void;
 
     /**
      * @brief modidfied max clique algorithm for finding maximum induced
      * subgraphs.
+     *
      * @return Vector of vertices that form the maximum clique.
      */
-    auto modifiedMaxClique() const -> std::vector<int>;
+    [[nodiscard]] auto modifiedMaxClique() const -> std::vector<size_t>;
 };

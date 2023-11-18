@@ -1,5 +1,5 @@
 /**
- * @file graph_distance.cpp
+ * @file max_clique.cpp
  * @brief Tool to calculate distance between .homenda.txt graphs
  */
 #include <algorithm>
@@ -32,18 +32,20 @@ auto main(int argc, char* argv[]) -> int {
         return 1;
     }
 
-    Graph g;
+    Graph graph;
     try {
-        g = Graph::fromFilename(args[1]);
+        graph = Graph::fromFilename(args[1]);
     } catch (const exception& e) {
         cerr << "Oops! [" << e.what() << "]\n";
         return 1;
     }
 
-    auto maxClique = g.maxClique();
+    auto maxClique = graph.maxClique();
     std::cout << "Max clique size: " << maxClique.size() << std::endl;
     std::cout << "Vertices of the max clique: {";
     std::for_each(maxClique.begin(), maxClique.end() - 1,
-                  [](int i) { std::cout << i << ", "; });
+                  [](int vertex) { std::cout << vertex << ", "; });
     std::cout << maxClique.back() << "}" << std::endl;
+
+    std::cout << graph.toDotLang() << std::endl;
 }
