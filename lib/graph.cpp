@@ -277,7 +277,7 @@ void Graph::maxCliqueHelper(size_t currentVertex, std::vector<int>& currentCliqu
     }
 }
 
-vector<int> Graph::maxClique() {
+auto Graph::maxClique() -> std::vector<int> {
     std::vector<int> currentClique;
     std::vector<int> maxClique;
     maxCliqueHelper(0, currentClique, maxClique);

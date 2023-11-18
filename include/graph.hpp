@@ -94,7 +94,7 @@ class Graph {
      * @brief Return vertex count.
      * @return Number of vertices in the graph.
      */
-    int getVertexCount() const { return vertexCount; }
+    auto getVertexCount() const -> int { return vertexCount; }
 
     /**
      * @brief returns string in DOT language
@@ -210,12 +210,13 @@ class Graph {
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
      */
+
     void maxCliqueHelper(size_t currentVertex, std::vector<int>& currentClique,
                          std::vector<int>& maxClique);
     /**
-     * @brief Returns the maximum clique of the graph using Bron-Kerbosch
+     * @brief Finds the maximum clique of the graph using Bron-Kerbosch
      * algorithm.
      * @return Vector of vertices that form the maximum clique.
      */
-    std::vector<int> maxClique();
+    auto maxClique() -> std::vector<int>;
 };
