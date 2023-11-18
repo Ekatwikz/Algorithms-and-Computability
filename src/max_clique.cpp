@@ -46,4 +46,6 @@ auto main(int argc, char* argv[]) -> int {
     std::for_each(maxClique.begin(), maxClique.end() - 1,
                   [](int i) { std::cout << i << ", "; });
     std::cout << maxClique.back() << "}" << std::endl;
+
+    std::cout << g.toDotLang() << std::endl;
 }
