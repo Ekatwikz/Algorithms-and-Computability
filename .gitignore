@@ -10,3 +10,5 @@ docs
 
 # Mathematica stuff lol
 *.nb
+
+CMakeLists.txt

@@ -197,3 +197,40 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
                                        ? *this == rhs
                                        : approxIsomorphicTo(rhs));
 }
+
+bool Graph::isAdjacentToAllNodesInClique(int vertex,
+                                         std::vector<int>& currentClique) {
+    for (int i = 0; i < currentClique.size(); ++i) {
+        if (adjacencyMatrix[vertex][currentClique[i]] == 0 ||
+            adjacencyMatrix[currentClique[i]][vertex] == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void Graph::maxCliqueHelper(int currentVertex, std::vector<int>& currentClique,
+                            std::vector<int>& maxClique) {
+    if (currentClique.size() > maxClique.size()) {
+        maxClique = std::vector(currentClique);
+    }
+
+    if (currentVertex == vertexCount) {
+        return;
+    }
+
+    for (int i = currentVertex; i < vertexCount; ++i) {
+        if (isAdjacentToAllNodesInClique(i, currentClique)) {
+            currentClique.push_back(i);
+            maxCliqueHelper(i + 1, currentClique, maxClique);
+            currentClique.pop_back();
+        }
+    }
+}
+
+vector<int> Graph::maxClique() {
+    std::vector<int> currentClique;
+    std::vector<int> maxClique;
+    maxCliqueHelper(0, currentClique, maxClique);
+    return maxClique;
+}

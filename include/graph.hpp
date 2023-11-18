@@ -83,6 +83,12 @@ class Graph {
         -> Graph;
 
     /**
+     * @brief Return vertex count.
+     * @return Number of vertices in the graph.
+     */
+    int getVertexCount() const { return vertexCount; }
+
+    /**
      * @brief returns string in DOT language
      *
      * Useful for generating visualization and stuff
@@ -168,4 +174,30 @@ class Graph {
     [[nodiscard]] auto metricDistanceTo(
         const Graph& rhs,
         AlgorithmAccuracy accuracy = AlgorithmAccuracy::EXACT) const -> size_t;
+
+    /**
+     * @brief Checks if the given vertex is adjacent to all vertices in the
+     * given clique.
+     * @param vertex Vertex to check.
+     * @param currentClique Clique to check.
+     * @return True if the vertex is adjacent to all vertices in the clique,
+     * false otherwise.
+     */
+    bool isAdjacentToAllNodesInClique(int vertex,
+                                      std::vector<int>& currentClique);
+
+    /**
+     * @brief Helper for maxClique, used for recursion.
+     * @param currentVertex Current vertex to check.
+     * @param vertex Vertex to check.
+     * @param currentClique Clique to check.
+     */
+    void maxCliqueHelper(int currentVertex, std::vector<int>& currentClique,
+                         std::vector<int>& maxClique);
+    /**
+     * @brief Returns the maximum clique of the graph using Bron-Kerbosch
+     * algorithm.
+     * @return Vector of vertices that form the maximum clique.
+     */
+    std::vector<int> maxClique();
 };
