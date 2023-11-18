@@ -40,5 +40,10 @@ auto main(int argc, char* argv[]) -> int {
         return 1;
     }
 
-    cout << lhs.modularProduct(rhs) << "\n";
+    Graph modProduct = lhs.modularProduct(rhs);
+    if (argc < 2 || strcmp("dot", args[2]) != 0) {
+        cout << modProduct;
+    } else {
+        cout << modProduct.toDotLang();
+    }
 }

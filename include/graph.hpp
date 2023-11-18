@@ -50,7 +50,7 @@ class Graph {
      * @param adjacencyMatrix is the adjacencyMatrix from which graph will be
      * constructed
      */
-    explicit Graph(const std::vector<std::vector<int>>& adjacencyMatrix);
+    explicit Graph(const std::vector<std::vector<int>>&& adjacencyMatrix);
 
     /**
      * @brief constructs graph from data in a stream

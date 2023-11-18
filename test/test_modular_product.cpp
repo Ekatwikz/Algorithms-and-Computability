@@ -12,42 +12,43 @@
 TEST_CASE("Graph construction, isomorphism and distance sanity checks") {
     Graph bidirectTwoGraph;
     Graph onedirectTwoGraph;
-    Graph wikiExampleA;
-    Graph wikiExampleB;
+    Graph wikiExampleAandB;
     Graph isolatedThreeVert;
     Graph isolatedTwoVert;
     Graph multiEdgeTriangleGraph;
     Graph multiEdgeTwoGraph;
 
-    REQUIRE_NOTHROW(bidirectTwoGraph = Graph{std::istringstream{"2\n"
-                                                                "0 1\n"
-                                                                "1 0"}});
-    REQUIRE_NOTHROW(onedirectTwoGraph = Graph{std::istringstream{"2\n"
-                                                                 "0 1\n"
-                                                                 "0 0"}});
-    REQUIRE_NOTHROW(wikiExampleA = Graph{std::istringstream{"3\n"
-                                                            "0 1 0\n"
-                                                            "1 0 1\n"
-                                                            "0 1 0"}});
-    REQUIRE_NOTHROW(wikiExampleB = Graph{std::istringstream{"3\n"
-                                                            "0 1 0\n"
-                                                            "1 0 1\n"
-                                                            "0 1 0"}});
-    REQUIRE_NOTHROW(isolatedThreeVert = Graph{std::istringstream{"3\n"
-                                                                 "0 0 0\n"
-                                                                 "0 0 0\n"
-                                                                 "0 0 0"}});
-    REQUIRE_NOTHROW(isolatedTwoVert = Graph{std::istringstream{"2\n"
-                                                               "0 0\n"
-                                                               "0 0"}});
-    REQUIRE_NOTHROW(multiEdgeTriangleGraph =
-                        Graph{std::istringstream{"3\n"
-                                                 "0 3 1\n"
-                                                 "0 0 0\n"
-                                                 "1 0 1"}});
-    REQUIRE_NOTHROW(multiEdgeTwoGraph = Graph{std::istringstream{"2\n"
-                                                                 "0 5\n"
-                                                                 "3 2"}});
+    bidirectTwoGraph =
+        Graph{std::istringstream{"2\n"
+                                 "0 1\n"
+                                 "1 0"}};
+    onedirectTwoGraph =
+        Graph{std::istringstream{"2\n"
+                                 "0 1\n"
+                                 "0 0"}};
+    wikiExampleAandB =
+        Graph{std::istringstream{"3\n"
+                                 "0 1 0\n"
+                                 "1 0 1\n"
+                                 "0 1 0"}};
+    isolatedThreeVert =
+        Graph{std::istringstream{"3\n"
+                                 "0 0 0\n"
+                                 "0 0 0\n"
+                                 "0 0 0"}};
+    isolatedTwoVert =
+        Graph{std::istringstream{"2\n"
+                                 "0 0\n"
+                                 "0 0"}};
+    multiEdgeTriangleGraph =
+        Graph{std::istringstream{"3\n"
+                                 "0 3 1\n"
+                                 "0 0 0\n"
+                                 "1 0 1"}};
+    multiEdgeTwoGraph =
+        Graph{std::istringstream{"2\n"
+                                 "0 5\n"
+                                 "3 2"}};
 
     SECTION(
         "Modular Product Result of bidirectTwoGraph and onedirectTwoGraph is "
@@ -62,7 +63,7 @@ TEST_CASE("Graph construction, isomorphism and distance sanity checks") {
 
     SECTION(
         "Modular Product Result of wikiExampleA and wikiExampleB is correct") {
-        REQUIRE(wikiExampleA.modularProduct(wikiExampleB) ==
+        REQUIRE(wikiExampleAandB.modularProduct(wikiExampleAandB) ==
                 Graph{std::istringstream{"9\n"
                                          "0 0 0 0 1 0 0 0 1\n"
                                          "0 0 0 1 0 1 0 0 0\n"

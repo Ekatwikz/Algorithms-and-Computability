@@ -19,15 +19,12 @@ using std::string;
 using std::swap;
 using std::vector;
 
-Graph::Graph(const std::vector<std::vector<int>>& adjacencyMatrix) : Graph{} {
-    size_t size = adjacencyMatrix.size();
-
-    vertexAndEdgeCount = vertexCount = size;
-    this->adjacencyMatrix.resize(vertexCount, std::vector<int>(vertexCount));
-
+Graph::Graph(const std::vector<std::vector<int>>&& adjacencyMatrix)
+    : vertexCount{adjacencyMatrix.size()},
+      vertexAndEdgeCount{adjacencyMatrix.size()},
+      adjacencyMatrix{adjacencyMatrix} {
     for (size_t i = 0; i < vertexCount; ++i) {
         for (size_t j = 0; j < vertexCount; ++j) {
-            this->adjacencyMatrix[i][j] = adjacencyMatrix[i][j];
             vertexAndEdgeCount += adjacencyMatrix[i][j];
         }
     }
@@ -247,5 +244,5 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
         }
     }
 
-    return Graph(adjacencyMatrixOfResultGraph);
+    return Graph(std::move(adjacencyMatrixOfResultGraph));
 }
