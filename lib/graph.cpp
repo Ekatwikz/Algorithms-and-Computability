@@ -246,3 +246,40 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
 
     return Graph(std::move(adjacencyMatrixOfResultGraph));
 }
+
+bool Graph::isAdjacentToAllNodesInClique(size_t vertex,
+                                         std::vector<int>& currentClique) {
+    for (size_t i = 0; i < currentClique.size(); ++i) {
+        if (adjacencyMatrix[vertex][currentClique[i]] == 0 ||
+            adjacencyMatrix[currentClique[i]][vertex] == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void Graph::maxCliqueHelper(size_t currentVertex, std::vector<int>& currentClique,
+                            std::vector<int>& maxClique) {
+    if (currentClique.size() > maxClique.size()) {
+        maxClique = std::vector(currentClique);
+    }
+
+    if (currentVertex == vertexCount) {
+        return;
+    }
+
+    for (size_t i = currentVertex; i < vertexCount; ++i) {
+        if (isAdjacentToAllNodesInClique(i, currentClique)) {
+            currentClique.push_back(i);
+            maxCliqueHelper(i + 1, currentClique, maxClique);
+            currentClique.pop_back();
+        }
+    }
+}
+
+vector<int> Graph::maxClique() {
+    std::vector<int> currentClique;
+    std::vector<int> maxClique;
+    maxCliqueHelper(0, currentClique, maxClique);
+    return maxClique;
+}

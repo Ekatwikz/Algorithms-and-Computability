@@ -91,6 +91,12 @@ class Graph {
         -> Graph;
 
     /**
+     * @brief Return vertex count.
+     * @return Number of vertices in the graph.
+     */
+    int getVertexCount() const { return vertexCount; }
+
+    /**
      * @brief returns string in DOT language
      *
      * Useful for generating visualization and stuff
@@ -185,5 +191,31 @@ class Graph {
      *
      * @return The modular product of the graphs
      */
+
     [[nodiscard]] auto modularProduct(const Graph& rhs) -> Graph;
+    /**
+     * @brief Checks if the given vertex is adjacent to all vertices in the
+     * given clique.
+     * @param vertex Vertex to check.
+     * @param currentClique Clique to check.
+     * @return True if the vertex is adjacent to all vertices in the clique,
+     * false otherwise.
+     */
+    bool isAdjacentToAllNodesInClique(size_t vertex,
+                                      std::vector<int>& currentClique);
+
+    /**
+     * @brief Helper for maxClique, used for recursion.
+     * @param currentVertex Current vertex to check.
+     * @param vertex Vertex to check.
+     * @param currentClique Clique to check.
+     */
+    void maxCliqueHelper(size_t currentVertex, std::vector<int>& currentClique,
+                         std::vector<int>& maxClique);
+    /**
+     * @brief Returns the maximum clique of the graph using Bron-Kerbosch
+     * algorithm.
+     * @return Vector of vertices that form the maximum clique.
+     */
+    std::vector<int> maxClique();
 };
