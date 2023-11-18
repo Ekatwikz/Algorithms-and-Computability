@@ -86,7 +86,7 @@ class Graph {
      * @brief Return vertex count.
      * @return Number of vertices in the graph.
      */
-    int getVertexCount() const { return vertexCount; }
+    auto getVertexCount() const -> int { return vertexCount; }
 
     /**
      * @brief returns string in DOT language
@@ -183,8 +183,8 @@ class Graph {
      * @return True if the vertex is adjacent to all vertices in the clique,
      * false otherwise.
      */
-    bool isAdjacentToAllNodesInClique(int vertex,
-                                      std::vector<int>& currentClique);
+    auto isAdjacentToAllNodesInClique(int vertex,
+                                      std::vector<int>& currentClique) -> bool;
 
     /**
      * @brief Helper for maxClique, used for recursion.
@@ -192,12 +192,12 @@ class Graph {
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
      */
-    void maxCliqueHelper(int currentVertex, std::vector<int>& currentClique,
-                         std::vector<int>& maxClique);
+    auto maxCliqueHelper(int currentVertex, std::vector<int>& currentClique,
+                         std::vector<int>& maxClique) -> void;
     /**
-     * @brief Returns the maximum clique of the graph using Bron-Kerbosch
+     * @brief Finds the maximum clique of the graph using Bron-Kerbosch
      * algorithm.
      * @return Vector of vertices that form the maximum clique.
      */
-    std::vector<int> maxClique();
+    auto maxClique() -> std::vector<int>;
 };
