@@ -309,7 +309,7 @@ auto Graph::modifiedMaxCliqueHelper(size_t currentVertex,
     for (size_t i = currentVertex; i < vertexCount; ++i) {
         if (hasSomeEdgeToAllNodesInClique(i, currentClique)) {
             currentClique.push_back(i);
-            maxCliqueHelper(i + 1, currentClique, maxClique);
+            modifiedMaxCliqueHelper(i + 1, currentClique, maxClique);
             currentClique.pop_back();
         }
     }
