@@ -25,7 +25,7 @@ using std::span;
  */
 auto main(int argc, char* argv[]) -> int {
     auto args = span(argv, static_cast<size_t>(argc));
-    if (argc < 2) {
+    if (argc < 3) {
         cerr << "Usage: " << args[0] << " <filename1> <filename2>\n";
         return 1;
     }
@@ -41,7 +41,7 @@ auto main(int argc, char* argv[]) -> int {
     }
 
     Graph modProduct = lhs.modularProduct(rhs);
-    if (argc < 2 || strcmp("dot", args[2]) != 0) {
+    if (argc < 4 || strcmp("dot", args[3]) != 0) {
         cout << modProduct;
     } else {
         cout << modProduct.toDotLang();
