@@ -3,6 +3,7 @@
  * @brief Graph representation definitions
  */
 #include <fstream>
+#include <functional>
 #include <vector>
 
 /**
@@ -184,20 +185,52 @@ class Graph {
      * false otherwise.
      */
     auto isAdjacentToAllNodesInClique(int vertex,
-                                      std::vector<int>& currentClique) -> bool;
+                                      std::vector<int>& currentClique) const
+        -> bool;
+
+    /**
+     * @brief Checks if the given vertex has some edge to all vertices in the
+     * given clique.
+     * @param vertex Vertex to check.
+     * @param currentClique Clique to check.
+     * @return True if the vertex has some edge to all vertices in the clique,
+     * false otherwise.
+     */
+    auto hasSomeEdgeToAllNodesInClique(int vertex,
+                                       std::vector<int>& currentClique) const
+        -> bool;
 
     /**
      * @brief Helper for maxClique, used for recursion.
      * @param currentVertex Current vertex to check.
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
+     * @param function to check if vertex is adjacency. Can use
+     * isAdjacentToAllNodesInClique or hasSomeEdgeToAllNodesInClique.
      */
     auto maxCliqueHelper(int currentVertex, std::vector<int>& currentClique,
-                         std::vector<int>& maxClique) -> void;
+                         std::vector<int>& maxClique) const -> void;
     /**
      * @brief Finds the maximum clique of the graph using Bron-Kerbosch
      * algorithm.
      * @return Vector of vertices that form the maximum clique.
      */
-    auto maxClique() -> std::vector<int>;
+    auto maxClique() const -> std::vector<int>;
+
+    /**
+     * @brief Helper for modifiedMaxClique, used for recursion.
+     * @param currentVertex Current vertex to check.
+     * @param vertex Vertex to check.
+     * @param currentClique Clique to check.
+     */
+    auto modifiedMaxCliqueHelper(int currentVertex,
+                                 std::vector<int>& currentClique,
+                                 std::vector<int>& maxClique) const -> void;
+
+    /**
+     * @brief modidfied max clique algorithm for finding maximum induced
+     * subgraphs.
+     * @return Vector of vertices that form the maximum clique.
+     */
+    auto modifiedMaxClique() const -> std::vector<int>;
 };
