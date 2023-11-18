@@ -186,7 +186,8 @@ class Graph {
      * @return True if the vertex is adjacent to all vertices in the clique,
      * false otherwise.
      */
-    auto isAdjacentToAllNodesInClique(int vertex,
+    [[nodiscard]] auto isAdjacentToAllNodesInClique(
+        int vertex,
                                       std::vector<int>& currentClique) const
         -> bool;
 
@@ -200,7 +201,8 @@ class Graph {
      * @return True if the vertex has some edge to all vertices in the clique,
      * false otherwise.
      */
-    auto hasSomeEdgeToAllNodesInClique(int vertex,
+    [[nodiscard]] auto hasSomeEdgeToAllNodesInClique(
+        int vertex,
                                        std::vector<int>& currentClique) const
         -> bool;
 
@@ -211,7 +213,8 @@ class Graph {
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
      */
-    auto maxCliqueHelper(int currentVertex, std::vector<int>& currentClique,
+    auto maxCliqueHelper(int currentVertex,
+                                       std::vector<int>& currentClique,
                          std::vector<int>& maxClique) const -> void;
     /**
      * @brief Finds the maximum clique of the graph using Bron-Kerbosch
@@ -219,7 +222,7 @@ class Graph {
      *
      * @return Vector of vertices that form the maximum clique.
      */
-    auto maxClique() const -> std::vector<int>;
+    [[nodiscard]] auto maxClique() const -> std::vector<int>;
 
     /**
      * @brief Helper for modifiedMaxClique, used for recursion.
@@ -228,7 +231,8 @@ class Graph {
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
      */
-    auto modifiedMaxCliqueHelper(int currentVertex,
+    auto modifiedMaxCliqueHelper(
+        int currentVertex,
                                  std::vector<int>& currentClique,
                                  std::vector<int>& maxClique) const -> void;
 
@@ -238,5 +242,5 @@ class Graph {
      *
      * @return Vector of vertices that form the maximum clique.
      */
-    auto modifiedMaxClique() const -> std::vector<int>;
+    [[nodiscard]] auto modifiedMaxClique() const -> std::vector<int>;
 };

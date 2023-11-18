@@ -220,7 +220,7 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     return true;
 }
 
-[[nodiscard]] auto Graph::maxCliqueHelper(int currentVertex,
+auto Graph::maxCliqueHelper(int currentVertex,
                                           std::vector<int>& currentClique,
                                           std::vector<int>& maxClique) const
     -> void {
@@ -248,7 +248,7 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     return maxClique;
 }
 
-[[nodiscard]] auto Graph::modifiedMaxCliqueHelper(
+auto Graph::modifiedMaxCliqueHelper(
     int currentVertex, std::vector<int>& currentClique,
     std::vector<int>& maxClique) const -> void {
     if (currentClique.size() > maxClique.size()) {
