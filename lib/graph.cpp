@@ -247,7 +247,7 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     return Graph(std::move(adjacencyMatrixOfResultGraph));
 }
 
-auto Graph::isAdjacentToAllNodesInClique(size_t vertex,
+[[nodiscard]] auto Graph::isAdjacentToAllNodesInClique(size_t vertex,
                                          std::vector<int>& currentClique) const -> bool {
     for (size_t i = 0; i < currentClique.size(); ++i) {
         if (adjacencyMatrix[vertex][currentClique[i]] == 0 ||
@@ -258,7 +258,7 @@ auto Graph::isAdjacentToAllNodesInClique(size_t vertex,
     return true;
 }
 
-auto Graph::hasSomeEdgeToAllNodesInClique(size_t vertex,
+[[nodiscard]] auto Graph::hasSomeEdgeToAllNodesInClique(size_t vertex,
                                          std::vector<int>& currentClique) const -> bool {
     for (size_t i = 0; i < currentClique.size(); ++i) {
         if (adjacencyMatrix[vertex][currentClique[i]] == 0 &&
@@ -272,7 +272,7 @@ auto Graph::hasSomeEdgeToAllNodesInClique(size_t vertex,
 auto Graph::maxCliqueHelper(size_t currentVertex, std::vector<int>& currentClique,
                             std::vector<int>& maxClique) const -> void{
     if (currentClique.size() > maxClique.size()) {
-        maxClique = std::vector(currentClique);
+        maxClique = vector<int>(currentClique);
     }
 
     if (currentVertex == vertexCount) {
@@ -288,7 +288,7 @@ auto Graph::maxCliqueHelper(size_t currentVertex, std::vector<int>& currentCliqu
     }
 }
 
-auto Graph::maxClique() const -> std::vector<int> {
+[[nodiscard]] auto Graph::maxClique() const -> std::vector<int> {
     std::vector<int> currentClique;
     std::vector<int> maxClique;
     maxCliqueHelper(0, currentClique, maxClique);
@@ -299,7 +299,7 @@ auto Graph::modifiedMaxCliqueHelper(size_t currentVertex,
                                     std::vector<int>& currentClique,
                                     std::vector<int>& maxClique) const -> void {
     if (currentClique.size() > maxClique.size()) {
-        maxClique = std::vector(currentClique);
+        maxClique = std::vector<int>(currentClique);
     }
 
     if (currentVertex == vertexCount) {
@@ -315,7 +315,7 @@ auto Graph::modifiedMaxCliqueHelper(size_t currentVertex,
     }
 }
 
-auto Graph::modifiedMaxClique() const -> std::vector<int> {
+[[nodiscard]] auto Graph::modifiedMaxClique() const -> std::vector<int> {
     std::vector<int> currentClique;
     std::vector<int> maxClique;
     maxCliqueHelper(0, currentClique, maxClique);
