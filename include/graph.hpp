@@ -187,9 +187,7 @@ class Graph {
      * false otherwise.
      */
     [[nodiscard]] auto isAdjacentToAllNodesInClique(
-        int vertex,
-                                      std::vector<int>& currentClique) const
-        -> bool;
+        int vertex, std::vector<int>& currentClique) const -> bool;
 
     /**
      * @brief Checks if the given vertex has one sided edge to all vertices in
@@ -202,9 +200,7 @@ class Graph {
      * false otherwise.
      */
     [[nodiscard]] auto hasSomeEdgeToAllNodesInClique(
-        int vertex,
-                                       std::vector<int>& currentClique) const
-        -> bool;
+        int vertex, std::vector<int>& currentClique) const -> bool;
 
     /**
      * @brief Helper for maxClique, used for recursion.
@@ -213,8 +209,7 @@ class Graph {
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
      */
-    auto maxCliqueHelper(int currentVertex,
-                                       std::vector<int>& currentClique,
+    auto maxCliqueHelper(int currentVertex, std::vector<int>& currentClique,
                          std::vector<int>& maxClique) const -> void;
     /**
      * @brief Finds the maximum clique of the graph using Bron-Kerbosch
@@ -231,8 +226,7 @@ class Graph {
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
      */
-    auto modifiedMaxCliqueHelper(
-        int currentVertex,
+    auto modifiedMaxCliqueHelper(int currentVertex,
                                  std::vector<int>& currentClique,
                                  std::vector<int>& maxClique) const -> void;
 
