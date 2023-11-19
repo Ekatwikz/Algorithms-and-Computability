@@ -12,11 +12,11 @@
 TEST_CASE("Modular product tests") {
     Graph bidirectTwoGraph;
     Graph onedirectTwoGraph;
-    Graph wikiExampleAandB;
     Graph isolatedThreeVert;
     Graph isolatedTwoVert;
     Graph multiEdgeTriangleGraph;
     Graph multiEdgeTwoGraph;
+    Graph modProductWikiExample;
 
     bidirectTwoGraph =
         Graph{std::istringstream{"2\n"
@@ -26,7 +26,7 @@ TEST_CASE("Modular product tests") {
         Graph{std::istringstream{"2\n"
                                  "0 1\n"
                                  "0 0"}};
-    wikiExampleAandB =
+    modProductWikiExample =
         Graph{std::istringstream{"3\n"
                                  "0 1 0\n"
                                  "1 0 1\n"
@@ -63,7 +63,7 @@ TEST_CASE("Modular product tests") {
 
     SECTION(
         "Modular Product Result of wikiExampleA and wikiExampleB is correct") {
-        REQUIRE(wikiExampleAandB.modularProduct(wikiExampleAandB) ==
+        REQUIRE(modProductWikiExample.modularProduct(modProductWikiExample) ==
                 Graph{std::istringstream{"9\n"
                                          "0 0 0 0 1 0 0 0 1\n"
                                          "0 0 0 1 0 1 0 0 0\n"
