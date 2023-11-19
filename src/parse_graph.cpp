@@ -38,7 +38,7 @@ auto main(int argc, char* argv[]) -> int {
     // also, TODO: use getopt here?
     auto args = span(argv, static_cast<size_t>(argc));
     if (argc < 2) {
-        cerr << "Usage: " << args[0] << " <filename>\n";
+        cerr << "Usage: " << args[0] << " <filename> [dot]\n";
         return 1;
     }
 

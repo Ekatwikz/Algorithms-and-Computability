@@ -6,8 +6,8 @@ on:
   release:
     types: [published]
   push:
-    tags:
     branches:
+    - main
 
 env:
   CLANG_TIDY_VERSION: "16.0.4"
@@ -50,10 +50,10 @@ jobs:
           clangtidy: ${{ env.CLANG_TIDY_VERSION }}
 
       - name: Building tests
-        run: make all tests
+        run: make all tests VERBOSE=1
 
       - name: Running Tests
-        run: make run-tests TESTFLAGS="-sv high"
+        run: make run-tests VERBOSE=1 TESTFLAGS="-sv high"
 
       - name: Archive gcc Build Output
         # Once for each OS, and only if on main branch?

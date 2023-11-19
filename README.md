@@ -17,9 +17,15 @@ Initial boilerplate for our AaC groupwork
 ## Build
 - `make` :thumbsup:
 
+- If you prefer to see the guts of the build:  
+`make VERBOSE=1`
+
 ## Tests
 - `make run-tests`  
 If they pass, the CI checks will accept too :thumbsup:  
+
+- Again, if you prefer verbosity, you can do:  
+`make run-tests VERBOSE=1 TESTFLAGS="-sv high"`
 
 ## Lint
 - Run `./lint-helper.sh -c format` and `./lint-helper.sh -c lint`  

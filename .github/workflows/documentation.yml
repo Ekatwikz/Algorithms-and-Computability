@@ -3,7 +3,6 @@ run-name: Generating documentation for ${{ github.actor }}'s ${{ github.event_na
 on:
   workflow_dispatch:
   push:
-    tags:
     branches:
       - main
 concurrency:

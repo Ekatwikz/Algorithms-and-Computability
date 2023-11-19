@@ -45,6 +45,14 @@ class Graph {
     Graph() : vertexCount{0}, vertexAndEdgeCount{0} {}
 
     /**
+     * @brief constructs graph from provided adjacency matrix
+     *
+     * @param adjacencyMatrix is the adjacencyMatrix from which graph will be
+     * constructed
+     */
+    explicit Graph(const std::vector<std::vector<int>>&& adjacencyMatrix);
+
+    /**
      * @brief constructs graph from data in a stream
      *
      * @param graphStream is the stream to be read from
@@ -168,4 +176,14 @@ class Graph {
     [[nodiscard]] auto metricDistanceTo(
         const Graph& rhs,
         AlgorithmAccuracy accuracy = AlgorithmAccuracy::EXACT) const -> size_t;
+
+    /**
+     * @brief Returns modular product of two graphs
+     *
+     * @param rhs is the graph with which the modular
+     * product should be applied
+     *
+     * @return The modular product of the graphs
+     */
+    [[nodiscard]] auto modularProduct(const Graph& rhs) -> Graph;
 };
