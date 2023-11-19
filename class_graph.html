@@ -109,6 +109,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae4c72b8ac4d693c49800a4c7e273654f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#ae4c72b8ac4d693c49800a4c7e273654f">Graph</a> ()</td></tr>
 <tr class="memdesc:ae4c72b8ac4d693c49800a4c7e273654f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="class_graph.html#ae4c72b8ac4d693c49800a4c7e273654f">More...</a><br /></td></tr>
 <tr class="separator:ae4c72b8ac4d693c49800a4c7e273654f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff6daa56595b45d12fe83d56ad31bd69"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#aff6daa56595b45d12fe83d56ad31bd69">Graph</a> (const std::vector&lt; std::vector&lt; int &gt; &gt; &amp;&amp;adjacencyMatrix)</td></tr>
+<tr class="memdesc:aff6daa56595b45d12fe83d56ad31bd69"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructs graph from provided adjacency matrix  <a href="class_graph.html#aff6daa56595b45d12fe83d56ad31bd69">More...</a><br /></td></tr>
+<tr class="separator:aff6daa56595b45d12fe83d56ad31bd69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a181250c124af8f543292385fc2878fcb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a181250c124af8f543292385fc2878fcb">Graph</a> (std::istream &amp;graphStream)</td></tr>
 <tr class="memdesc:a181250c124af8f543292385fc2878fcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructs graph from data in a stream  <a href="class_graph.html#a181250c124af8f543292385fc2878fcb">More...</a><br /></td></tr>
 <tr class="separator:a181250c124af8f543292385fc2878fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,6 +133,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acc93756c1b649190bb03781d2b7aa691"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#acc93756c1b649190bb03781d2b7aa691">metricDistanceTo</a> (const <a class="el" href="class_graph.html">Graph</a> &amp;rhs, <a class="el" href="graph_8hpp.html#a0954a5c4d6c206eddbc6c921e2d71070">AlgorithmAccuracy</a> accuracy=AlgorithmAccuracy::EXACT) const -&gt; size_t</td></tr>
 <tr class="memdesc:acc93756c1b649190bb03781d2b7aa691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns distance to another graph.  <a href="class_graph.html#acc93756c1b649190bb03781d2b7aa691">More...</a><br /></td></tr>
 <tr class="separator:acc93756c1b649190bb03781d2b7aa691"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4f63359371f69aaccbd281ee96f04ec"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#aa4f63359371f69aaccbd281ee96f04ec">modularProduct</a> (const <a class="el" href="class_graph.html">Graph</a> &amp;rhs) -&gt; <a class="el" href="class_graph.html">Graph</a></td></tr>
+<tr class="memdesc:aa4f63359371f69aaccbd281ee96f04ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns modular product of two graphs.  <a href="class_graph.html#aa4f63359371f69aaccbd281ee96f04ec">More...</a><br /></td></tr>
+<tr class="separator:aa4f63359371f69aaccbd281ee96f04ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -150,7 +156,7 @@ Friends</h2></td></tr>
 <div class="textblock"><p >Class that represents a graph as a matrix (vector of vectors) of adjacencies. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae4c72b8ac4d693c49800a4c7e273654f" name="ae4c72b8ac4d693c49800a4c7e273654f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae4c72b8ac4d693c49800a4c7e273654f">&#9670;&#160;</a></span>Graph() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4c72b8ac4d693c49800a4c7e273654f">&#9670;&#160;</a></span>Graph() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,8 +183,42 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="aff6daa56595b45d12fe83d56ad31bd69" name="aff6daa56595b45d12fe83d56ad31bd69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff6daa56595b45d12fe83d56ad31bd69">&#9670;&#160;</a></span>Graph() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Graph::Graph </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::vector&lt; int &gt; &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>adjacencyMatrix</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>constructs graph from provided adjacency matrix </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">adjacencyMatrix</td><td>is the adjacencyMatrix from which graph will be constructed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a181250c124af8f543292385fc2878fcb" name="a181250c124af8f543292385fc2878fcb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a181250c124af8f543292385fc2878fcb">&#9670;&#160;</a></span>Graph() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a181250c124af8f543292385fc2878fcb">&#9670;&#160;</a></span>Graph() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -213,7 +253,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a id="a15096e1bfeb998b97152f35b6b3201bb" name="a15096e1bfeb998b97152f35b6b3201bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15096e1bfeb998b97152f35b6b3201bb">&#9670;&#160;</a></span>Graph() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a15096e1bfeb998b97152f35b6b3201bb">&#9670;&#160;</a></span>Graph() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -406,6 +446,42 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="aa4f63359371f69aaccbd281ee96f04ec" name="aa4f63359371f69aaccbd281ee96f04ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4f63359371f69aaccbd281ee96f04ec">&#9670;&#160;</a></span>modularProduct()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Graph::modularProduct </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_graph.html">Graph</a> &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td> -&gt; <a class="el" href="class_graph.html">Graph</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns modular product of two graphs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>is the graph with which the modular product should be applied</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The modular product of the graphs </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_graph_aa4f63359371f69aaccbd281ee96f04ec_icgraph.png" border="0" usemap="#aclass_graph_aa4f63359371f69aaccbd281ee96f04ec_icgraph" alt=""/></div>
+<map name="aclass_graph_aa4f63359371f69aaccbd281ee96f04ec_icgraph" id="aclass_graph_aa4f63359371f69aaccbd281ee96f04ec_icgraph">
+<area shape="rect" title="Returns modular product of two graphs." alt="" coords="104,5,259,31"/>
+<area shape="rect" href="modular__product_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Computes modular product of two graphs." alt="" coords="5,5,56,31"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a3dc4bfc47771619240533ea5729eae9a" name="a3dc4bfc47771619240533ea5729eae9a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3dc4bfc47771619240533ea5729eae9a">&#9670;&#160;</a></span>operator[]()</h2>
 
@@ -458,7 +534,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="class_graph_a1f7062bac466472f4821f46c0d572de8_icgraph.png" border="0" usemap="#aclass_graph_a1f7062bac466472f4821f46c0d572de8_icgraph" alt=""/></div>
 <map name="aclass_graph_a1f7062bac466472f4821f46c0d572de8_icgraph" id="aclass_graph_a1f7062bac466472f4821f46c0d572de8_icgraph">
 <area shape="rect" title="returns string in DOT language" alt="" coords="104,5,227,31"/>
-<area shape="rect" href="parse__graph_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Graph parser." alt="" coords="5,5,56,31"/>
+<area shape="rect" href="modular__product_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Computes modular product of two graphs." alt="" coords="5,5,56,31"/>
 </map>
 </div>
 
