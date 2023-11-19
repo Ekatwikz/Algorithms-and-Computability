@@ -112,34 +112,39 @@ TEST_CASE("Graph construction, isomorphism and distance sanity checks") {
 
     // interesting note: squareWithOutcast and strangeStar are cospectral mates
 
-    SECTION("Example graphs have sensible sizes") {
-        REQUIRE(nullGraph.getSize() == 0);
-        REQUIRE(pentagon1.getSize() == pentagon2.getSize());
-        REQUIRE(squareWithOutcast.getSize() == strangeStar.getSize());
+    SECTION(
+        "Basic checks, "
+        "also ensuring that the different construction types are the same") {
+        SECTION("Example graphs have sensible sizes") {
+            REQUIRE(nullGraph.getSize() == 0);
+            REQUIRE(pentagon1.getSize() == pentagon2.getSize());
+            REQUIRE(squareWithOutcast.getSize() == strangeStar.getSize());
 
-        REQUIRE(pentagonFromMatrix1.getSize() == pentagonFromMatrix2.getSize());
-        REQUIRE(squareWithOutcastFromMatrix.getSize() ==
-                strangeStarFromMatrix.getSize());
+            REQUIRE(pentagonFromMatrix1.getSize() ==
+                    pentagonFromMatrix2.getSize());
+            REQUIRE(squareWithOutcastFromMatrix.getSize() ==
+                    strangeStarFromMatrix.getSize());
 
-        REQUIRE(pentagon1.getSize() == pentagonFromMatrix1.getSize());
-        REQUIRE(pentagon2.getSize() == pentagonFromMatrix2.getSize());
-        REQUIRE(squareWithOutcast.getSize() ==
-                squareWithOutcastFromMatrix.getSize());
-        REQUIRE(strangeStar.getSize() == strangeStarFromMatrix.getSize());
-    }
+            REQUIRE(pentagon1.getSize() == pentagonFromMatrix1.getSize());
+            REQUIRE(pentagon2.getSize() == pentagonFromMatrix2.getSize());
+            REQUIRE(squareWithOutcast.getSize() ==
+                    squareWithOutcastFromMatrix.getSize());
+            REQUIRE(strangeStar.getSize() == strangeStarFromMatrix.getSize());
+        }
 
-    SECTION("goofypentagon1 and goofypentagon2 are isomorphic") {
-        REQUIRE(pentagon1 == pentagon2);
-        REQUIRE(pentagonFromMatrix1 == pentagonFromMatrix2);
-        REQUIRE(pentagon1 == pentagonFromMatrix1);
-        REQUIRE(pentagon2 == pentagonFromMatrix2);
-    }
+        SECTION("goofypentagon1 and goofypentagon2 are isomorphic") {
+            REQUIRE(pentagon1 == pentagon2);
+            REQUIRE(pentagonFromMatrix1 == pentagonFromMatrix2);
+            REQUIRE(pentagon1 == pentagonFromMatrix1);
+            REQUIRE(pentagon2 == pentagonFromMatrix2);
+        }
 
-    SECTION("square-with-outcast and strange-star are NOT isomorphic") {
-        REQUIRE(squareWithOutcast != strangeStar);
-        REQUIRE(squareWithOutcastFromMatrix != strangeStarFromMatrix);
-        REQUIRE(squareWithOutcast != strangeStarFromMatrix);
-        REQUIRE(squareWithOutcastFromMatrix != strangeStar);
+        SECTION("square-with-outcast and strange-star are NOT isomorphic") {
+            REQUIRE(squareWithOutcast != strangeStar);
+            REQUIRE(squareWithOutcastFromMatrix != strangeStarFromMatrix);
+            REQUIRE(squareWithOutcast != strangeStarFromMatrix);
+            REQUIRE(squareWithOutcastFromMatrix != strangeStar);
+        }
     }
 
     SECTION("pentagon1 and pentagon2 have distance 0") {

@@ -9,7 +9,7 @@
 // NOLINTBEGIN(cppcoreguidelines-avoid-do-while)
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 
-TEST_CASE("Graph construction, isomorphism and distance sanity checks") {
+TEST_CASE("Modular product tests") {
     Graph bidirectTwoGraph;
     Graph onedirectTwoGraph;
     Graph wikiExampleAandB;
