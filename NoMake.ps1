@@ -1,25 +1,47 @@
-# May god forgive whoever invented powershell.
+<#
+.SYNOPSIS
+The walmart version of make
 
+.DESCRIPTION
+Accepts a single parameter, which decides whether to compile, test or clean
+
+.PARAMETER Action
+The action to be performed by the script. Must be one of 'Build', 'Invoke-Tests', or 'Clear-Build'.
+The correspending function will be called
+
+.EXAMPLE
+>  .\NoMake.ps1 -Action Build
+# Compiles ./src into the ./build folder
+
+.EXAMPLE
+>  .\NoMake.ps1 -Action Invoke-Tests
+# Builds and runs the unit tests
+
+.EXAMPLE
+>  .\NoMake.ps1 -Action Clear-Build
+# Clears the programs' and tests' build folders
+#>
 Param(
-        [Parameter(Mandatory = $true)]
-        [ValidateSet('Build', 'Build-Tests', 'Invoke-Tests', 'Clear-Build')]
+        [Parameter(Mandatory=$true, HelpMessage="Action must be provided")]
+        [ValidateSet('Build', 'Invoke-Tests', 'Clear-Build')]
         [string]$Action
      )
 
+$CXX = "g++"
 function NoMake {
+    [CmdletBinding()]
+    param()
+
     Set-Vars
     Show-Vars
 
     Set-PSDebug -Trace 1
     Invoke-Expression "$Action"
+    Set-PSDebug -Trace 0
 }
 
 function Build {
-    New-Item -Force -ItemType Directory $OBJECTDIR
-    foreach ($objectsource in $LIBSOURCES) {
-        $target = Join-Path $OBJECTDIR ($objectsource.BaseName + ".o")
-        Build-Object $objectsource $target
-    }
+    Build-Objects
 
     New-Item -Force -ItemType Directory $OUTPUTDIR
     foreach ($source in $SOURCES) {
@@ -29,11 +51,7 @@ function Build {
 }
 
 function Build-Tests {
-    New-Item -Force -ItemType Directory $OBJECTDIR
-    foreach ($objectsource in $LIBSOURCES) {
-        $target = Join-Path $OBJECTDIR ($objectsource.BaseName + ".o")
-        Build-Object $objectsource $target
-    }
+    Build-Objects
 
     New-Item -Force -ItemType Directory $TESTOBJECTDIR
     foreach ($testobectsource in $TESTLIBSOURCES) {
@@ -45,6 +63,14 @@ function Build-Tests {
     foreach ($testsource in $TESTSOURCES) {
         $target = Join-Path $TESTOUTPUTDIR ($testsource.BaseName + $EXTENSION)
         Build-Program $testsource $target $OBJECTS,$TESTOBJECTS
+    }
+}
+
+function Build-Objects {
+    New-Item -Force -ItemType Directory $OBJECTDIR
+    foreach ($objectsource in $LIBSOURCES) {
+        $target = Join-Path $OBJECTDIR ($objectsource.BaseName + ".o")
+        Build-Object $objectsource $target
     }
 }
 
@@ -71,67 +97,60 @@ function Clear-Build {
 }
 
 function Set-Vars {
-    $global:CXX = "g++"
+    $script:SOURCEDIR = "./src"
+    $script:OUTPUTDIR = "./build"
+    $script:OBJECTDIR = "$OUTPUTDIR/obj"
+    $script:INCLUDEDIR = "./include"
+    $script:LIBDIR = "./lib"
 
-    $global:SOURCEDIR = "./src"
-    $global:OUTPUTDIR = "./build"
-    $global:OBJECTDIR = "$OUTPUTDIR/obj"
-    $global:INCLUDEDIR = "./include"
-    $global:LIBDIR = "./lib"
+    $script:TESTSOURCEDIR = "./test"
+    $script:TESTOUTPUTDIR = "./test/build"
+    $script:TESTOBJECTDIR = "$TESTOUTPUTDIR/obj"
+    $script:TESTLIBDIR = "./test/catch2"
 
-    $global:TESTSOURCEDIR = "./test"
-    $global:TESTOUTPUTDIR = "./test/build"
-    $global:TESTOBJECTDIR = "$TESTOUTPUTDIR/obj"
-    $global:TESTLIBDIR = "./test/catch2"
+    $script:WARNINGS = "all", "extra", "pedantic"
 
-    $global:WARNINGS = "all", "extra", "pedantic"
+    $script:DEBUGFLAGS = "-g3", "-O0"
 
-    $global:DEBUGFLAGS = "-g3", "-O0"
+    $script:FFLAGS = "no-omit-frame-pointer"
+    $script:STANDARD = "c++20"
 
-    $global:FFLAGS = "no-omit-frame-pointer"
-    $global:STANDARD = "c++20"
+    $script:EXTENSION = ".exe"
+    $script:CXXFLAGS += "-static-libstdc++"
+    $script:CXXFLAGS += " "
 
-    $global:EXTENSION = ".exe"
-    $global:CXXFLAGS += "-static-libstdc++"
-    $global:CXXFLAGS += " "
+    $script:SOURCES = Get-ChildItem -Path $SOURCEDIR -Filter "*.cpp"
+    $script:LIBSOURCES = Get-ChildItem -Path $LIBDIR -Filter "*.cpp"
+    $script:OBJECTS = $LIBSOURCES | ForEach-Object { Join-Path $OBJECTDIR ($_.BaseName + ".o") }
 
-    $global:SOURCES = Get-ChildItem -Path $SOURCEDIR -Filter "*.cpp"
-    $global:DEFAULTTARGETS = $SOURCES | ForEach-Object { Join-Path $OUTPUTDIR ($_.BaseName + $EXTENSION) }
-    $global:LIBSOURCES = Get-ChildItem -Path $LIBDIR -Filter "*.cpp"
-    $global:LIBHEADERS = Get-ChildItem -Path $INCLUDEDIR -Filter "*.hpp"
-    $global:OBJECTS = $LIBSOURCES | ForEach-Object { Join-Path $OBJECTDIR ($_.BaseName + ".o") }
+    $script:TESTSOURCES = Get-ChildItem -Path $TESTSOURCEDIR -Filter "*.cpp"
+    $script:TESTTARGETS = $TESTSOURCES | ForEach-Object { Join-Path $TESTOUTPUTDIR ($_.BaseName + $EXTENSION) }
+    $script:TESTLIBSOURCES = Get-ChildItem -Path $TESTLIBDIR -Filter "*.cpp"
+    $script:TESTOBJECTS = $TESTLIBSOURCES | ForEach-Object { Join-Path $TESTOBJECTDIR ($_.BaseName + ".o") }
 
-    $global:TESTSOURCES = Get-ChildItem -Path $TESTSOURCEDIR -Filter "*.cpp"
-    $global:TESTTARGETS = $TESTSOURCES | ForEach-Object { Join-Path $TESTOUTPUTDIR ($_.BaseName + $EXTENSION) }
-    $global:TESTLIBSOURCES = Get-ChildItem -Path $TESTLIBDIR -Filter "*.cpp"
-    $global:TESTLIBHEADERS = Get-ChildItem -Path $TESTLIBDIR -Filter "*.hpp"
-    $global:TESTOBJECTS = $TESTLIBSOURCES | ForEach-Object { Join-Path $TESTOBJECTDIR ($_.BaseName + ".o") }
-
-    $global:CXXFLAGS += "-I$INCLUDEDIR", "-I$TESTLIBDIR"
-    $global:CXXFLAGS += " "
-    $global:CXXFLAGS += $WARNINGS | ForEach-Object { "-W$_" }
-    $global:CXXFLAGS += " "
-    $global:CXXFLAGS += $FFLAGS | ForEach-Object { "-f$_" }
-    $global:CXXFLAGS += " "
-    $global:CXXFLAGS += $DEBUGFLAGS
-    $global:CXXFLAGS += " "
-    $global:CXXFLAGS += "-std=$STANDARD"
-    $global:CXXFLAGS += " "
+    # TODO: write this in one line lol
+    $script:CXXFLAGS += "-I$INCLUDEDIR", "-I$TESTLIBDIR"
+    $script:CXXFLAGS += " "
+    $script:CXXFLAGS += $WARNINGS | ForEach-Object { "-W$_" }
+    $script:CXXFLAGS += " "
+    $script:CXXFLAGS += $FFLAGS | ForEach-Object { "-f$_" }
+    $script:CXXFLAGS += " "
+    $script:CXXFLAGS += $DEBUGFLAGS
+    $script:CXXFLAGS += " "
+    $script:CXXFLAGS += "-std=$STANDARD"
+    $script:CXXFLAGS += " "
 }
 
 function Show-Vars {
     Write-Host "CXXFLAGS: $CXXFLAGS"
     Write-Host "SOURCES: $SOURCES"
-    Write-Host "DEFAULTTARGETS: $DEFAULTTARGETS"
     Write-Host "LIBSOURCES: $LIBSOURCES"
-    Write-Host "LIBHEADERS: $LIBHEADERS"
     Write-Host "OBJECTS: $OBJECTS"
     Write-Host "TESTSOURCES: $TESTSOURCES"
     Write-Host "TESTTARGETS: $TESTTARGETS"
     Write-Host "TESTLIBSOURCES: $TESTLIBSOURCES"
-    Write-Host "TESTLIBHEADERS: $TESTLIBHEADERS"
     Write-Host "TESTOBJECTS: $TESTOBJECTS"
-    Write-Host "`n`n"
+    Write-Host "`n"
 }
 
 NoMake
