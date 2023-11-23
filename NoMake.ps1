@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-The walmart version of make
+Walmart version of make
 
 .DESCRIPTION
 Accepts a single parameter, which decides whether to compile, test or clean
@@ -31,10 +31,7 @@ $CXX = "g++"
 function NoMake {
     [CmdletBinding()]
     param()
-
     Set-Vars
-    Show-Vars
-
     Set-PSDebug -Trace 1
     Invoke-Expression "$Action"
     Set-PSDebug -Trace 0
@@ -46,7 +43,7 @@ function Build {
     New-Item -Force -ItemType Directory $OUTPUTDIR
     foreach ($source in $SOURCES) {
         $target = Join-Path $OUTPUTDIR ($source.BaseName + $EXTENSION)
-        Build-Program $source $target $OBJECTS
+        Build-Program $source.FullName $target $OBJECTS
     }
 }
 
@@ -56,13 +53,13 @@ function Build-Tests {
     New-Item -Force -ItemType Directory $TESTOBJECTDIR
     foreach ($testobectsource in $TESTLIBSOURCES) {
         $target = Join-Path $TESTOBJECTDIR ($testobectsource.BaseName + ".o")
-        Build-Object $testobectsource $target
+        Build-Object $testobectsource.FullName $target
     }
 
     New-Item -Force -ItemType Directory $TESTOUTPUTDIR
     foreach ($testsource in $TESTSOURCES) {
         $target = Join-Path $TESTOUTPUTDIR ($testsource.BaseName + $EXTENSION)
-        Build-Program $testsource $target $OBJECTS,$TESTOBJECTS
+        Build-Program $testsource.FullName $target $OBJECTS,$TESTOBJECTS
     }
 }
 
@@ -70,7 +67,7 @@ function Build-Objects {
     New-Item -Force -ItemType Directory $OBJECTDIR
     foreach ($objectsource in $LIBSOURCES) {
         $target = Join-Path $OBJECTDIR ($objectsource.BaseName + ".o")
-        Build-Object $objectsource $target
+        Build-Object $objectsource.FullName $target
     }
 }
 
@@ -109,15 +106,10 @@ function Set-Vars {
     $script:TESTLIBDIR = "./test/catch2"
 
     $script:WARNINGS = "all", "extra", "pedantic"
-
     $script:DEBUGFLAGS = "-g3", "-O0"
-
     $script:FFLAGS = "no-omit-frame-pointer"
     $script:STANDARD = "c++20"
-
     $script:EXTENSION = ".exe"
-    $script:CXXFLAGS += "-static-libstdc++"
-    $script:CXXFLAGS += " "
 
     $script:SOURCES = Get-ChildItem -Path $SOURCEDIR -Filter "*.cpp"
     $script:LIBSOURCES = Get-ChildItem -Path $LIBDIR -Filter "*.cpp"
@@ -129,8 +121,8 @@ function Set-Vars {
     $script:TESTOBJECTS = $TESTLIBSOURCES | ForEach-Object { Join-Path $TESTOBJECTDIR ($_.BaseName + ".o") }
 
     # TODO: write this in one line lol
-    $script:CXXFLAGS += "-I$INCLUDEDIR", "-I$TESTLIBDIR"
-    $script:CXXFLAGS += " "
+    $script:CXXFLAGS += "-static-libstdc++ "
+    $script:CXXFLAGS += "-I$INCLUDEDIR", "-I$TESTLIBDIR "
     $script:CXXFLAGS += $WARNINGS | ForEach-Object { "-W$_" }
     $script:CXXFLAGS += " "
     $script:CXXFLAGS += $FFLAGS | ForEach-Object { "-f$_" }
@@ -138,19 +130,6 @@ function Set-Vars {
     $script:CXXFLAGS += $DEBUGFLAGS
     $script:CXXFLAGS += " "
     $script:CXXFLAGS += "-std=$STANDARD"
-    $script:CXXFLAGS += " "
-}
-
-function Show-Vars {
-    Write-Host "CXXFLAGS: $CXXFLAGS"
-    Write-Host "SOURCES: $SOURCES"
-    Write-Host "LIBSOURCES: $LIBSOURCES"
-    Write-Host "OBJECTS: $OBJECTS"
-    Write-Host "TESTSOURCES: $TESTSOURCES"
-    Write-Host "TESTTARGETS: $TESTTARGETS"
-    Write-Host "TESTLIBSOURCES: $TESTLIBSOURCES"
-    Write-Host "TESTOBJECTS: $TESTOBJECTS"
-    Write-Host "`n"
 }
 
 NoMake
