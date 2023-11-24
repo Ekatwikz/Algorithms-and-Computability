@@ -213,33 +213,40 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     size_t rhsVertexCount = rhs.vertexCount;
     size_t resultGraphVertexCount = vertexCount * rhsVertexCount;
     size_t minVertexCount = std::min(vertexCount, rhsVertexCount);
+    size_t maxVertexCount = std::max(vertexCount, rhsVertexCount);
 
     vector<vector<int>> adjacencyMatrixOfResultGraph(
         resultGraphVertexCount, vector<int>(resultGraphVertexCount));
 
-    for (size_t lhsRow = 0; lhsRow < vertexCount; lhsRow++) {
-        for (size_t lhsCol = 0; lhsCol < vertexCount; lhsCol++) {
-            for (size_t rhsRow = 0; rhsRow < rhsVertexCount; rhsRow++) {
-                for (size_t rhsCol = 0; rhsCol < rhsVertexCount; rhsCol++) {
-                    if (rhsRow == rhsCol || lhsRow == lhsCol) {
-                        continue;
-                    }
+    for (size_t row = 0; row < resultGraphVertexCount; row++) {
+        for (size_t col = 0; col < resultGraphVertexCount; col++) {
+            size_t lhsRow = 0;
+            size_t lhsCol = 0;
+            size_t rhsRow = 0;
+            size_t rhsCol = 0;
 
-                    if (adjacencyMatrix[lhsRow][lhsCol] > 0 &&
-                        rhs[rhsRow][rhsCol] > 0) {
-                        adjacencyMatrixOfResultGraph
-                            [lhsRow * minVertexCount + rhsRow]
-                            [lhsCol * minVertexCount + rhsCol] =
-                                std::min(adjacencyMatrix[lhsRow][lhsCol],
-                                         rhs[rhsRow][rhsCol]);
-                    } else if (adjacencyMatrix[lhsRow][lhsCol] == 0 &&
-                               rhs[rhsRow][rhsCol] == 0) {
-                        adjacencyMatrixOfResultGraph[lhsRow * minVertexCount +
-                                                     rhsRow]
-                                                    [lhsCol * minVertexCount +
-                                                     rhsCol] = 1;
-                    }
-                }
+            if (vertexCount == minVertexCount) {
+                lhsRow = row / maxVertexCount;
+                lhsCol = col / maxVertexCount;
+                rhsRow = row % maxVertexCount;
+                rhsCol = col % maxVertexCount;
+            } else {
+                lhsRow = row / minVertexCount;
+                lhsCol = col / minVertexCount;
+                rhsRow = row % minVertexCount;
+                rhsCol = col % minVertexCount;
+            }
+
+            if (row == col || rhsRow == rhsCol || lhsRow == lhsCol) {
+                continue;
+            }
+
+            adjacencyMatrixOfResultGraph[row][col] =
+                std::min(adjacencyMatrix[lhsRow][lhsCol], rhs[rhsRow][rhsCol]);
+
+            if (adjacencyMatrix[lhsRow][lhsCol] == 0 &&
+                rhs[rhsRow][rhsCol] == 0) {
+                adjacencyMatrixOfResultGraph[row][col] = 1;
             }
         }
     }
