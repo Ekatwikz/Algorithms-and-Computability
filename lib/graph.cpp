@@ -294,7 +294,8 @@ auto Graph::maxCliqueHelper(size_t currentVertex,
 
 auto Graph::modifiedMaxCliqueHelper(size_t currentVertex,
                                     std::vector<size_t>& currentClique,
-                                    std::vector<size_t>& maxClique) const -> void {
+                                    std::vector<size_t>& maxClique) const
+    -> void {
     if (currentClique.size() > maxClique.size()) {
         maxClique = std::vector<size_t>(currentClique);
     }

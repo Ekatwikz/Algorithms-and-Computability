@@ -226,7 +226,8 @@ class Graph {
      * @param currentClique Clique to check.
      */
 
-    auto maxCliqueHelper(size_t currentVertex, std::vector<size_t>& currentClique,
+    auto maxCliqueHelper(size_t currentVertex,
+                         std::vector<size_t>& currentClique,
                          std::vector<size_t>& maxClique) const -> void;
     /**
      * @brief Finds the maximum clique of the graph using Bron-Kerbosch
