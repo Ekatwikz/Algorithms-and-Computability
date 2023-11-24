@@ -46,6 +46,14 @@ class Graph {
     Graph() : vertexCount{0}, vertexAndEdgeCount{0} {}
 
     /**
+     * @brief constructs graph from provided adjacency matrix
+     *
+     * @param adjacencyMatrix is the adjacencyMatrix from which graph will be
+     * constructed
+     */
+    explicit Graph(const std::vector<std::vector<int>>&& adjacencyMatrix);
+
+    /**
      * @brief constructs graph from data in a stream
      *
      * @param graphStream is the stream to be read from
@@ -177,6 +185,7 @@ class Graph {
         AlgorithmAccuracy accuracy = AlgorithmAccuracy::EXACT) const -> size_t;
 
     /**
+<<<<<<< HEAD
      * @brief Checks if the given vertex is adjacent to all vertices in the
      * given clique.
      *
@@ -237,4 +246,14 @@ class Graph {
      * @return Vector of vertices that form the maximum clique.
      */
     [[nodiscard]] auto modifiedMaxClique() const -> std::vector<int>;
+=======
+     * @brief Returns modular product of two graphs
+     *
+     * @param rhs is the graph with which the modular
+     * product should be applied
+     *
+     * @return The modular product of the graphs
+     */
+    [[nodiscard]] auto modularProduct(const Graph& rhs) -> Graph;
+>>>>>>> 03c98c93aff19929856d5dc9326b205d7a4c8d52
 };

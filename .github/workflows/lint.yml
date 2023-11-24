@@ -8,6 +8,7 @@ on:
   push:
     tags:
     branches:
+    - main
 
 env:
   # Might be too new tho lol

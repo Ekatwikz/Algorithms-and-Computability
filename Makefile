@@ -21,7 +21,7 @@ STANDARD:=c++20
 
 ifeq ($(OS), Windows_NT)
 	EXTENSION:=.exe
-	CFLAGS+=-static-libstdc++
+	CXXFLAGS+=-static-libstdc++
 else
 	# Gucci stuff onli on linix
 	FFLAGS+=sanitize=address,undefined
@@ -41,37 +41,41 @@ TESTLIBSOURCES:=$(wildcard $(TESTLIBDIR)/*.cpp)
 TESTLIBHEADERS:=$(wildcard $(TESTLIBDIR)/*.hpp)
 TESTOBJECTS:=$(patsubst $(TESTLIBDIR)/%.cpp, $(TESTOBJECTDIR)/%.o, $(TESTLIBSOURCES))
 
-CFLAGS+=-I$(INCLUDEDIR) -I$(TESTLIBDIR) $(WARNINGS:%=-W%) $(FFLAGS:%=-f%) $(DEBUGFLAGS) -std=$(STANDARD)
+CXXFLAGS+=-I$(INCLUDEDIR) -I$(TESTLIBDIR) $(WARNINGS:%=-W%) $(FFLAGS:%=-f%) $(DEBUGFLAGS) -std=$(STANDARD)
 
 .PHONY: all clean docs docs-clean tests run-tests
 .SECONDARY: $(TESTOBJECTS)
 .DELETE_ON_ERROR:
 
+ifndef VERBOSE
+.SILENT:
+endif
+
 $(OBJECTDIR)/%.o: $(LIBDIR)/%.cpp $(LIBHEADERS)
-	@mkdir -pv $(OBJECTDIR)
-	@printf "=== %s -> %s ===\n" "$<" "$@"
-	@$(CXX) $(CFLAGS) -c $< -o $@
+	mkdir -pv $(OBJECTDIR)
+	printf "=== %s -> %s ===\n" "$<" "$@"
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 all: $(DEFAULTTARGETS)
 $(OUTPUTDIR)/%$(EXTENSION): $(SOURCEDIR)/%.cpp $(OBJECTS) $(LIBHEADERS)
-	@mkdir -pv $(OUTPUTDIR)
-	@printf "=== %s -> %s ===\n" "$<" "$@"
-	@$(CXX) $(CFLAGS) $(OBJECTS) $< -o $@
+	mkdir -pv $(OUTPUTDIR)
+	printf "=== %s -> %s ===\n" "$<" "$@"
+	$(CXX) $(CXXFLAGS) $(OBJECTS) $< -o $@
 
 $(TESTOBJECTDIR)/%.o: $(TESTLIBDIR)/%.cpp $(TESTLIBHEADERS)
-	@mkdir -pv $(TESTOBJECTDIR)
-	@printf "=== %s -> %s ===\n" "$<" "$@"
-	@$(CXX) $(CFLAGS) -c $< -o $@
+	mkdir -pv $(TESTOBJECTDIR)
+	printf "=== %s -> %s ===\n" "$<" "$@"
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 tests: $(TESTTARGETS)
 $(TESTOUTPUTDIR)/%$(EXTENSION): $(TESTSOURCEDIR)/%.cpp $(OBJECTS) $(TESTOBJECTS)
-	@mkdir -pv $(TESTOUTPUTDIR)
-	@printf "=== %s -> %s ===\n" "$<" "$@"
-	@$(CXX) $(CFLAGS) $(OBJECTS) $(TESTOBJECTS) $< -o $@
+	mkdir -pv $(TESTOUTPUTDIR)
+	printf "=== %s -> %s ===\n" "$<" "$@"
+	$(CXX) $(CXXFLAGS) $(OBJECTS) $(TESTOBJECTS) $< -o $@
 
 # slightly goofy
 run-tests: tests
-	@RESULT=0 ; \
+	RESULT=0 ; \
 	for test in $(TESTTARGETS) ; do \
 		printf "===\n\033[0;30;46mTESTING\033[0m %s\n===\n\n" "$$test" ; \
 		command ./$$test $(TESTFLAGS) ; \
@@ -80,14 +84,14 @@ run-tests: tests
 	exit $$RESULT
 
 docs:
-	@doxygen
-	@make -C $(DOCSDIR)/latex
-	@printf "\n\033[0;30;42mOKAY!\033[0m\n"
+	doxygen
+	make -C $(DOCSDIR)/latex
+	printf "\n\033[0;30;42mOKAY!\033[0m\n"
 
 # nukes are simpler than surgeries:
 clean:
-	@rm -rfv $(OUTPUTDIR) $(TESTOUTPUTDIR)
+	rm -rfv $(OUTPUTDIR) $(TESTOUTPUTDIR)
 
 docs-clean:
-	@rm -rfv $(DOCSDIR)
+	rm -rfv $(DOCSDIR)
 

@@ -19,6 +19,17 @@ using std::string;
 using std::swap;
 using std::vector;
 
+Graph::Graph(const std::vector<std::vector<int>>&& adjacencyMatrix)
+    : vertexCount{adjacencyMatrix.size()},
+      vertexAndEdgeCount{adjacencyMatrix.size()},
+      adjacencyMatrix{adjacencyMatrix} {
+    for (size_t i = 0; i < vertexCount; ++i) {
+        for (size_t j = 0; j < vertexCount; ++j) {
+            vertexAndEdgeCount += adjacencyMatrix[i][j];
+        }
+    }
+}
+
 Graph::Graph(std::istream& graphStream) : Graph{} {
     // Read the first line to get the number of rows/columns
     if (!(graphStream >> vertexCount)) {
@@ -198,6 +209,7 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
                                        : approxIsomorphicTo(rhs));
 }
 
+<<<<<<< HEAD
 [[nodiscard]] auto Graph::isAdjacentToAllNodesInClique(
     int vertex, std::vector<int>& currentClique) const -> bool {
     for (const auto& cliqueVertex : currentClique) {
@@ -271,4 +283,42 @@ auto Graph::modifiedMaxCliqueHelper(int currentVertex,
     std::vector<int> maxClique;
     maxCliqueHelper(0, currentClique, maxClique);
     return maxClique;
+=======
+[[nodiscard]] auto Graph::modularProduct(const Graph& rhs) -> Graph {
+    size_t rhsVertexCount = rhs.vertexCount;
+    size_t resultGraphVertexCount = vertexCount * rhsVertexCount;
+    size_t minVertexCount = std::min(vertexCount, rhsVertexCount);
+
+    vector<vector<int>> adjacencyMatrixOfResultGraph(
+        resultGraphVertexCount, vector<int>(resultGraphVertexCount));
+
+    for (size_t lhsRow = 0; lhsRow < vertexCount; lhsRow++) {
+        for (size_t lhsCol = 0; lhsCol < vertexCount; lhsCol++) {
+            for (size_t rhsRow = 0; rhsRow < rhsVertexCount; rhsRow++) {
+                for (size_t rhsCol = 0; rhsCol < rhsVertexCount; rhsCol++) {
+                    if (rhsRow == rhsCol || lhsRow == lhsCol) {
+                        continue;
+                    }
+
+                    if (adjacencyMatrix[lhsRow][lhsCol] > 0 &&
+                        rhs[rhsRow][rhsCol] > 0) {
+                        adjacencyMatrixOfResultGraph
+                            [lhsRow * minVertexCount + rhsRow]
+                            [lhsCol * minVertexCount + rhsCol] =
+                                std::min(adjacencyMatrix[lhsRow][lhsCol],
+                                         rhs[rhsRow][rhsCol]);
+                    } else if (adjacencyMatrix[lhsRow][lhsCol] == 0 &&
+                               rhs[rhsRow][rhsCol] == 0) {
+                        adjacencyMatrixOfResultGraph[lhsRow * minVertexCount +
+                                                     rhsRow]
+                                                    [lhsCol * minVertexCount +
+                                                     rhsCol] = 1;
+                    }
+                }
+            }
+        }
+    }
+
+    return Graph(std::move(adjacencyMatrixOfResultGraph));
+>>>>>>> 03c98c93aff19929856d5dc9326b205d7a4c8d52
 }
