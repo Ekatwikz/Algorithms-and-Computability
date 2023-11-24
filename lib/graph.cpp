@@ -209,7 +209,6 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
                                        : approxIsomorphicTo(rhs));
 }
 
-<<<<<<< HEAD
 [[nodiscard]] auto Graph::modularProduct(const Graph& rhs) -> Graph {
     size_t rhsVertexCount = rhs.vertexCount;
     size_t resultGraphVertexCount = vertexCount * rhsVertexCount;
@@ -250,48 +249,20 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
 
 [[nodiscard]] auto Graph::isAdjacentToAllNodesInClique(size_t vertex,
                                          std::vector<int>& currentClique) const -> bool {
-    for (size_t i = 0; i < currentClique.size(); ++i) {
-        if (adjacencyMatrix[vertex][currentClique[i]] == 0 ||
-            adjacencyMatrix[currentClique[i]][vertex] == 0) {
-=======
-[[nodiscard]] auto Graph::isAdjacentToAllNodesInClique(
-    int vertex, std::vector<int>& currentClique) const -> bool {
-    for (const auto& cliqueVertex : currentClique) {
-        if (adjacencyMatrix[vertex][cliqueVertex] == 0 ||
-            adjacencyMatrix[cliqueVertex][vertex] == 0) {
->>>>>>> Fix lint errors
-            return false;
-        }
-    }
-    return true;
+    return std::all_of(currentClique.begin(), currentClique.end(), [&](int cliqueVertex){
+        return adjacencyMatrix[vertex][cliqueVertex] > 0 && adjacencyMatrix[cliqueVertex][vertex] > 0;
+    });
 }
 
-<<<<<<< HEAD
 [[nodiscard]] auto Graph::hasSomeEdgeToAllNodesInClique(size_t vertex,
                                          std::vector<int>& currentClique) const -> bool {
-    for (size_t i = 0; i < currentClique.size(); ++i) {
-        if (adjacencyMatrix[vertex][currentClique[i]] == 0 &&
-            adjacencyMatrix[currentClique[i]][vertex] == 0) {
-=======
-[[nodiscard]] auto Graph::hasSomeEdgeToAllNodesInClique(
-    int vertex, std::vector<int>& currentClique) const -> bool {
-    for (const auto& cliqueVertex : currentClique) {
-        if (adjacencyMatrix[vertex][cliqueVertex] == 0 &&
-            adjacencyMatrix[cliqueVertex][vertex] == 0) {
->>>>>>> Fix lint errors
-            return false;
-        }
-    }
-    return true;
+    return std::all_of(currentClique.begin(), currentClique.end(), [&](int cliqueVertex){
+        return adjacencyMatrix[vertex][cliqueVertex] > 0 || adjacencyMatrix[cliqueVertex][vertex] > 0;
+    });
 }
 
-<<<<<<< HEAD
 auto Graph::maxCliqueHelper(size_t currentVertex, std::vector<int>& currentClique,
                             std::vector<int>& maxClique) const -> void{
-=======
-auto Graph::maxCliqueHelper(int currentVertex, std::vector<int>& currentClique,
-                            std::vector<int>& maxClique) const -> void {
->>>>>>> Fix lint errors
     if (currentClique.size() > maxClique.size()) {
         maxClique = vector<int>(currentClique);
     }
@@ -316,11 +287,7 @@ auto Graph::maxCliqueHelper(int currentVertex, std::vector<int>& currentClique,
     return maxClique;
 }
 
-<<<<<<< HEAD
 auto Graph::modifiedMaxCliqueHelper(size_t currentVertex,
-=======
-auto Graph::modifiedMaxCliqueHelper(int currentVertex,
->>>>>>> Fix lint errors
                                     std::vector<int>& currentClique,
                                     std::vector<int>& maxClique) const -> void {
     if (currentClique.size() > maxClique.size()) {
@@ -343,6 +310,6 @@ auto Graph::modifiedMaxCliqueHelper(int currentVertex,
 [[nodiscard]] auto Graph::modifiedMaxClique() const -> std::vector<int> {
     std::vector<int> currentClique;
     std::vector<int> maxClique;
-    maxCliqueHelper(0, currentClique, maxClique);
+    modifiedMaxCliqueHelper(0, currentClique, maxClique);
     return maxClique;
 }

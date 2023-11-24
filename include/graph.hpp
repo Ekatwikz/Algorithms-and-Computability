@@ -204,14 +204,8 @@ class Graph {
      * @return True if the vertex is adjacent to all vertices in the clique,
      * false otherwise.
      */
-<<<<<<< HEAD
-    [[nodiscard]] auto isAdjacentToAllNodesInClique(size_t vertex,
-                                      std::vector<int>& currentClique) const -> bool;
-=======
     [[nodiscard]] auto isAdjacentToAllNodesInClique(
-        int vertex, std::vector<int>& currentClique) const -> bool;
-
->>>>>>> Fix lint errors
+        size_t vertex, std::vector<int>& currentClique) const -> bool;
     /**
      * @brief Checks if the given vertex has one sided edge to all vertices in
      * the given clique.
@@ -222,14 +216,8 @@ class Graph {
      * @return True if the vertex has some edge to all vertices in the clique,
      * false otherwise.
      */
-<<<<<<< HEAD
-    [[nodiscard]] auto hasSomeEdgeToAllNodesInClique(size_t vertex,
-                                       std::vector<int>& currentClique) const
-        -> bool;
-=======
     [[nodiscard]] auto hasSomeEdgeToAllNodesInClique(
-        int vertex, std::vector<int>& currentClique) const -> bool;
->>>>>>> Fix lint errors
+        size_t vertex, std::vector<int>& currentClique) const -> bool;
 
     /**
      * @brief Helper for maxClique, used for recursion.
@@ -238,12 +226,8 @@ class Graph {
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
      */
-<<<<<<< HEAD
 
     auto maxCliqueHelper(size_t currentVertex, std::vector<int>& currentClique,
-=======
-    auto maxCliqueHelper(int currentVertex, std::vector<int>& currentClique,
->>>>>>> Fix lint errors
                          std::vector<int>& maxClique) const -> void;
     /**
      * @brief Finds the maximum clique of the graph using Bron-Kerbosch
@@ -260,11 +244,7 @@ class Graph {
      * @param vertex Vertex to check.
      * @param currentClique Clique to check.
      */
-<<<<<<< HEAD
     auto modifiedMaxCliqueHelper(size_t currentVertex,
-=======
-    auto modifiedMaxCliqueHelper(int currentVertex,
->>>>>>> Fix lint errors
                                  std::vector<int>& currentClique,
                                  std::vector<int>& maxClique) const -> void;
 
