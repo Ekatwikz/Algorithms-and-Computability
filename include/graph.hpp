@@ -3,6 +3,7 @@
  * @brief Graph representation definitions
  */
 #include <fstream>
+#include <functional>
 #include <vector>
 
 /**
@@ -89,6 +90,12 @@ class Graph {
      */
     [[nodiscard]] static auto fromFilename(const std::string& filename)
         -> Graph;
+
+    /**
+     * @brief Return vertex count.
+     * @return Number of vertices in the graph.
+     */
+    [[nodiscard]] auto getVertexCount() const -> size_t { return vertexCount; }
 
     /**
      * @brief returns string in DOT language
@@ -186,4 +193,66 @@ class Graph {
      * @return The modular product of the graphs
      */
     [[nodiscard]] auto modularProduct(const Graph& rhs) -> Graph;
+
+    /**
+     * @brief Checks if the given vertex is adjacent to all vertices in the
+     * given clique.
+     *
+     * @param vertex Vertex to check.
+     * @param currentClique Clique to check.
+     *
+     * @return True if the vertex is adjacent to all vertices in the clique,
+     * false otherwise.
+     */
+    [[nodiscard]] auto isAdjacentToAllNodesInClique(
+        int vertex, std::vector<int>& currentClique) const -> bool;
+
+    /**
+     * @brief Checks if the given vertex has one sided edge to all vertices in
+     * the given clique.
+     *
+     * @param vertex Vertex to check.
+     * @param currentClique Clique to check.
+     *
+     * @return True if the vertex has some edge to all vertices in the clique,
+     * false otherwise.
+     */
+    [[nodiscard]] auto hasSomeEdgeToAllNodesInClique(
+        int vertex, std::vector<int>& currentClique) const -> bool;
+
+    /**
+     * @brief Helper for maxClique, used for recursion.
+     *
+     * @param currentVertex Current vertex to check.
+     * @param vertex Vertex to check.
+     * @param currentClique Clique to check.
+     */
+    auto maxCliqueHelper(int currentVertex, std::vector<int>& currentClique,
+                         std::vector<int>& maxClique) const -> void;
+    /**
+     * @brief Finds the maximum clique of the graph using Bron-Kerbosch
+     * algorithm.
+     *
+     * @return Vector of vertices that form the maximum clique.
+     */
+    [[nodiscard]] auto maxClique() const -> std::vector<int>;
+
+    /**
+     * @brief Helper for modifiedMaxClique, used for recursion.
+     *
+     * @param currentVertex Current vertex to check.
+     * @param vertex Vertex to check.
+     * @param currentClique Clique to check.
+     */
+    auto modifiedMaxCliqueHelper(int currentVertex,
+                                 std::vector<int>& currentClique,
+                                 std::vector<int>& maxClique) const -> void;
+
+    /**
+     * @brief modidfied max clique algorithm for finding maximum induced
+     * subgraphs.
+     *
+     * @return Vector of vertices that form the maximum clique.
+     */
+    [[nodiscard]] auto modifiedMaxClique() const -> std::vector<int>;
 };
