@@ -328,3 +328,40 @@ auto Graph::modifiedMaxCliqueHelper(int currentVertex,
     maxCliqueHelper(0, currentClique, maxClique);
     return maxClique;
 }
+
+[[nodiscard]] auto Graph::maxSubgraph(const Graph& rhs) -> Graph {
+    Graph modProd = this->modularProduct(rhs);
+    std::vector<int> maxClique = modProd.modifiedMaxClique();
+    size_t maxCliqueSize = maxClique.size();
+
+    std::vector<std::vector<int>> maxSubgraphAdjacencyMatrix(
+        maxCliqueSize, std::vector<int>(maxCliqueSize));
+
+    for (size_t row = 0; row < maxCliqueSize; row++) {
+        for (size_t col = 0; col < maxCliqueSize; col++) {
+            maxSubgraphAdjacencyMatrix[row][col] =
+                modProd[maxClique[row]][maxClique[col]];
+        }
+    }
+
+    // tweeks for isolated vertices
+    int divisor = static_cast<int>(
+        vertexCount == std::min(vertexCount, rhs.getVertexCount())
+            ? rhs.getVertexCount()
+            : vertexCount);
+    divisor = std::max(divisor, 1);
+
+    for (size_t i = 0; i < maxCliqueSize; i++) {
+        maxClique[i] /= divisor;
+    }
+
+    for (size_t row = 0; row < maxCliqueSize; row++) {
+        for (size_t col = 0; col < maxCliqueSize; col++) {
+            maxSubgraphAdjacencyMatrix[row][col] =
+                std::min(adjacencyMatrix[maxClique[row]][maxClique[col]],
+                         maxSubgraphAdjacencyMatrix[row][col]);
+        }
+    }
+
+    return Graph(std::move(maxSubgraphAdjacencyMatrix));
+}
