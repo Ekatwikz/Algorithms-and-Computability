@@ -247,24 +247,29 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     return Graph(std::move(adjacencyMatrixOfResultGraph));
 }
 
-[[nodiscard]] auto Graph::isAdjacentToAllNodesInClique(size_t vertex,
-                                         std::vector<int>& currentClique) const -> bool {
-    return std::all_of(currentClique.begin(), currentClique.end(), [&](int cliqueVertex){
-        return adjacencyMatrix[vertex][cliqueVertex] > 0 && adjacencyMatrix[cliqueVertex][vertex] > 0;
-    });
+[[nodiscard]] auto Graph::isAdjacentToAllNodesInClique(
+    size_t vertex, std::vector<size_t>& currentClique) const -> bool {
+    return std::all_of(currentClique.begin(), currentClique.end(),
+                       [&](int cliqueVertex) {
+                           return adjacencyMatrix[vertex][cliqueVertex] > 0 &&
+                                  adjacencyMatrix[cliqueVertex][vertex] > 0;
+                       });
 }
 
-[[nodiscard]] auto Graph::hasSomeEdgeToAllNodesInClique(size_t vertex,
-                                         std::vector<int>& currentClique) const -> bool {
-    return std::all_of(currentClique.begin(), currentClique.end(), [&](int cliqueVertex){
-        return adjacencyMatrix[vertex][cliqueVertex] > 0 || adjacencyMatrix[cliqueVertex][vertex] > 0;
-    });
+[[nodiscard]] auto Graph::hasSomeEdgeToAllNodesInClique(
+    size_t vertex, std::vector<size_t>& currentClique) const -> bool {
+    return std::all_of(currentClique.begin(), currentClique.end(),
+                       [&](int cliqueVertex) {
+                           return adjacencyMatrix[vertex][cliqueVertex] > 0 ||
+                                  adjacencyMatrix[cliqueVertex][vertex] > 0;
+                       });
 }
 
-auto Graph::maxCliqueHelper(size_t currentVertex, std::vector<int>& currentClique,
-                            std::vector<int>& maxClique) const -> void{
+auto Graph::maxCliqueHelper(size_t currentVertex,
+                            std::vector<size_t>& currentClique,
+                            std::vector<size_t>& maxClique) const -> void {
     if (currentClique.size() > maxClique.size()) {
-        maxClique = vector<int>(currentClique);
+        maxClique = vector<size_t>(currentClique);
     }
 
     if (currentVertex == vertexCount) {
@@ -280,18 +285,18 @@ auto Graph::maxCliqueHelper(size_t currentVertex, std::vector<int>& currentCliqu
     }
 }
 
-[[nodiscard]] auto Graph::maxClique() const -> std::vector<int> {
-    std::vector<int> currentClique;
-    std::vector<int> maxClique;
+[[nodiscard]] auto Graph::maxClique() const -> std::vector<size_t> {
+    std::vector<size_t> currentClique;
+    std::vector<size_t> maxClique;
     maxCliqueHelper(0, currentClique, maxClique);
     return maxClique;
 }
 
 auto Graph::modifiedMaxCliqueHelper(size_t currentVertex,
-                                    std::vector<int>& currentClique,
-                                    std::vector<int>& maxClique) const -> void {
+                                    std::vector<size_t>& currentClique,
+                                    std::vector<size_t>& maxClique) const -> void {
     if (currentClique.size() > maxClique.size()) {
-        maxClique = std::vector<int>(currentClique);
+        maxClique = std::vector<size_t>(currentClique);
     }
 
     if (currentVertex == vertexCount) {
@@ -307,9 +312,9 @@ auto Graph::modifiedMaxCliqueHelper(size_t currentVertex,
     }
 }
 
-[[nodiscard]] auto Graph::modifiedMaxClique() const -> std::vector<int> {
-    std::vector<int> currentClique;
-    std::vector<int> maxClique;
+[[nodiscard]] auto Graph::modifiedMaxClique() const -> std::vector<size_t> {
+    std::vector<size_t> currentClique;
+    std::vector<size_t> maxClique;
     modifiedMaxCliqueHelper(0, currentClique, maxClique);
     return maxClique;
 }

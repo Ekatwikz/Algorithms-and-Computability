@@ -3,7 +3,6 @@
  * @brief Graph representation definitions
  */
 #include <fstream>
-#include <functional>
 #include <vector>
 
 /**
@@ -205,7 +204,7 @@ class Graph {
      * false otherwise.
      */
     [[nodiscard]] auto isAdjacentToAllNodesInClique(
-        size_t vertex, std::vector<int>& currentClique) const -> bool;
+        size_t vertex, std::vector<size_t>& currentClique) const -> bool;
     /**
      * @brief Checks if the given vertex has one sided edge to all vertices in
      * the given clique.
@@ -217,7 +216,7 @@ class Graph {
      * false otherwise.
      */
     [[nodiscard]] auto hasSomeEdgeToAllNodesInClique(
-        size_t vertex, std::vector<int>& currentClique) const -> bool;
+        size_t vertex, std::vector<size_t>& currentClique) const -> bool;
 
     /**
      * @brief Helper for maxClique, used for recursion.
@@ -227,15 +226,15 @@ class Graph {
      * @param currentClique Clique to check.
      */
 
-    auto maxCliqueHelper(size_t currentVertex, std::vector<int>& currentClique,
-                         std::vector<int>& maxClique) const -> void;
+    auto maxCliqueHelper(size_t currentVertex, std::vector<size_t>& currentClique,
+                         std::vector<size_t>& maxClique) const -> void;
     /**
      * @brief Finds the maximum clique of the graph using Bron-Kerbosch
      * algorithm.
      *
      * @return Vector of vertices that form the maximum clique.
      */
-    [[nodiscard]] auto maxClique() const -> std::vector<int>;
+    [[nodiscard]] auto maxClique() const -> std::vector<size_t>;
 
     /**
      * @brief Helper for modifiedMaxClique, used for recursion.
@@ -245,8 +244,8 @@ class Graph {
      * @param currentClique Clique to check.
      */
     auto modifiedMaxCliqueHelper(size_t currentVertex,
-                                 std::vector<int>& currentClique,
-                                 std::vector<int>& maxClique) const -> void;
+                                 std::vector<size_t>& currentClique,
+                                 std::vector<size_t>& maxClique) const -> void;
 
     /**
      * @brief modidfied max clique algorithm for finding maximum induced
@@ -254,5 +253,5 @@ class Graph {
      *
      * @return Vector of vertices that form the maximum clique.
      */
-    [[nodiscard]] auto modifiedMaxClique() const -> std::vector<int>;
+    [[nodiscard]] auto modifiedMaxClique() const -> std::vector<size_t>;
 };
