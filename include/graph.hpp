@@ -38,14 +38,14 @@ class Graph {
     /**
      * @brief constant used for finding estimate in maxClique.
      */
-    static constexpr size_t estimateMultiplier = 1000;
+    static constexpr size_t ESTIMATE_MULTIPLIER = 1000;
 
     /**
      * @brief Helper for maxClique, used for recursion.
      *
      * @param currentVertex Current vertex to check.
      * @param currentClique Clique to check.
-     * @param maxClique Maximum clique in the graph.
+     * @param maxCliques Maximum cliques of the graph.
      * @param estimation To check if an estimation of max clique is
      * required.
      * @param currentExecution Keeps track of the current execution. Used for
@@ -57,29 +57,10 @@ class Graph {
 
     auto maxCliqueHelper(size_t currentVertex,
                          std::vector<size_t>& currentClique,
-                         std::vector<size_t>& maxClique, bool estimation,
-                         size_t& currentExecution, size_t executionLimit,
-                         auto adjacencyFunction) const -> void;
-
-    /**
-     * @brief Helper for modifiedMaxClique, used for recursion.
-     *
-     * @param currentVertex Current vertex to check.
-     * @param currentClique Clique to check.
-     * @param maxCliques Maximum cliques in the graph.
-     * @param estimation To check if an estimation of max clique is required.
-     * @param currentExecution Keeps track of the current execution. Used for
-     * estimation.
-     * @param executionLimit Maximum executions allowed. Used for estimation.
-     * @param adajcencyFunction Checks if there is at least one sided connection
-     * between a vertex and all the vertices in the clique.
-     */
-    auto modifiedMaxCliqueHelper(size_t currentVertex,
-                                 std::vector<size_t>& currentClique,
-                                 std::vector<std::vector<size_t>>& maxCliques,
-                                 bool estimation, size_t& currentExecution,
-                                 size_t executionLimit,
-                                 auto adjacencyFunction) const -> void;
+                         std::vector<std::vector<size_t>>& maxCliques,
+                         bool estimation, size_t& currentExecution,
+                         size_t executionLimit, auto adjacencyFunction) const
+        -> void;
 
     /**
      * @brief Checks the maximum number of connections in a clique. Used for
