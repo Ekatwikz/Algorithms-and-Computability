@@ -247,29 +247,11 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     return Graph(std::move(adjacencyMatrixOfResultGraph));
 }
 
-[[nodiscard]] auto Graph::isAdjacentToAllNodesInClique(
-    size_t vertex, std::vector<size_t>& currentClique) const -> bool {
-    return std::all_of(currentClique.begin(), currentClique.end(),
-                       [&](int cliqueVertex) {
-                           return adjacencyMatrix[vertex][cliqueVertex] > 0 &&
-                                  adjacencyMatrix[cliqueVertex][vertex] > 0;
-                       });
-}
-
-[[nodiscard]] auto Graph::hasSomeEdgeToAllNodesInClique(
-    size_t vertex, std::vector<size_t>& currentClique) const -> bool {
-    return std::all_of(currentClique.begin(), currentClique.end(),
-                       [&](int cliqueVertex) {
-                           return adjacencyMatrix[vertex][cliqueVertex] > 0 ||
-                                  adjacencyMatrix[cliqueVertex][vertex] > 0;
-                       });
-}
-
 auto Graph::maxCliqueHelper(size_t currentVertex,
                             std::vector<size_t>& currentClique,
                             std::vector<size_t>& maxClique, bool estimation,
-                            size_t& currentExecution,
-                            size_t executionLimit) const -> void {
+                            size_t& currentExecution, size_t executionLimit,
+                            auto adjacencyFunction) const -> void {
     if (currentClique.size() > maxClique.size()) {
         maxClique = vector<size_t>(currentClique);
     }
@@ -285,10 +267,11 @@ auto Graph::maxCliqueHelper(size_t currentVertex,
     }
 
     for (size_t i = currentVertex; i < vertexCount; ++i) {
-        if (isAdjacentToAllNodesInClique(i, currentClique)) {
+        if (adjacencyFunction(i, currentClique)) {
             currentClique.push_back(i);
             maxCliqueHelper(i + 1, currentClique, maxClique, estimation,
-                            currentExecution, executionLimit);
+                            currentExecution, executionLimit,
+                            adjacencyFunction);
             currentClique.pop_back();
         }
     }
@@ -301,15 +284,24 @@ auto Graph::maxCliqueHelper(size_t currentVertex,
     size_t currentExecution = 0;
     size_t maxExecutionLimit = 1000 * vertexCount * vertexCount;
 
-    maxCliqueHelper(0, currentClique, maxClique, estimation, currentExecution,
-                    maxExecutionLimit);
+    maxCliqueHelper(
+        0, currentClique, maxClique, estimation, currentExecution,
+        maxExecutionLimit, [&](int vertex, auto currentClique) {
+            return std::all_of(
+                currentClique.begin(), currentClique.end(),
+                [&](int cliqueVertex) {
+                    return adjacencyMatrix[vertex][cliqueVertex] > 0 &&
+                           adjacencyMatrix[cliqueVertex][vertex] > 0;
+                });
+        });
     return maxClique;
 }
 
 auto Graph::modifiedMaxCliqueHelper(
     size_t currentVertex, std::vector<size_t>& currentClique,
     std::vector<std::vector<size_t>>& maxCliques, bool estimation,
-    size_t& currentExecution, size_t executionLimit) const -> void {
+    size_t& currentExecution, size_t executionLimit,
+    auto adjacencyFunction) const -> void {
     if (currentClique.size() > maxCliques[0].size()) {
         maxCliques = {std::vector<size_t>(currentClique)};
     } else if (currentClique.size() == maxCliques[0].size()) {
@@ -327,17 +319,17 @@ auto Graph::modifiedMaxCliqueHelper(
     }
 
     for (size_t i = currentVertex; i < vertexCount; ++i) {
-        if (hasSomeEdgeToAllNodesInClique(i, currentClique)) {
+        if (adjacencyFunction(i, currentClique)) {
             currentClique.push_back(i);
             modifiedMaxCliqueHelper(i + 1, currentClique, maxCliques,
                                     estimation, currentExecution,
-                                    executionLimit);
+                                    executionLimit, adjacencyFunction);
             currentClique.pop_back();
         }
     }
 }
 
-[[nodiscard]] auto Graph::totalEdgeWeight(
+[[nodiscard]] auto Graph::totalConnections(
     const std::vector<size_t>& clique) const -> size_t {
     size_t totalWeight = 0;
 
@@ -355,16 +347,23 @@ auto Graph::modifiedMaxCliqueHelper(
     -> std::vector<size_t> {
     std::vector<size_t> currentClique;
     std::vector<std::vector<size_t>> maxCliques{{}};
-    size_t vertexCount = getVertexCount();
     size_t currentExecution = 0;
     size_t maxExecutionLimit = 1000 * vertexCount * vertexCount;
 
-    modifiedMaxCliqueHelper(0, currentClique, maxCliques, estimation,
-                            currentExecution, maxExecutionLimit);
+    modifiedMaxCliqueHelper(
+        0, currentClique, maxCliques, estimation, currentExecution,
+        maxExecutionLimit, [&](int vertex, auto currentClique) {
+            return std::all_of(
+                currentClique.begin(), currentClique.end(),
+                [&](int cliqueVertex) {
+                    return adjacencyMatrix[vertex][cliqueVertex] > 0 ||
+                           adjacencyMatrix[cliqueVertex][vertex] > 0;
+                });
+        });
 
     return *std::max_element(maxCliques.begin(), maxCliques.end(),
                              [this](const auto& clique1, const auto& clique2) {
-                                 return totalEdgeWeight(clique1) <
-                                        totalEdgeWeight(clique2);
+                                 return totalConnections(clique1) <
+                                        totalConnections(clique2);
                              });
 }

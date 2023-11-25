@@ -12,7 +12,7 @@
 TEST_CASE("Edge case with two potential modified cliques") {
     Graph special =
         Graph{std::istringstream{"4\n"
-                                 "0 0 1 0\n"
+                                 "0 0 3 0\n"
                                  "1 0 1 1\n"
                                  "1 1 0 1\n"
                                  "1 1 1 0\n"}};
@@ -27,7 +27,7 @@ TEST_CASE("Edge case with two potential modified cliques") {
 TEST_CASE("Three Connected Graph") {
     Graph threeConnected =
         Graph{std::istringstream{"3\n"
-                                 "0 1 1\n"
+                                 "0 2 1\n"
                                  "1 0 1\n"
                                  "1 1 0"}};
 
@@ -68,7 +68,7 @@ TEST_CASE("Graph with one vertex connected to other vertices") {
 TEST_CASE("Disconnected Graph with 4 vertices") {
     Graph disconnectedGraph =
         Graph{std::istringstream{"4\n"
-                                 "0 1 0 0\n"
+                                 "0 5 0 0\n"
                                  "1 0 0 0\n"
                                  "0 0 0 1\n"
                                  "0 0 1 0"}};
@@ -82,9 +82,9 @@ TEST_CASE("Disconnected Graph with 4 vertices") {
 TEST_CASE("Singleton Vertex in graph with 4 vertices") {
     Graph singletonGraph =
         Graph{std::istringstream{"4\n"
-                                 "0 1 0 0\n"
+                                 "0 3 0 0\n"
                                  "1 0 1 0\n"
-                                 "0 1 0 1\n"
+                                 "0 4 0 5\n"
                                  "0 0 1 0"}};
 
     SECTION("Max cliques of singletonGraph are") {
@@ -96,13 +96,13 @@ TEST_CASE("Singleton Vertex in graph with 4 vertices") {
 TEST_CASE("Large Disconnected Graph with Multiple Components") {
     Graph largeDisconnectedGraph =
         Graph{std::istringstream{"8\n"
-                                 "0 1 0 0 0 0 0 0\n"
+                                 "0 2 0 0 0 0 0 0\n"
                                  "1 0 0 0 0 0 0 0\n"
                                  "0 0 0 1 0 0 0 0\n"
-                                 "0 0 1 0 0 0 0 0\n"
+                                 "0 0 5 0 0 0 0 0\n"
                                  "0 0 0 0 0 1 0 0\n"
                                  "0 0 0 0 1 0 0 0\n"
-                                 "0 0 0 0 0 0 0 1\n"
+                                 "0 0 0 0 0 0 0 3\n"
                                  "0 0 0 0 0 0 1 0"}};
 
     SECTION("Max cliques of largeDisconnectedGraph are") {
@@ -114,10 +114,10 @@ TEST_CASE("Large Disconnected Graph with Multiple Components") {
 TEST_CASE("Singleton Vertex in Large Connected Graph") {
     Graph singletonLargeGraph =
         Graph{std::istringstream{"5\n"
-                                 "0 1 0 0 0\n"
+                                 "0 5 0 0 0\n"
                                  "1 0 1 0 0\n"
                                  "0 1 0 1 0\n"
-                                 "0 0 1 0 1\n"
+                                 "0 0 3 0 1\n"
                                  "0 0 0 1 0"}};
 
     SECTION("Max cliques of singletonLargeGraph are") {
@@ -129,16 +129,16 @@ TEST_CASE("Singleton Vertex in Large Connected Graph") {
 TEST_CASE("Graph with 10 Vertices and Max Clique Size of 5") {
     Graph tenVerticesGraph =
         Graph{std::istringstream{"10\n"
-                                 "0 1 1 1 1 0 0 0 0 0\n"
-                                 "1 0 1 1 1 1 0 0 0 0\n"
+                                 "0 3 1 1 1 0 0 0 0 0\n"
+                                 "1 0 1 1 1 7 0 0 0 0\n"
                                  "1 1 0 1 1 0 0 0 0 0\n"
                                  "1 1 1 0 1 0 0 0 0 0\n"
                                  "1 1 1 1 0 1 0 0 0 0\n"
-                                 "0 1 0 0 1 0 1 0 0 0\n"
+                                 "0 1 0 0 4 0 1 0 0 0\n"
                                  "0 0 0 0 0 1 0 1 0 0\n"
                                  "0 0 0 0 0 0 1 0 1 0\n"
-                                 "0 0 0 0 0 0 0 1 0 1\n"
-                                 "0 0 0 0 0 0 0 0 1 0"}};
+                                 "0 0 0 0 0 0 0 1 0 6\n"
+                                 "0 0 0 0 0 0 0 0 8 0"}};
 
     SECTION("Max clique of tenVerticesGraph is") {
         auto vertices = tenVerticesGraph.modifiedMaxClique();

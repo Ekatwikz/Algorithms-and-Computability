@@ -36,43 +36,25 @@ class Graph {
     std::vector<std::vector<int>> adjacencyMatrix;
 
     /**
-     * @brief Checks if the given vertex is adjacent to all vertices in the
-     * given clique.
-     *
-     * @param vertex Vertex to check.
-     * @param currentClique Clique to check.
-     *
-     * @return True if the vertex is adjacent to all vertices in the clique,
-     * false otherwise.
-     */
-    [[nodiscard]] auto isAdjacentToAllNodesInClique(
-        size_t vertex, std::vector<size_t>& currentClique) const -> bool;
-    /**
-     * @brief Checks if the given vertex has one sided edge to all vertices in
-     * the given clique.
-     *
-     * @param vertex Vertex to check.
-     * @param currentClique Clique to check.
-     *
-     * @return True if the vertex has some edge to all vertices in the clique,
-     * false otherwise.
-     */
-    [[nodiscard]] auto hasSomeEdgeToAllNodesInClique(
-        size_t vertex, std::vector<size_t>& currentClique) const -> bool;
-
-    /**
      * @brief Helper for maxClique, used for recursion.
      *
      * @param currentVertex Current vertex to check.
      * @param currentClique Clique to check.
      * @param maxClique Maximum clique in the graph.
+     * @param estimation To check if an estimation of max clique is
+     * required.
+     * @param currentExecution Keeps track of the current execution. Used for
+     * estimation.
+     * @param executionLimit Maximum executions allowed. Used for estimation.
+     * @param adajcencyFunction Checks if a vertex is adjacent to all the
+     * vertices in the clique.
      */
 
     auto maxCliqueHelper(size_t currentVertex,
                          std::vector<size_t>& currentClique,
                          std::vector<size_t>& maxClique, bool estimation,
-                         size_t& currentExecution, size_t executionLimit) const
-        -> void;
+                         size_t& currentExecution, size_t executionLimit,
+                         auto adjacencyFunction) const -> void;
 
     /**
      * @brief Helper for modifiedMaxClique, used for recursion.
@@ -80,14 +62,29 @@ class Graph {
      * @param currentVertex Current vertex to check.
      * @param currentClique Clique to check.
      * @param maxCliques Maximum cliques in the graph.
+     * @param estimation To check if an estimation of max clique is required.
+     * @param currentExecution Keeps track of the current execution. Used for
+     * estimation.
+     * @param executionLimit Maximum executions allowed. Used for estimation.
+     * @param adajcencyFunction Checks if there is at least one sided connection
+     * between a vertex and all the vertices in the clique.
      */
     auto modifiedMaxCliqueHelper(size_t currentVertex,
                                  std::vector<size_t>& currentClique,
                                  std::vector<std::vector<size_t>>& maxCliques,
                                  bool estimation, size_t& currentExecution,
-                                 size_t executionLimit) const -> void;
+                                 size_t executionLimit,
+                                 auto adjacencyFunction) const -> void;
 
-    auto totalEdgeWeight(const std::vector<size_t>& clique) const -> size_t;
+    /**
+     * @brief Checks the maximum number of connections in a clique. Used for
+     * finding max induced subgraph.
+     *
+     * @param clique The clique whose connections are being checked.
+     *
+     * @return Number of connections in the clique.
+     */
+    auto totalConnections(const std::vector<size_t>& clique) const -> size_t;
 
    public:
     /**
