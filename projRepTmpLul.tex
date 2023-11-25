@@ -1,0 +1,64 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+%\usepackage[T2A,T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+%\usepackage[russian,english]{babel}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{graphicx}
+\graphicspath{{images/}}
+
+\usepackage[
+backend=bibtex,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+\addbibresource{citations.bib}
+
+\usepackage{amsthm}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+
+%%% Title Page Stuff:
+\title{Graph Metric, Max Common Subgraph and Max Clique Algorithms}
+\author{auth1, auth2}
+\date{\today}
+\newcommand{\course}{Algorithms and Computability}
+
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\thetitle}
+\cfoot{\thepage}
+%%% End of title page stuffz
+
+% https://tex.stackexchange.com/a/40924/6832
+\newcommand\inputfile[1]{%
+	\InputIfFileExists{#1}{}{\typeout{No file "#1"??}}%
+}
+
+\begin{document}
+\inputfile{sections/title}
+
+\tableofcontents
+\cleardoublepage % Zaczynamy od nieparzystej strony
+\pagestyle{headings}
+
+\include{sections/metric}
+
+\cleardoublepage
+\printbibliography[
+	heading=bibintoc,
+	title={Bibliography}
+	]
+\end{document}

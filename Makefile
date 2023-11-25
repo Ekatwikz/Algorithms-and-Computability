@@ -95,3 +95,7 @@ clean:
 docs-clean:
 	rm -rfv $(DOCSDIR)
 
+.PHONY: clean
+
+clean:
+	rm -fv *.aux *.bit *.blg *.bbl *.lof *.log *.lot *.glo *.glx *.gxg *.gxs *.idx *.ilg *.ind *.out *.url *.svn *.toc

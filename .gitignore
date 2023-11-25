@@ -16,3 +16,29 @@ CMakeLists.txt
 
 # VSCode stuff
 .vscode
+# output
+*.pdf
+
+# yoinked from internet
+*.aux
+*.bit
+*.blg
+*.bbl
+*.lof
+*.log
+*.lot
+*.glo
+*.glx
+*.gxg
+*.gxs
+*.idx
+*.ilg
+*.ind
+*.out
+*.url
+*.svn
+*.toc
+
+# idk
+*.synctex.gz
+*.run.xml

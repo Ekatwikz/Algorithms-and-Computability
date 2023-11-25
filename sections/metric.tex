@@ -1,0 +1,265 @@
+\section{Metric}
+Our main observation was that there are many functions $d'$ that are intuitively ``almost metrics'' for graphs,\\
+ie: they have all the properties of a metric, except for the guarantee that 0 distance implies equality. \\
+We aim to take such a $d'$ and create a metric $d$ by adjusting it. \\
+In case it is required that isomorphic graphs have 0 distance to each other, we also explain how we can instead create a metric on the space of classes of isomorphic graphs. \\
+This approach allows us to use $d'$ as a basic but fast approximation for $d$ as well.
+
+\subsection{The method}
+	We take a set $S$ and a function $d'\colon S \times S \mapsto \mathbb{N} \cup \{0\}$ \\
+	Such that $\forall \{a, b, c\} \subseteq S$: \\
+	\begin{equation} \label{statement:1}
+		a = b \implies d'(a, b)=0
+	\end{equation}
+	\begin{equation} \label{statement:2}
+		d'(a, b) = d'(b, a)
+	\end{equation}
+	\begin{equation} \label{statement:3}
+		d'(a, c) \leq d'(a, b) + d'(b, c)
+	\end{equation}
+	We can also create a relation:
+	\[a\sim_{d'}b \iff d'(a, b)=0\]
+	
+	\begin{proposition}
+		$\sim_{d'}$ is an equivalence relation
+	\end{proposition}
+	\begin{proof} $\forall \{a, b, c\} \subseteq S$: \\
+		(\ref{statement:1}) $\implies a \sim a$, \\
+		(\ref{statement:2}) $\implies a \sim b \iff b \sim a$, \\
+		$(\ref{statement:3}) \land a \sim b \land b \sim c
+		\implies d'(a, c) \leq d'(a,b) + d'(b, c) = 0 + 0 \implies a \sim c $ \\
+	\end{proof}
+	
+	We will use the usual notation of equivalence classes where \\
+	$[a]_{\sim} = \{x \mid x \sim a \}$, and for convenience just write $[a] = \{x \mid x \sim_{d'} a\}$
+
+\newpage
+
+	\begin{proposition}
+		\[ d(a, b) = \begin{cases}
+			1 & d'(a,b)=0 \land a \neq b \\
+			d'(a,b) & otherwise
+		\end{cases}
+		\] is a metric on S
+	\end{proposition}
+	\begin{proof} $\forall \{a, b, c\} \subseteq S$:
+		\begin{equation} \label{statement:4}
+			a = b \iff d(a, b)=0
+		\end{equation}
+		By definition, $a=b \implies d(a, b) = d'(a, b) = 0$ \\
+		For the converse, $d(a, b) = 0 \implies $ \\
+		$ d(a, b) \neq 1 \land ( d(a, b) = d'(a, b) \neq 0 \lor a=b) \implies $ \\
+		$ a = b $
+		
+		\begin{equation} \label{statement:5}
+			d(a, b) = d(b, a)
+		\end{equation}
+		If $d(a, b) \neq 1$: \\
+		$d(a, b) = d'(a, b) = d'(b, a) = d(a, b) $ \\
+		Otherwise: \\
+		$d'(a,b)=0 \land a \neq b \iff d'(b,a)=0 \land b \neq a $ \\
+		so: \\
+		$d(a, b)=1 \iff d(b, a)=1$
+		
+		\begin{equation} \label{statement:6}
+			d(a, c) \leq d(a, b) + d(b, c)
+		\end{equation}
+		\begin{lemma}
+		\label{lemma1}
+			$[a]=[b] \implies d'(a,c) = d'(b, c)$
+		\end{lemma}
+		\begin{proof} Assume (for the sake of contradiction), that (WLOG) \\
+			$[a]=[b] \land  d'(a , c)< d'(b , c)$ \\
+			Then $[a]=[b] \iff d'(a, b)=d'(b, a)=0$ (by definition) \\
+			and $d'(b, c) \leq d'(b, a) + d'(a, c)$ (by (\ref{statement:3})) \\
+			$ \implies d'(b, c) \leq 0 + d'(a, c) $ which contradicts the initial assumption
+		\end{proof}
+		\begin{lemma}
+		\label{lemma2}
+			$[a] \neq [b] \implies d(a, b) = d'(a, b) > 0$
+		\end{lemma}
+		\begin{lemma}
+		\label{lemma3}
+			$[a]=[b] \implies d(a, b)=d_1(a , b)$ \\
+			Where $d_1$ is the discrete metric
+		\end{lemma}
+		Lemma \ref{lemma2} and \ref{lemma3} follow directly from the definitions.\\
+		So, proceeding with (\ref{statement:6}):\\
+		
+		If $[a]=[b]=[c]$, Lemma \ref{lemma3} implies (\ref{statement:6}):
+		\begin{proof}
+			We know that $d=d_1$ is a metric for all pairs in this case
+		\end{proof}
+		
+		If $[a]=[b]\land[a]\neq[c ]\land[b]\neq[c ]$, Lemma \ref{lemma1}, \ref{lemma2} and \ref{lemma3} imply (\ref{statement:6}):
+		\begin{proof}
+			We know that $d (a , b) = d_1(a,b) \leq 1 \land d (a , c)=d (b , c)=d ' (a , c)>0$
+		\end{proof}
+		
+		If $[a]$, $[b]$ and $[c]$ are pairwise different, Lemma \ref{lemma2} implies (\ref{statement:6}):
+		\begin{proof}
+			Assume (for the sake of contradiction) that Lemma \ref{lemma2} is true but (\ref{statement:6}) is false for this case, then Lemma \ref{lemma2} implies that (\ref{statement:3}) does not hold for $d'$
+		\end{proof}
+		
+		So (\ref{statement:4}), (\ref{statement:5}) and (\ref{statement:6}) hold, hence $d$ is a metric.
+	\end{proof}
+
+\newpage	
+\subsection{Examples of $d'$ for graphs}
+	We can then take $S$ as the set of all graphs, and pick an appropriate $d'$ to
+	“extend” to a $d$ in this way. \\
+	If we require isomorphic graphs to have 0 distance to each other, then we can
+	instead interpret $S_{\cong}$ as being the class of sets $[g]_{\cong}$ where $g_1 \cong g_2 \iff g_1$ is
+	isomorphic to $g_2$ , and use abuse of notation to write the metrics on $S_{\cong}$ with
+	the same syntax as those on $S$ \\
+	(one way is by relating $g$ to $[g]_{\cong}$ , and making sure
+	that any $f(g)$ used in the definition of a $d'$ on $S$ has the property $g_1 \cong g_2 \implies f (g_1)=f (g_2)$ ). \\
+	
+	We say that $A(f)$ is an algorithm that computes $f$. \\
+	In the $S_{\cong}$ case, any $A(d)$ has a time complexity of at least $2^{poly(\log n)}$ \cite{DBLP:journals/corr/Babai15} due to the existence of a reduction from the GI problem to the computation of $d$. \\
+	So, any $A(d')$ can be used to approximate its respective $d$, which will always be faster
+	than $A(d)$ and exact whenever $[g_1]\neq[g_2]$.\\
+	
+	Some simple functions which have the properties of $d'$ are:
+	\begin{itemize}
+		\item $d'(g_1 , g_2)=d_{\mathbb{N} \cup \{0\}} (|g_1|,|g_2|)$ \\
+		where $|g|$ is the size of $g$ and \\
+		and $d_{\mathbb{N} \cup \{0\}}$ is any metric on $\mathbb{N} \cup \{0\}$ \\
+		
+		Our program (Algorithm \ref{alg:metric1}) will cover this case, with:\\
+		$d_{\mathbb{N} \cup \{0\}}(a, b) = |a - b|$ \\
+		and $|g|$ = $|V| + |E|$, where $V$ is the vertex set of the graph, and $E$ is the edge set of the graph
+		
+		\item $d'(g_1, g_2)=d_M (degrees(g_1), degrees(g_2))$ \\
+		Where $degrees(g)$ is the multiset of vertex degrees in $g$, \\
+		and $d_M$ is any metric on multisets, such as $d_M = d_1$
+		
+		\item $d'(g_1 , g_2)=d_{str} (str ( p_{g_1} (x)), str ( p_{g_2} (x)))$ \\
+		where $p_g(x)$ is the characteristic polynomial of $g$ \\
+		$str$ is any function that injectively maps polynomials to strings \\
+		and $d_{str}$ is any metric on strings
+		
+		an example of $str$ would be to take the coefficients of the polynomial in ascending order, and write them separated with spaces \\
+		an example of $d_{str}$ would be Levenshtein Distance
+	\end{itemize}
+	
+\subsection{The algorithm}
+\begin{algorithm}[H]
+	\caption{Our metric for graphs}\label{alg:metric1}
+	\begin{algorithmic}
+		\Procedure {MetricDistance}{$M_{g_1}$, $M_{g_2}$, $justApprox$}
+			\State $d \gets |GraphSize(M_{g_1}) - GraphSize(M_{g_2})|$
+			
+			\If{$d > 0 \lor justApprox$}
+			\State \textbf{return $d$}
+			\ElsIf{$IsIsomorphicTo(M_{g_1}, M_{g_2})$}
+			\State \textbf{return $0$}
+			\Else
+			\State \textbf{return $1$}
+			\EndIf
+		\EndProcedure
+		
+		\\
+		
+		\Procedure {GraphSize}{$M$}
+			\State $n \gets VertexCount(M)$
+			\State $vertsAndEdges \gets n$
+			
+			\\
+			
+			\For{$i \gets 0, n - 1$}
+			\For{$j \gets 0, n - 1$}
+			\State $vertsAndEdges \gets vertsAndEdges + M_{i, j}$
+			\EndFor
+			\EndFor
+			\State \textbf{return $vertsAndEdges$}
+		\EndProcedure
+		
+		\\
+		
+		\Procedure {IsIsomorphicTo}{$M_{g_1}$, $M_{g_2}$}
+			\If{$GraphSize(M_{g_1}) \neq GraphSize(M_{g_2})$}
+				\State \textbf{return $false$}
+			\EndIf
+		
+			\\
+				
+			\State $n \gets VertexCount(M_{g_1})$
+			
+			\\
+			
+			\Procedure {IsPermutationIsomorphism}{$A$, $B$, $p$}
+				\For{$lhsPos \gets 0, n - 1$}
+					\For{$rhsPos \gets 0, n - 1$}
+						\If{$A_{lhsPos, rhsPos} \neq B_{p[lhsPos], p[rhsPos]}$}
+							\State \textbf{return $false$}
+						\EndIf
+					\EndFor
+				\EndFor
+				\State \textbf{return $true$}
+			\EndProcedure
+			
+			\\
+			
+			\State $iota \gets Iota(n)$ \Comment{array of n ascending values, starting from 0}
+			\State $perms \gets HeapsPerms(iota)$
+			
+			\For{$i \gets 0,n!-1$}
+				\If{$IsPermutationIsomorphism(M_{g_1}, M_{g_2}, perms[i])$}
+					\State \textbf{return $true$}
+				\EndIf
+			\EndFor
+			\State \textbf{return $false$}
+		\EndProcedure
+		
+		\algstore{bkbreak}
+	\end{algorithmic}
+\end{algorithm}
+\begin{algorithm}[h]
+	\begin{algorithmic}[1]
+		\algrestore{bkbreak}
+		\Procedure {HeapsPerms}{$array$} \Comment{array of all perms of array\cite{10.1093/comjnl/6.3.293}}
+			\State $n \gets length(array)$
+			\State $c \gets Iota(n)$ \Comment{stack state encoding}
+			\State $outputArray \gets []$
+			\State $outputArray \gets outputArray \cup array$
+			
+			\\
+			
+			\State $i \gets 1$
+			
+			\While{$i < n$}
+				\If{$c[i] < i$}
+					\If{$i$ is even}
+						\State $Swap(A[0], A[i])$
+					\Else
+						\State $Swap(A[c[i]], A[i])$
+					\EndIf
+					
+					\\
+					
+					\State $outputArray \gets outputArray \cup array$
+					\State $c[i] \gets c[i] + 1$
+					\State $i \gets 1$
+				\Else
+					\State $c[i] \gets 0$
+					\State $i \gets i + 1$
+				\EndIf
+			\EndWhile
+			
+			\\
+			
+			\State \textbf{return $outputArray$}
+		\EndProcedure		
+	\end{algorithmic}
+\end{algorithm}
+
+\newpage
+
+\subsection{Time Complexity}
+The $IsPermutationIsomorphism$ procedure is $O(n^2)$ \\
+The $HeapsPerms$ procedure is $O(n!)$ \cite{10.1093/comjnl/6.3.293}, and generates a set with $n!$ elements \\
+Therefore, the $IsIsomorphicTo$ procedure is $O(n^2 n!)$, since its most expensive step is at the end, where in the worst case it calls $IsPermutationIsomorphism$ on each the element generated by $HeapsPerms$ \\
+Assuming $VertexCount$ is $O(1)$ \cite{cppstandard}, the $GraphSize$ procedure will be $O(n^2)$
+
+We can then conclude that if $justApprox$ is false, the worst case time complexity of $MetricDistance$ will $O(n^2 n!)$, otherwise it will be $O(n^2)$
