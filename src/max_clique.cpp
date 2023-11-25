@@ -11,7 +11,9 @@
 #include "graph.hpp"
 
 using std::cerr;
+using std::cout;
 using std::exception;
+using std::for_each;
 using std::span;
 
 /**
@@ -28,7 +30,7 @@ using std::span;
 auto main(int argc, char* argv[]) -> int {
     auto args = span(argv, static_cast<size_t>(argc));
     if (argc < 2) {
-        cerr << "Usage: " << args[0] << " <filename1>\n";
+        cerr << "Usage: " << args[0] << " <filename1> \n";
         return 1;
     }
 
@@ -40,12 +42,16 @@ auto main(int argc, char* argv[]) -> int {
         return 1;
     }
 
-    auto maxClique = graph.maxClique();
-    std::cout << "Max clique size: " << maxClique.size() << std::endl;
-    std::cout << "Vertices of the max clique: {";
-    std::for_each(maxClique.begin(), maxClique.end() - 1,
-                  [](int vertex) { std::cout << vertex << ", "; });
-    std::cout << maxClique.back() << "}" << std::endl;
+    bool approx = (argc >= 3 && strcmp(args[2], "approx") == 0);
 
-    std::cout << graph.toDotLang() << std::endl;
+    cout << graph.toDotLang() << std::endl;
+
+    auto maxClique = graph.maxClique(approx);
+
+#ifdef DEBUG
+    cerr << "{";
+    for_each(maxClique.begin(), maxClique.end() - 1,
+             [](int vertex) { cerr << vertex << ", "; });
+    cerr << maxClique.back() << "}" << std::endl;
+#endif
 }
