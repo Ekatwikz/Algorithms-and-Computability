@@ -282,7 +282,7 @@ auto Graph::maxCliqueHelper(size_t currentVertex,
     std::vector<size_t> currentClique;
     std::vector<size_t> maxClique;
     size_t currentExecution = 0;
-    size_t maxExecutionLimit = 1000 * vertexCount * vertexCount;
+    size_t maxExecutionLimit = estimateMultiplier * vertexCount * vertexCount;
 
     maxCliqueHelper(
         0, currentClique, maxClique, estimation, currentExecution,
@@ -335,8 +335,10 @@ auto Graph::modifiedMaxCliqueHelper(
 
     for (size_t i = 0; i < clique.size(); ++i) {
         for (size_t j = i + 1; j < clique.size(); ++j) {
-            totalWeight += adjacencyMatrix[clique[i]][clique[j]] > 0;
-            totalWeight += adjacencyMatrix[clique[j]][clique[i]] > 0;
+            totalWeight +=
+                static_cast<size_t>(adjacencyMatrix[clique[i]][clique[j]] > 0);
+            totalWeight +=
+                static_cast<size_t>(adjacencyMatrix[clique[j]][clique[i]] > 0);
         }
     }
 
@@ -348,7 +350,7 @@ auto Graph::modifiedMaxCliqueHelper(
     std::vector<size_t> currentClique;
     std::vector<std::vector<size_t>> maxCliques{{}};
     size_t currentExecution = 0;
-    size_t maxExecutionLimit = 1000 * vertexCount * vertexCount;
+    size_t maxExecutionLimit = estimateMultiplier * vertexCount * vertexCount;
 
     modifiedMaxCliqueHelper(
         0, currentClique, maxCliques, estimation, currentExecution,

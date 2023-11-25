@@ -11,7 +11,9 @@
 #include "graph.hpp"
 
 using std::cerr;
+using std::cout;
 using std::exception;
+using std::for_each;
 using std::span;
 
 /**
@@ -42,12 +44,11 @@ auto main(int argc, char* argv[]) -> int {
 
     bool approx = (argc >= 3 && strcmp(args[2], "approx") == 0);
 
-    std::cout << graph.toDotLang() << std::endl;
+    cout << graph.toDotLang() << std::endl;
 
     auto maxClique = graph.maxClique(approx);
-    std::cout << "Max clique size: " << maxClique.size() << std::endl;
-    std::cout << "Vertices of the max clique: {";
-    std::for_each(maxClique.begin(), maxClique.end() - 1,
-                  [](int vertex) { std::cout << vertex << ", "; });
-    std::cout << maxClique.back() << "}" << std::endl;
+    cout << "{";
+    for_each(maxClique.begin(), maxClique.end() - 1,
+             [](int vertex) { std::cout << vertex << ", "; });
+    cout << maxClique.back() << "}" << std::endl;
 }

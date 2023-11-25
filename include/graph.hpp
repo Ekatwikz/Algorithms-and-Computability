@@ -36,6 +36,11 @@ class Graph {
     std::vector<std::vector<int>> adjacencyMatrix;
 
     /**
+     * @brief constant used for finding estimate in maxClique.
+     */
+    static constexpr size_t estimateMultiplier = 1000;
+
+    /**
      * @brief Helper for maxClique, used for recursion.
      *
      * @param currentVertex Current vertex to check.
