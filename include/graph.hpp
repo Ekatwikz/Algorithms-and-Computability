@@ -89,7 +89,7 @@ class Graph {
      *
      * @return Number of connections in the clique.
      */
-    auto totalConnections(const std::vector<size_t>& clique) const -> size_t;
+    [[nodiscard]] auto totalConnections(const std::vector<size_t>& clique) const -> size_t;
 
    public:
     /**
