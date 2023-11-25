@@ -247,45 +247,15 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     return Graph(std::move(adjacencyMatrixOfResultGraph));
 }
 
-auto Graph::maxCliqueHelper(size_t currentVertex,
-                            std::vector<size_t>& currentClique,
-                            std::vector<size_t>& maxClique, bool estimation,
-                            size_t& currentExecution, size_t executionLimit,
-                            auto adjacencyFunction) const -> void {
-    if (currentClique.size() > maxClique.size()) {
-        maxClique = vector<size_t>(currentClique);
-    }
-
-    if (currentVertex == vertexCount) {
-        return;
-    }
-
-    if (estimation) {
-        if (++currentExecution >= executionLimit) {
-            return;
-        }
-    }
-
-    for (size_t i = currentVertex; i < vertexCount; ++i) {
-        if (adjacencyFunction(i, currentClique)) {
-            currentClique.push_back(i);
-            maxCliqueHelper(i + 1, currentClique, maxClique, estimation,
-                            currentExecution, executionLimit,
-                            adjacencyFunction);
-            currentClique.pop_back();
-        }
-    }
-}
-
 [[nodiscard]] auto Graph::maxClique(bool estimation) const
     -> std::vector<size_t> {
     std::vector<size_t> currentClique;
-    std::vector<size_t> maxClique;
+    std::vector<std::vector<size_t>> maxCliques{{}};
     size_t currentExecution = 0;
-    size_t maxExecutionLimit = estimateMultiplier * vertexCount * vertexCount;
+    size_t maxExecutionLimit = ESTIMATE_MULTIPLIER * vertexCount * vertexCount;
 
     maxCliqueHelper(
-        0, currentClique, maxClique, estimation, currentExecution,
+        0, currentClique, maxCliques, estimation, currentExecution,
         maxExecutionLimit, [&](int vertex, auto currentClique) {
             return std::all_of(
                 currentClique.begin(), currentClique.end(),
@@ -294,14 +264,15 @@ auto Graph::maxCliqueHelper(size_t currentVertex,
                            adjacencyMatrix[cliqueVertex][vertex] > 0;
                 });
         });
-    return maxClique;
+    return maxCliques[0];
 }
 
-auto Graph::modifiedMaxCliqueHelper(
-    size_t currentVertex, std::vector<size_t>& currentClique,
-    std::vector<std::vector<size_t>>& maxCliques, bool estimation,
-    size_t& currentExecution, size_t executionLimit,
-    auto adjacencyFunction) const -> void {
+auto Graph::maxCliqueHelper(size_t currentVertex,
+                            std::vector<size_t>& currentClique,
+                            std::vector<std::vector<size_t>>& maxCliques,
+                            bool estimation, size_t& currentExecution,
+                            size_t executionLimit, auto adjacencyFunction) const
+    -> void {
     if (currentClique.size() > maxCliques[0].size()) {
         maxCliques = {std::vector<size_t>(currentClique)};
     } else if (currentClique.size() == maxCliques[0].size()) {
@@ -321,9 +292,9 @@ auto Graph::modifiedMaxCliqueHelper(
     for (size_t i = currentVertex; i < vertexCount; ++i) {
         if (adjacencyFunction(i, currentClique)) {
             currentClique.push_back(i);
-            modifiedMaxCliqueHelper(i + 1, currentClique, maxCliques,
-                                    estimation, currentExecution,
-                                    executionLimit, adjacencyFunction);
+            maxCliqueHelper(i + 1, currentClique, maxCliques, estimation,
+                            currentExecution, executionLimit,
+                            adjacencyFunction);
             currentClique.pop_back();
         }
     }
@@ -350,9 +321,9 @@ auto Graph::modifiedMaxCliqueHelper(
     std::vector<size_t> currentClique;
     std::vector<std::vector<size_t>> maxCliques{{}};
     size_t currentExecution = 0;
-    size_t maxExecutionLimit = estimateMultiplier * vertexCount * vertexCount;
+    size_t maxExecutionLimit = ESTIMATE_MULTIPLIER * vertexCount * vertexCount;
 
-    modifiedMaxCliqueHelper(
+    maxCliqueHelper(
         0, currentClique, maxCliques, estimation, currentExecution,
         maxExecutionLimit, [&](int vertex, auto currentClique) {
             return std::all_of(

@@ -47,8 +47,11 @@ auto main(int argc, char* argv[]) -> int {
     cout << graph.toDotLang() << std::endl;
 
     auto maxClique = graph.maxClique(approx);
-    cout << "{";
+
+#ifdef DEBUG
+    cerr << "{";
     for_each(maxClique.begin(), maxClique.end() - 1,
-             [](int vertex) { std::cout << vertex << ", "; });
-    cout << maxClique.back() << "}" << std::endl;
+             [](int vertex) { cerr << vertex << ", "; });
+    cerr << maxClique.back() << "}" << std::endl;
+#endif
 }
