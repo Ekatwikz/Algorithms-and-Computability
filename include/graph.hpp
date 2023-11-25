@@ -35,6 +35,60 @@ class Graph {
      */
     std::vector<std::vector<int>> adjacencyMatrix;
 
+    /**
+     * @brief Checks if the given vertex is adjacent to all vertices in the
+     * given clique.
+     *
+     * @param vertex Vertex to check.
+     * @param currentClique Clique to check.
+     *
+     * @return True if the vertex is adjacent to all vertices in the clique,
+     * false otherwise.
+     */
+    [[nodiscard]] auto isAdjacentToAllNodesInClique(
+        size_t vertex, std::vector<size_t>& currentClique) const -> bool;
+    /**
+     * @brief Checks if the given vertex has one sided edge to all vertices in
+     * the given clique.
+     *
+     * @param vertex Vertex to check.
+     * @param currentClique Clique to check.
+     *
+     * @return True if the vertex has some edge to all vertices in the clique,
+     * false otherwise.
+     */
+    [[nodiscard]] auto hasSomeEdgeToAllNodesInClique(
+        size_t vertex, std::vector<size_t>& currentClique) const -> bool;
+
+    /**
+     * @brief Helper for maxClique, used for recursion.
+     *
+     * @param currentVertex Current vertex to check.
+     * @param currentClique Clique to check.
+     * @param maxClique Maximum clique in the graph.
+     */
+
+    auto maxCliqueHelper(size_t currentVertex,
+                         std::vector<size_t>& currentClique,
+                         std::vector<size_t>& maxClique, bool estimation,
+                         size_t& currentExecution, size_t executionLimit) const
+        -> void;
+
+    /**
+     * @brief Helper for modifiedMaxClique, used for recursion.
+     *
+     * @param currentVertex Current vertex to check.
+     * @param currentClique Clique to check.
+     * @param maxCliques Maximum cliques in the graph.
+     */
+    auto modifiedMaxCliqueHelper(size_t currentVertex,
+                                 std::vector<size_t>& currentClique,
+                                 std::vector<std::vector<size_t>>& maxCliques,
+                                 bool estimation, size_t& currentExecution,
+                                 size_t executionLimit) const -> void;
+
+    auto totalEdgeWeight(const std::vector<size_t>& clique) const -> size_t;
+
    public:
     /**
      * @brief Default constructor
@@ -193,60 +247,15 @@ class Graph {
      */
 
     [[nodiscard]] auto modularProduct(const Graph& rhs) -> Graph;
-    /**
-     * @brief Checks if the given vertex is adjacent to all vertices in the
-     * given clique.
-     *
-     * @param vertex Vertex to check.
-     * @param currentClique Clique to check.
-     *
-     * @return True if the vertex is adjacent to all vertices in the clique,
-     * false otherwise.
-     */
-    [[nodiscard]] auto isAdjacentToAllNodesInClique(
-        size_t vertex, std::vector<size_t>& currentClique) const -> bool;
-    /**
-     * @brief Checks if the given vertex has one sided edge to all vertices in
-     * the given clique.
-     *
-     * @param vertex Vertex to check.
-     * @param currentClique Clique to check.
-     *
-     * @return True if the vertex has some edge to all vertices in the clique,
-     * false otherwise.
-     */
-    [[nodiscard]] auto hasSomeEdgeToAllNodesInClique(
-        size_t vertex, std::vector<size_t>& currentClique) const -> bool;
 
-    /**
-     * @brief Helper for maxClique, used for recursion.
-     *
-     * @param currentVertex Current vertex to check.
-     * @param vertex Vertex to check.
-     * @param currentClique Clique to check.
-     */
-
-    auto maxCliqueHelper(size_t currentVertex,
-                         std::vector<size_t>& currentClique,
-                         std::vector<size_t>& maxClique) const -> void;
     /**
      * @brief Finds the maximum clique of the graph using Bron-Kerbosch
      * algorithm.
      *
      * @return Vector of vertices that form the maximum clique.
      */
-    [[nodiscard]] auto maxClique() const -> std::vector<size_t>;
-
-    /**
-     * @brief Helper for modifiedMaxClique, used for recursion.
-     *
-     * @param currentVertex Current vertex to check.
-     * @param vertex Vertex to check.
-     * @param currentClique Clique to check.
-     */
-    auto modifiedMaxCliqueHelper(size_t currentVertex,
-                                 std::vector<size_t>& currentClique,
-                                 std::vector<size_t>& maxClique) const -> void;
+    [[nodiscard]] auto maxClique(bool estimation = false) const
+        -> std::vector<size_t>;
 
     /**
      * @brief modidfied max clique algorithm for finding maximum induced
@@ -254,5 +263,6 @@ class Graph {
      *
      * @return Vector of vertices that form the maximum clique.
      */
-    [[nodiscard]] auto modifiedMaxClique() const -> std::vector<size_t>;
+    [[nodiscard]] auto modifiedMaxClique(bool estimation = false) const
+        -> std::vector<size_t>;
 };
