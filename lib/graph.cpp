@@ -313,32 +313,22 @@ auto Graph::maxCliqueHelper(size_t currentVertex,
     std::vector<size_t> maxClique = modProd.modifiedMaxClique();
     size_t maxCliqueSize = maxClique.size();
 
+    std::vector<size_t> lhsVerts(maxCliqueSize);
+    std::vector<size_t> rhsVerts(maxCliqueSize);
+
     std::vector<std::vector<int>> maxSubgraphAdjacencyMatrix(
         maxCliqueSize, std::vector<int>(maxCliqueSize));
 
-    for (size_t row = 0; row < maxCliqueSize; row++) {
-        for (size_t col = 0; col < maxCliqueSize; col++) {
-            maxSubgraphAdjacencyMatrix[row][col] =
-                modProd[maxClique[row]][maxClique[col]];
-        }
-    }
-
-    // tweeks for isolated vertices
-    int divisor = static_cast<int>(
-        vertexCount == std::min(vertexCount, rhs.getVertexCount())
-            ? vertexCount
-            : rhs.getVertexCount());
-    divisor = std::max(divisor, 1);
-
     for (size_t i = 0; i < maxCliqueSize; i++) {
-        maxClique[i] /= divisor;
+        lhsVerts[i] = maxClique[i] / rhs.getVertexCount();
+        rhsVerts[i] = maxClique[i] / vertexCount;
     }
 
     for (size_t row = 0; row < maxCliqueSize; row++) {
         for (size_t col = 0; col < maxCliqueSize; col++) {
             maxSubgraphAdjacencyMatrix[row][col] =
-                std::min(adjacencyMatrix[maxClique[row]][maxClique[col]],
-                         maxSubgraphAdjacencyMatrix[row][col]);
+                std::min(adjacencyMatrix[lhsVerts[row]][lhsVerts[col]],
+                         rhs[rhsVerts[row]][rhsVerts[col]]);
         }
     }
 
