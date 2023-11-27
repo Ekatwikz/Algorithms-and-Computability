@@ -84,8 +84,8 @@ TEST_CASE("Maximum induced subgraph tests") {
         "is correct") {
         REQUIRE(multiEdgeTriangleGraph.maxSubgraph(multiEdgeTwoGraph) ==
                 Graph{std::istringstream{"2\n"
-                                         "0 3\n"
-                                         "0 0"}});
+                                         "0 1\n"
+                                         "1 0"}});
     }
 }
 

@@ -64,7 +64,7 @@ class Graph {
         -> void;
 
     /**
-     * @brief Checks the maximum number of connections in a clique. Used for
+     * @brief Checks the number of connections in a clique. Used for
      * finding max induced subgraph.
      *
      * @param clique The clique whose connections are being checked.
@@ -72,6 +72,17 @@ class Graph {
      * @return Number of connections in the clique.
      */
     [[nodiscard]] auto totalConnections(const std::vector<size_t>& clique) const
+        -> size_t;
+
+    /**
+     * @brief Returns the sum of edge in the clique. Used for
+     * finding max induced subgraph.
+     *
+     * @param clique The clique whose connections are being checked.
+     *
+     * @return Number of edges in the clique.
+     */
+    [[nodiscard]] auto edgeCount(const std::vector<size_t>& clique) const
         -> size_t;
 
    public:
