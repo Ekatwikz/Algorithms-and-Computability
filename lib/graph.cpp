@@ -321,7 +321,7 @@ auto Graph::maxCliqueHelper(size_t currentVertex,
 
     for (size_t i = 0; i < maxCliqueSize; i++) {
         lhsVerts[i] = maxClique[i] / rhs.getVertexCount();
-        rhsVerts[i] = maxClique[i] / vertexCount;
+        rhsVerts[i] = maxClique[i] % rhs.getVertexCount();
     }
 
     for (size_t row = 0; row < maxCliqueSize; row++) {

@@ -279,5 +279,6 @@ class Graph {
      *
      * @return Vector of vertices that form the maximum clique.
      */
-    [[nodiscard]] auto maxCliqueGraph(AlgorithmAccuracy accuracy) const -> Graph;
+    [[nodiscard]] auto maxCliqueGraph(AlgorithmAccuracy accuracy) const
+        -> Graph;
 };
