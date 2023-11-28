@@ -12,13 +12,14 @@
 TEST_CASE("Three Connected Graph") {
     Graph threeConnected =
         Graph{std::istringstream{"3\n"
-                                 "0 2 1\n"
-                                 "8 0 1\n"
-                                 "1 2 0"}};
+                                 "0 1 1\n"
+                                 "1 0 1\n"
+                                 "1 1 0"}};
 
     SECTION("Max clique of threeConnectedGraph is") {
         auto vertices = threeConnected.maxClique();
-        auto verticesEstimate = threeConnected.maxClique(true);
+        auto verticesEstimate =
+            threeConnected.maxClique(AlgorithmAccuracy::APPROXIMATE);
         REQUIRE(vertices.size() == 3);
         REQUIRE(verticesEstimate.size() == 3);
     }
@@ -34,7 +35,8 @@ TEST_CASE("Four Connected Graph") {
 
     SECTION("Max clique of fourConnectedGraph is") {
         auto vertices = fourConnected.maxClique();
-        auto verticesEstimate = fourConnected.maxClique(true);
+        auto verticesEstimate =
+            fourConnected.maxClique(AlgorithmAccuracy::APPROXIMATE);
 
         REQUIRE(vertices.size() == 4);
         REQUIRE(verticesEstimate.size() == 4);
@@ -51,7 +53,8 @@ TEST_CASE("Disconnected Graph with 4 vertices") {
 
     SECTION("Max cliques of disconnectedGraph are") {
         auto vertices = disconnectedGraph.maxClique();
-        auto verticesEstimate = disconnectedGraph.maxClique(true);
+        auto verticesEstimate =
+            disconnectedGraph.maxClique(AlgorithmAccuracy::APPROXIMATE);
 
         REQUIRE(vertices.size() == 2);
         REQUIRE(verticesEstimate.size() == 2);
@@ -68,7 +71,8 @@ TEST_CASE("Singleton Vertex in graph with 4 vertices") {
 
     SECTION("Max cliques of singletonGraph are") {
         auto vertices = singletonGraph.maxClique();
-        auto verticesEstimate = singletonGraph.maxClique(true);
+        auto verticesEstimate =
+            singletonGraph.maxClique(AlgorithmAccuracy::APPROXIMATE);
 
         REQUIRE(vertices.size() == 2);
         REQUIRE(verticesEstimate.size() == 2);
@@ -89,7 +93,8 @@ TEST_CASE("Large Disconnected Graph with Multiple Components") {
 
     SECTION("Max cliques of largeDisconnectedGraph are") {
         auto vertices = largeDisconnectedGraph.maxClique();
-        auto verticesEstimate = largeDisconnectedGraph.maxClique(true);
+        auto verticesEstimate =
+            largeDisconnectedGraph.maxClique(AlgorithmAccuracy::APPROXIMATE);
 
         REQUIRE(vertices.size() == 2);
         REQUIRE(verticesEstimate.size() == 2);
@@ -107,7 +112,8 @@ TEST_CASE("Singleton Vertex in Large Connected Graph") {
 
     SECTION("Max cliques of singletonLargeGraph are") {
         auto vertices = singletonLargeGraph.maxClique();
-        auto verticesEstimate = singletonLargeGraph.maxClique(true);
+        auto verticesEstimate =
+            singletonLargeGraph.maxClique(AlgorithmAccuracy::APPROXIMATE);
 
         REQUIRE(vertices.size() == 2);
         REQUIRE(verticesEstimate.size() == 2);
@@ -130,7 +136,8 @@ TEST_CASE("Graph with 10 Vertices and Max Clique Size of 5") {
 
     SECTION("Max clique of tenVerticesGraph is") {
         auto vertices = tenVerticesGraph.maxClique();
-        auto verticesEstimate = tenVerticesGraph.maxClique(true);
+        auto verticesEstimate =
+            tenVerticesGraph.maxClique(AlgorithmAccuracy::APPROXIMATE);
 
         REQUIRE(vertices.size() == 5);
         REQUIRE(verticesEstimate.size() == 5);

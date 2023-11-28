@@ -59,7 +59,7 @@ class Graph {
     auto maxCliqueHelper(size_t currentVertex,
                          std::vector<size_t>& currentClique,
                          std::vector<std::vector<size_t>>& maxCliques,
-                         bool estimation, size_t& currentExecution,
+                         AlgorithmAccuracy accuracy, size_t& currentExecution,
                          size_t executionLimit, auto adjacencyFunction) const
         -> void;
 
@@ -250,7 +250,8 @@ class Graph {
      *
      * @return Vector of vertices that form the maximum clique.
      */
-    [[nodiscard]] auto maxClique(bool estimation = false) const
+    [[nodiscard]] auto maxClique(
+        AlgorithmAccuracy accuracy = AlgorithmAccuracy::EXACT) const
         -> std::vector<size_t>;
 
     /**
@@ -259,6 +260,24 @@ class Graph {
      *
      * @return Vector of vertices that form the maximum clique.
      */
-    [[nodiscard]] auto modifiedMaxClique(bool estimation = false) const
+    [[nodiscard]] auto modifiedMaxClique(
+        AlgorithmAccuracy accuracy = AlgorithmAccuracy::EXACT) const
         -> std::vector<size_t>;
+
+    /**
+     * @brief Returns maximum induced subgraph of two graphs
+     *
+     * @param rhs is the graph with which the maximum
+     * induced subgrraph should be applied
+     *
+     * @return The maximum induced subgraph of the graphs
+     */
+    [[nodiscard]] auto maxSubgraph(const Graph& rhs) -> Graph;
+
+    /**
+     * @brief Graph of max clique.
+     *
+     * @return Vector of vertices that form the maximum clique.
+     */
+    [[nodiscard]] auto maxCliqueGraph(AlgorithmAccuracy accuracy) const -> Graph;
 };

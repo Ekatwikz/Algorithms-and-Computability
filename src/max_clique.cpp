@@ -30,7 +30,7 @@ using std::span;
 auto main(int argc, char* argv[]) -> int {
     auto args = span(argv, static_cast<size_t>(argc));
     if (argc < 2) {
-        cerr << "Usage: " << args[0] << " <filename1> \n";
+        cerr << "Usage: " << args[0] << " <filename1> [approx] [dot]\n";
         return 1;
     }
 
@@ -42,16 +42,24 @@ auto main(int argc, char* argv[]) -> int {
         return 1;
     }
 
-    bool approx = (argc >= 3 && strcmp(args[2], "approx") == 0);
-
-    cout << graph.toDotLang() << std::endl;
-
-    auto maxClique = graph.maxClique(approx);
+    AlgorithmAccuracy accuracy = (argc >= 3 && strcmp(args[2], "approx") == 0)
+                                     ? AlgorithmAccuracy::APPROXIMATE
+                                     : AlgorithmAccuracy::EXACT;
 
 #ifdef DEBUG
-    cerr << "{";
-    for_each(maxClique.begin(), maxClique.end() - 1,
-             [](int vertex) { cerr << vertex << ", "; });
-    cerr << maxClique.back() << "}" << std::endl;
+    if (accuracy == AlgorithmAccuracy::APPROXIMATE) {
+        std::cerr << "Finding approximation of max clique\n";
+    }
 #endif
+
+    bool dotLang = ((argc >= 3 && strcmp("dot", args[2]) == 0) ||
+                    (argc >= 4 && strcmp("dot", args[3]) == 0));
+
+    auto maxClique = graph.maxCliqueGraph(accuracy);
+
+    if (dotLang) {
+        cout << maxClique.toDotLang();
+    } else {
+        cout << maxClique;
+    }
 }
