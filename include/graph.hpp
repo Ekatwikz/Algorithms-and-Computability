@@ -55,7 +55,6 @@ class Graph {
      * @param adajcencyFunction Checks if a vertex is adjacent to all the
      * vertices in the clique.
      */
-
     auto maxCliqueHelper(size_t currentVertex,
                          std::vector<size_t>& currentClique,
                          std::vector<std::vector<size_t>>& maxCliques,
@@ -248,6 +247,8 @@ class Graph {
      * @brief Finds the maximum clique of the graph using Bron-Kerbosch
      * algorithm.
      *
+     * @param accuracy decides whether to use a simple approximation instead
+     *
      * @return Vector of vertices that form the maximum clique.
      */
     [[nodiscard]] auto maxClique(
@@ -257,6 +258,8 @@ class Graph {
     /**
      * @brief modidfied max clique algorithm for finding maximum induced
      * subgraphs.
+     *
+     * @param accuracy decides whether to use a simple approximation instead
      *
      * @return Vector of vertices that form the maximum clique.
      */
@@ -276,6 +279,8 @@ class Graph {
 
     /**
      * @brief Graph of max clique.
+     *
+     * @param accuracy decides whether to use a simple approximation instead
      *
      * @return Vector of vertices that form the maximum clique.
      */
