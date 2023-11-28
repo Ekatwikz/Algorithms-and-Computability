@@ -19,6 +19,11 @@ using std::string;
 using std::swap;
 using std::vector;
 
+using std::ranges::all_of;
+using std::ranges::any_of;
+using std::ranges::max_element;
+using std::ranges::next_permutation;
+
 Graph::Graph(const std::vector<std::vector<int>>&& adjacencyMatrix)
     : vertexCount{adjacencyMatrix.size()},
       vertexAndEdgeCount{adjacencyMatrix.size()},
@@ -108,6 +113,7 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     return outputStream;
 }
 
+// TODO: Remove me.
 [[nodiscard]] auto Graph::approxIsomorphicTo(const Graph& rhs) const -> bool {
     // Lambda function to generate degree frequency map
     auto generateDegreeSequenceMap = [](const Graph& graph) {
@@ -158,19 +164,16 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     vector<size_t> permutation(lhs.vertexCount);
     std::iota(permutation.begin(), permutation.end(), 0);
     auto isPermutationOf = [&permutation](const Graph& lhs, const Graph& rhs) {
-        return std::all_of(
-            permutation.begin(), permutation.end(), [&](size_t lhsPos) {
-                return std::all_of(
-                    permutation.begin(), permutation.end(), [&](size_t rhsPos) {
-                        return lhs[lhsPos][rhsPos] ==
-                               rhs[permutation[lhsPos]][permutation[rhsPos]];
-                    });
+        return all_of(permutation, [&](size_t lhsPos) {
+            return all_of(permutation, [&](size_t rhsPos) {
+                return lhs[lhsPos][rhsPos] ==
+                       rhs[permutation[lhsPos]][permutation[rhsPos]];
             });
+        });
     };
 
     bool permutationWasFound = isPermutationOf(lhs, rhs);
-    while (!permutationWasFound &&
-           std::next_permutation(permutation.begin(), permutation.end())) {
+    while (!permutationWasFound && next_permutation(permutation).found) {
         permutationWasFound = isPermutationOf(lhs, rhs);
     }
 
@@ -261,16 +264,13 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     size_t currentExecution = 0;
     size_t maxExecutionLimit = ESTIMATE_MULTIPLIER * vertexCount * vertexCount;
 
-    maxCliqueHelper(
-        0, currentClique, maxCliques, accuracy, currentExecution,
-        maxExecutionLimit, [&](int vertex, auto currentClique) {
-            return std::all_of(
-                currentClique.begin(), currentClique.end(),
-                [&](int cliqueVertex) {
-                    return adjacencyMatrix[vertex][cliqueVertex] > 0 &&
-                           adjacencyMatrix[cliqueVertex][vertex] > 0;
-                });
-        });
+    maxCliqueHelper(0, currentClique, maxCliques, accuracy, currentExecution,
+                    maxExecutionLimit, [&](int vertex, auto currentClique) {
+                        return all_of(currentClique, [&](int cliqueVertex) {
+                            return adjacencyMatrix[vertex][cliqueVertex] > 0 &&
+                                   adjacencyMatrix[cliqueVertex][vertex] > 0;
+                        });
+                    });
     return maxCliques[0];
 }
 
@@ -281,26 +281,22 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     size_t currentExecution = 0;
     size_t maxExecutionLimit = ESTIMATE_MULTIPLIER * vertexCount * vertexCount;
 
-    maxCliqueHelper(
-        0, currentClique, maxCliques, accuracy, currentExecution,
-        maxExecutionLimit, [&](int vertex, auto currentClique) {
-            return std::all_of(
-                currentClique.begin(), currentClique.end(),
-                [&](int cliqueVertex) {
-                    return adjacencyMatrix[vertex][cliqueVertex] > 0 ||
-                           adjacencyMatrix[cliqueVertex][vertex] > 0;
-                });
-        });
+    maxCliqueHelper(0, currentClique, maxCliques, accuracy, currentExecution,
+                    maxExecutionLimit, [&](int vertex, auto currentClique) {
+                        return all_of(currentClique, [&](int cliqueVertex) {
+                            return adjacencyMatrix[vertex][cliqueVertex] > 0 ||
+                                   adjacencyMatrix[cliqueVertex][vertex] > 0;
+                        });
+                    });
 
-    return *std::max_element(maxCliques.begin(), maxCliques.end(),
-                             [this](const auto& lhs, const auto& rhs) {
-                                 auto lhsConnections = totalConnections(lhs);
-                                 auto rhsConnections = totalConnections(rhs);
+    return *max_element(maxCliques, [this](const auto& lhs, const auto& rhs) {
+        auto lhsConnections = totalConnections(lhs);
+        auto rhsConnections = totalConnections(rhs);
 
-                                 return lhsConnections == rhsConnections
-                                            ? edgeCount(lhs) < edgeCount(rhs)
-                                            : lhsConnections < rhsConnections;
-                             });
+        return lhsConnections == rhsConnections
+                   ? edgeCount(lhs) < edgeCount(rhs)
+                   : lhsConnections < rhsConnections;
+    });
 }
 
 auto Graph::maxCliqueHelper(size_t currentVertex,
@@ -361,7 +357,7 @@ auto Graph::maxCliqueHelper(size_t currentVertex,
         }
     }
 
-    return Graph(std::move(maxSubgraphAdjacencyMatrix));
+    return Graph{std::move(maxSubgraphAdjacencyMatrix)};
 }
 
 [[nodiscard]] auto Graph::edgeCount(const std::vector<size_t>& clique) const
