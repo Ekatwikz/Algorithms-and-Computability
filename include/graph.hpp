@@ -190,20 +190,7 @@ class Graph {
     friend auto operator==(const Graph& lhs, const Graph& rhs) -> bool;
 
     /**
-     * @brief checks for *approximate* isomorphism between 2 graphs
-     *
-     * The current implementation *always returns true for isomorphic graphs*,
-     * but will return true for graphs with equal multisets of vertex degrees
-     * anyway
-     *
-     * @param rhs the rhs of A approx== B
-     *
-     * @return `true` iff the pair is "approximately isomorphic"
-     */
-    [[nodiscard]] auto approxIsomorphicTo(const Graph& rhs) const -> bool;
-
-    /**
-     * @brief Returns size
+     * @brief Returns graph size
      *
      * NB: This is ***NOT*** necessarily == vertex count nor edge count
      *

@@ -23,9 +23,7 @@ using std::span;
  *
  * @param argc should be >=3
  * @param argv should have the filename to read at [1] and [2]\n
- * if either are "-", stdin will be read instead for that one\n
- * if [3] == "approx", an approximate algorithm will be used for the check
- * instead
+ * if either are "-", stdin will be read instead for that one
  *
  * @return 0, or 1 for parse errors
  */
@@ -46,10 +44,5 @@ auto main(int argc, char* argv[]) -> int {
         return 1;
     }
 
-    bool isomorphismExists = argc >= 4 && strcmp(args[3], "approx") == 0
-                                 ? lhs.approxIsomorphicTo(rhs)
-
-                                 // NB: This is an overridden operator
-                                 : lhs == rhs;
-    cout << (isomorphismExists ? "" : "NOT ") << "Isomorphic.\n";
+    cout << (lhs == rhs ? "" : "NOT ") << "Isomorphic.\n";
 }
