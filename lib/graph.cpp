@@ -390,12 +390,25 @@ auto Graph::maxCliqueHelper(size_t currentVertex,
     return totalWeight;
 }
 
+[[nodiscard]] auto Graph::subGraph(std::vector<size_t>& vertices) const
+    -> Graph {
+    std::vector<std::vector<int>> maxCliqueGraph(
+        vertices.size(), std::vector<int>(vertices.size(), 0));
+
+    for (size_t i = 0; i < vertices.size(); ++i) {
+        for (size_t j = i; j < vertices.size(); ++j) {
+            maxCliqueGraph[i][j] = adjacencyMatrix[vertices[i]][vertices[j]];
+
+            maxCliqueGraph[j][i] = adjacencyMatrix[vertices[j]][vertices[i]];
+        }
+    }
+
+    return Graph(std::move(maxCliqueGraph));
+}
+
 [[nodiscard]] auto Graph::maxCliqueGraph(AlgorithmAccuracy accuracy) const
     -> Graph {
     auto maxCliqueVertices = maxClique(accuracy);
-    std::vector<std::vector<int>> maxCliqueGraph(
-        maxCliqueVertices.size(),
-        std::vector<int>(maxCliqueVertices.size(), 0));
 
 #ifdef DEBUG
     for (auto& vertex : maxCliqueVertices) {
@@ -404,15 +417,5 @@ auto Graph::maxCliqueHelper(size_t currentVertex,
     std::cerr << '\n';
 #endif
 
-    for (size_t i = 0; i < maxCliqueVertices.size(); ++i) {
-        for (size_t j = i; j < maxCliqueVertices.size(); ++j) {
-            maxCliqueGraph[i][j] =
-                adjacencyMatrix[maxCliqueVertices[i]][maxCliqueVertices[j]];
-
-            maxCliqueGraph[j][i] =
-                adjacencyMatrix[maxCliqueVertices[j]][maxCliqueVertices[i]];
-        }
-    }
-
-    return Graph{std::move(maxCliqueGraph)};
+    return subGraph(maxCliqueVertices);
 }

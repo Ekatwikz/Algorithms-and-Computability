@@ -39,7 +39,7 @@ class Graph {
     /**
      * @brief constant used for finding estimate in maxClique.
      */
-    static constexpr size_t ESTIMATE_MULTIPLIER = 1000;
+    static constexpr size_t ESTIMATE_MULTIPLIER = 10;
 
     /**
      * @brief Helper for maxClique, used for recursion.
@@ -280,10 +280,20 @@ class Graph {
     /**
      * @brief Graph of max clique.
      *
-     * @param accuracy decides whether to use a simple approximation instead
+     * @param accuracy Determines whether to return the approximation or exact
+     * solution.
      *
      * @return Vector of vertices that form the maximum clique.
      */
     [[nodiscard]] auto maxCliqueGraph(AlgorithmAccuracy accuracy) const
         -> Graph;
+
+    /**
+     * @brief Gives the induced subgraph given by the vertices.
+     *
+     * @param vertices of the subgraph.
+     *
+     * @return Induced subgraph.
+     */
+    [[nodiscard]] auto subGraph(std::vector<size_t>& vertices) const -> Graph;
 };
