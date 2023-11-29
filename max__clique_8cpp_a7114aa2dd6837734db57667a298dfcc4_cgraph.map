@@ -1,0 +1,5 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title="Max clique between two graphs." alt="" coords="5,31,56,56"/>
+<area shape="rect" id="node2" href="$class_graph.html#a80f5eebdf01db3f5be5e3def18706d35" title="constructs graph from data in specified filename" alt="" coords="112,5,255,31"/>
+<area shape="rect" id="node3" href="$class_graph.html#ab88dba54f5ff6e5131d9adeaf8fa6192" title="Graph of max clique." alt="" coords="104,55,263,80"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="Graph::maxSubgraph" name="Graph::maxSubgraph">
+<area shape="rect" id="node1" title="Returns maximum induced subgraph of two graphs." alt="" coords="5,5,148,31"/>
+<area shape="rect" id="node2" href="$class_graph.html#a47376e6f3ce1726b882052598028440c" title="modidfied max clique algorithm for finding maximum induced subgraphs." alt="" coords="196,5,367,31"/>
+</map>

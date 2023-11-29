@@ -1,4 +1,4 @@
 <map id="Graph::toDotLang" name="Graph::toDotLang">
 <area shape="rect" id="node1" title="returns string in DOT language" alt="" coords="104,5,227,31"/>
-<area shape="rect" id="node2" href="$modular__product_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Computes modular product of two graphs." alt="" coords="5,5,56,31"/>
+<area shape="rect" id="node2" href="$max__subgraph_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Computes maximum induced subgraph of two graphs." alt="" coords="5,5,56,31"/>
 </map>

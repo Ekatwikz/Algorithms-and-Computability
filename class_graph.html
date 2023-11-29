@@ -118,6 +118,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a15096e1bfeb998b97152f35b6b3201bb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a15096e1bfeb998b97152f35b6b3201bb">Graph</a> (std::istream &amp;&amp;graphStream)</td></tr>
 <tr class="memdesc:a15096e1bfeb998b97152f35b6b3201bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructs graph from data in a stream  <a href="class_graph.html#a15096e1bfeb998b97152f35b6b3201bb">More...</a><br /></td></tr>
 <tr class="separator:a15096e1bfeb998b97152f35b6b3201bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbf4aa7b886ced4ca7a34a0b8c9243af"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#abbf4aa7b886ced4ca7a34a0b8c9243af">getVertexCount</a> () const -&gt; size_t</td></tr>
+<tr class="memdesc:abbf4aa7b886ced4ca7a34a0b8c9243af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return vertex count.  <a href="class_graph.html#abbf4aa7b886ced4ca7a34a0b8c9243af">More...</a><br /></td></tr>
+<tr class="separator:abbf4aa7b886ced4ca7a34a0b8c9243af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f7062bac466472f4821f46c0d572de8"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a1f7062bac466472f4821f46c0d572de8">toDotLang</a> () const -&gt; std::string</td></tr>
 <tr class="memdesc:a1f7062bac466472f4821f46c0d572de8"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns string in DOT language  <a href="class_graph.html#a1f7062bac466472f4821f46c0d572de8">More...</a><br /></td></tr>
 <tr class="separator:a1f7062bac466472f4821f46c0d572de8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,6 +139,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa4f63359371f69aaccbd281ee96f04ec"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#aa4f63359371f69aaccbd281ee96f04ec">modularProduct</a> (const <a class="el" href="class_graph.html">Graph</a> &amp;rhs) -&gt; <a class="el" href="class_graph.html">Graph</a></td></tr>
 <tr class="memdesc:aa4f63359371f69aaccbd281ee96f04ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns modular product of two graphs.  <a href="class_graph.html#aa4f63359371f69aaccbd281ee96f04ec">More...</a><br /></td></tr>
 <tr class="separator:aa4f63359371f69aaccbd281ee96f04ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16c34cab9ac808175cec5ec5ae64331e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a16c34cab9ac808175cec5ec5ae64331e">maxClique</a> (<a class="el" href="graph_8hpp.html#a0954a5c4d6c206eddbc6c921e2d71070">AlgorithmAccuracy</a> accuracy=AlgorithmAccuracy::EXACT) const -&gt; std::vector&lt; size_t &gt;</td></tr>
+<tr class="memdesc:a16c34cab9ac808175cec5ec5ae64331e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the maximum clique of the graph using Bron-Kerbosch algorithm.  <a href="class_graph.html#a16c34cab9ac808175cec5ec5ae64331e">More...</a><br /></td></tr>
+<tr class="separator:a16c34cab9ac808175cec5ec5ae64331e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47376e6f3ce1726b882052598028440c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a47376e6f3ce1726b882052598028440c">modifiedMaxClique</a> (<a class="el" href="graph_8hpp.html#a0954a5c4d6c206eddbc6c921e2d71070">AlgorithmAccuracy</a> accuracy=AlgorithmAccuracy::EXACT) const -&gt; std::vector&lt; size_t &gt;</td></tr>
+<tr class="memdesc:a47376e6f3ce1726b882052598028440c"><td class="mdescLeft">&#160;</td><td class="mdescRight">modidfied max clique algorithm for finding maximum induced subgraphs.  <a href="class_graph.html#a47376e6f3ce1726b882052598028440c">More...</a><br /></td></tr>
+<tr class="separator:a47376e6f3ce1726b882052598028440c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97e2ef69e56a58c7e7b1ad0854f10492"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a97e2ef69e56a58c7e7b1ad0854f10492">maxSubgraph</a> (const <a class="el" href="class_graph.html">Graph</a> &amp;rhs, <a class="el" href="graph_8hpp.html#a0954a5c4d6c206eddbc6c921e2d71070">AlgorithmAccuracy</a> accuracy=AlgorithmAccuracy::EXACT) -&gt; <a class="el" href="class_graph.html">Graph</a></td></tr>
+<tr class="memdesc:a97e2ef69e56a58c7e7b1ad0854f10492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns maximum induced subgraph of two graphs.  <a href="class_graph.html#a97e2ef69e56a58c7e7b1ad0854f10492">More...</a><br /></td></tr>
+<tr class="separator:a97e2ef69e56a58c7e7b1ad0854f10492"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab88dba54f5ff6e5131d9adeaf8fa6192"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#ab88dba54f5ff6e5131d9adeaf8fa6192">maxCliqueGraph</a> (<a class="el" href="graph_8hpp.html#a0954a5c4d6c206eddbc6c921e2d71070">AlgorithmAccuracy</a> accuracy) const -&gt; <a class="el" href="class_graph.html">Graph</a></td></tr>
+<tr class="memdesc:ab88dba54f5ff6e5131d9adeaf8fa6192"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_graph.html" title="Class that represents a graph as a matrix (vector of vectors) of adjacencies.">Graph</a> of max clique.  <a href="class_graph.html#ab88dba54f5ff6e5131d9adeaf8fa6192">More...</a><br /></td></tr>
+<tr class="separator:ab88dba54f5ff6e5131d9adeaf8fa6192"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31a09ffb31eb05e191769bddf37a5e63"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a31a09ffb31eb05e191769bddf37a5e63">subGraph</a> (std::vector&lt; size_t &gt; &amp;vertices) const -&gt; <a class="el" href="class_graph.html">Graph</a></td></tr>
+<tr class="memdesc:a31a09ffb31eb05e191769bddf37a5e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives the induced subgraph given by the vertices.  <a href="class_graph.html#a31a09ffb31eb05e191769bddf37a5e63">More...</a><br /></td></tr>
+<tr class="separator:a31a09ffb31eb05e191769bddf37a5e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -393,6 +411,153 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="abbf4aa7b886ced4ca7a34a0b8c9243af" name="abbf4aa7b886ced4ca7a34a0b8c9243af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbf4aa7b886ced4ca7a34a0b8c9243af">&#9670;&#160;</a></span>getVertexCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Graph::getVertexCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const -&gt; size_t </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return vertex count. </p>
+<dl class="section return"><dt>Returns</dt><dd>Number of vertices in the graph. </dd></dl>
+
+</div>
+</div>
+<a id="a16c34cab9ac808175cec5ec5ae64331e" name="a16c34cab9ac808175cec5ec5ae64331e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16c34cab9ac808175cec5ec5ae64331e">&#9670;&#160;</a></span>maxClique()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Graph::maxClique </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="graph_8hpp.html#a0954a5c4d6c206eddbc6c921e2d71070">AlgorithmAccuracy</a>&#160;</td>
+          <td class="paramname"><em>accuracy</em> = <code>AlgorithmAccuracy::EXACT</code></td><td>)</td>
+          <td> const -&gt; std::vector&lt;size_t&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Finds the maximum clique of the graph using Bron-Kerbosch algorithm. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">accuracy</td><td>decides whether to use a simple approximation instead</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of vertices that form the maximum clique. </dd></dl>
+
+</div>
+</div>
+<a id="ab88dba54f5ff6e5131d9adeaf8fa6192" name="ab88dba54f5ff6e5131d9adeaf8fa6192"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab88dba54f5ff6e5131d9adeaf8fa6192">&#9670;&#160;</a></span>maxCliqueGraph()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Graph::maxCliqueGraph </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="graph_8hpp.html#a0954a5c4d6c206eddbc6c921e2d71070">AlgorithmAccuracy</a>&#160;</td>
+          <td class="paramname"><em>accuracy</em></td><td>)</td>
+          <td> const -&gt; <a class="el" href="class_graph.html">Graph</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="class_graph.html" title="Class that represents a graph as a matrix (vector of vectors) of adjacencies.">Graph</a> of max clique. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">accuracy</td><td>Determines whether to return the approximation or exact solution.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of vertices that form the maximum clique. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_graph_ab88dba54f5ff6e5131d9adeaf8fa6192_icgraph.png" border="0" usemap="#aclass_graph_ab88dba54f5ff6e5131d9adeaf8fa6192_icgraph" alt=""/></div>
+<map name="aclass_graph_ab88dba54f5ff6e5131d9adeaf8fa6192_icgraph" id="aclass_graph_ab88dba54f5ff6e5131d9adeaf8fa6192_icgraph">
+<area shape="rect" title="Graph of max clique." alt="" coords="104,5,263,31"/>
+<area shape="rect" href="max__clique_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Max clique between two graphs." alt="" coords="5,5,56,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a97e2ef69e56a58c7e7b1ad0854f10492" name="a97e2ef69e56a58c7e7b1ad0854f10492"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97e2ef69e56a58c7e7b1ad0854f10492">&#9670;&#160;</a></span>maxSubgraph()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Graph::maxSubgraph </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_graph.html">Graph</a> &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="graph_8hpp.html#a0954a5c4d6c206eddbc6c921e2d71070">AlgorithmAccuracy</a>&#160;</td>
+          <td class="paramname"><em>accuracy</em> = <code>AlgorithmAccuracy::EXACT</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; <a class="el" href="class_graph.html">Graph</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns maximum induced subgraph of two graphs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>is the graph with which the maximum induced subgrraph should be applied </td></tr>
+    <tr><td class="paramname">accuracy</td><td>decides whether to just use a simple approximation instead</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The maximum induced subgraph of the graphs </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_graph_a97e2ef69e56a58c7e7b1ad0854f10492_cgraph.png" border="0" usemap="#aclass_graph_a97e2ef69e56a58c7e7b1ad0854f10492_cgraph" alt=""/></div>
+<map name="aclass_graph_a97e2ef69e56a58c7e7b1ad0854f10492_cgraph" id="aclass_graph_a97e2ef69e56a58c7e7b1ad0854f10492_cgraph">
+<area shape="rect" title="Returns maximum induced subgraph of two graphs." alt="" coords="5,5,148,31"/>
+<area shape="rect" href="class_graph.html#a47376e6f3ce1726b882052598028440c" title="modidfied max clique algorithm for finding maximum induced subgraphs." alt="" coords="196,5,367,31"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_graph_a97e2ef69e56a58c7e7b1ad0854f10492_icgraph.png" border="0" usemap="#aclass_graph_a97e2ef69e56a58c7e7b1ad0854f10492_icgraph" alt=""/></div>
+<map name="aclass_graph_a97e2ef69e56a58c7e7b1ad0854f10492_icgraph" id="aclass_graph_a97e2ef69e56a58c7e7b1ad0854f10492_icgraph">
+<area shape="rect" title="Returns maximum induced subgraph of two graphs." alt="" coords="104,5,247,31"/>
+<area shape="rect" href="max__subgraph_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Computes maximum induced subgraph of two graphs." alt="" coords="5,5,56,31"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="acc93756c1b649190bb03781d2b7aa691" name="acc93756c1b649190bb03781d2b7aa691"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acc93756c1b649190bb03781d2b7aa691">&#9670;&#160;</a></span>metricDistanceTo()</h2>
 
@@ -428,10 +593,10 @@ this parameter is optional</td></tr>
   </table>
   </dd>
 </dl>
-<p>"Distance" in this case is defined by d(G1, G2),<br  />
-where d (for now) is  <picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ max(\big| \big|  G1 \big|  - \big| G2 \big| \big|, 1)
-* (1 - (G1 \cong G2)) $" src="form_0.png" width="220" height="16"/></picture><br  />
-and <picture><source srcset="form_1_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$\cong$" src="form_1.png" width="9" height="8"/></picture> checks for isomorphism between graphs and converts the<br  />
+<p>"Distance" in this case is defined by <picture><source srcset="form_0_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$d(G_1, G_2)$" src="form_0.png" width="51" height="14"/></picture>,<br  />
+where <picture><source srcset="form_1_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$d$" src="form_1.png" width="6" height="10"/></picture> (for now) is  <picture><source srcset="form_2_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$ max(\big| \big|  G_1 \big|  - \big| G_2 \big| \big|, 1)
+* (1 - (G_1 \cong G_2)) $" src="form_2.png" width="218" height="16"/></picture><br  />
+and <picture><source srcset="form_3_dark.png" media="(prefers-color-scheme: dark)"/><img class="formulaInl" alt="$\cong$" src="form_3.png" width="9" height="8"/></picture> checks for isomorphism between graphs and converts the<br  />
 resulting bool to 0 or 1 respectively</p>
 <dl class="section return"><dt>Returns</dt><dd>The distance to the RHS </dd></dl>
 <div class="dynheader">
@@ -441,6 +606,43 @@ Here is the caller graph for this function:</div>
 <map name="aclass_graph_acc93756c1b649190bb03781d2b7aa691_icgraph" id="aclass_graph_acc93756c1b649190bb03781d2b7aa691_icgraph">
 <area shape="rect" title="Returns distance to another graph." alt="" coords="104,5,269,31"/>
 <area shape="rect" href="graph__distance_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Computes distance between two graphs." alt="" coords="5,5,56,31"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a47376e6f3ce1726b882052598028440c" name="a47376e6f3ce1726b882052598028440c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47376e6f3ce1726b882052598028440c">&#9670;&#160;</a></span>modifiedMaxClique()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Graph::modifiedMaxClique </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="graph_8hpp.html#a0954a5c4d6c206eddbc6c921e2d71070">AlgorithmAccuracy</a>&#160;</td>
+          <td class="paramname"><em>accuracy</em> = <code>AlgorithmAccuracy::EXACT</code></td><td>)</td>
+          <td> const -&gt; std::vector&lt;size_t&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>modidfied max clique algorithm for finding maximum induced subgraphs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">accuracy</td><td>decides whether to use a simple approximation instead</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of vertices that form the maximum clique. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_graph_a47376e6f3ce1726b882052598028440c_icgraph.png" border="0" usemap="#aclass_graph_a47376e6f3ce1726b882052598028440c_icgraph" alt=""/></div>
+<map name="aclass_graph_a47376e6f3ce1726b882052598028440c_icgraph" id="aclass_graph_a47376e6f3ce1726b882052598028440c_icgraph">
+<area shape="rect" title="modidfied max clique algorithm for finding maximum induced subgraphs." alt="" coords="295,5,465,31"/>
+<area shape="rect" href="class_graph.html#a97e2ef69e56a58c7e7b1ad0854f10492" title="Returns maximum induced subgraph of two graphs." alt="" coords="104,5,247,31"/>
+<area shape="rect" href="max__subgraph_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Computes maximum induced subgraph of two graphs." alt="" coords="5,5,56,31"/>
 </map>
 </div>
 
@@ -509,6 +711,33 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a31a09ffb31eb05e191769bddf37a5e63" name="a31a09ffb31eb05e191769bddf37a5e63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31a09ffb31eb05e191769bddf37a5e63">&#9670;&#160;</a></span>subGraph()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto Graph::subGraph </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; size_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vertices</em></td><td>)</td>
+          <td> const -&gt; <a class="el" href="class_graph.html">Graph</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives the induced subgraph given by the vertices. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vertices</td><td>of the subgraph.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Induced subgraph. </dd></dl>
+
+</div>
+</div>
 <a id="a1f7062bac466472f4821f46c0d572de8" name="a1f7062bac466472f4821f46c0d572de8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1f7062bac466472f4821f46c0d572de8">&#9670;&#160;</a></span>toDotLang()</h2>
 
@@ -534,7 +763,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="class_graph_a1f7062bac466472f4821f46c0d572de8_icgraph.png" border="0" usemap="#aclass_graph_a1f7062bac466472f4821f46c0d572de8_icgraph" alt=""/></div>
 <map name="aclass_graph_a1f7062bac466472f4821f46c0d572de8_icgraph" id="aclass_graph_a1f7062bac466472f4821f46c0d572de8_icgraph">
 <area shape="rect" title="returns string in DOT language" alt="" coords="104,5,227,31"/>
-<area shape="rect" href="modular__product_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Computes modular product of two graphs." alt="" coords="5,5,56,31"/>
+<area shape="rect" href="max__subgraph_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Computes maximum induced subgraph of two graphs." alt="" coords="5,5,56,31"/>
 </map>
 </div>
 
