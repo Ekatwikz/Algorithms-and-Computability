@@ -275,7 +275,9 @@ class Graph {
      *
      * @return The maximum induced subgraph of the graphs
      */
-    [[nodiscard]] auto maxSubgraph(const Graph& rhs) -> Graph;
+    [[nodiscard]] auto maxSubgraph(
+        const Graph& rhs, AlgorithmAccuracy accuracy = AlgorithmAccuracy::EXACT)
+        -> Graph;
 
     /**
      * @brief Graph of max clique.

@@ -333,9 +333,10 @@ auto Graph::maxCliqueHelper(size_t currentVertex,
     }
 }
 
-[[nodiscard]] auto Graph::maxSubgraph(const Graph& rhs) -> Graph {
+[[nodiscard]] auto Graph::maxSubgraph(const Graph& rhs,
+                                      AlgorithmAccuracy accuracy) -> Graph {
     Graph modProd = modularProduct(rhs);
-    std::vector<size_t> maxClique = modProd.modifiedMaxClique();
+    std::vector<size_t> maxClique = modProd.modifiedMaxClique(accuracy);
     size_t maxCliqueSize = maxClique.size();
 
     std::vector<size_t> lhsVerts(maxCliqueSize);

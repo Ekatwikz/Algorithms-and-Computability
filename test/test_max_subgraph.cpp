@@ -80,9 +80,52 @@ TEST_CASE("Maximum induced subgraph tests") {
 
     SECTION(
         "Maximum induced subgraph of multiEdgeTriangleGraph and "
-        "multiEdge2Graph "
-        "is correct") {
+        "multiEdge2Graph is correct") {
         REQUIRE(multiEdgeTriangleGraph.maxSubgraph(multiEdgeTwoGraph) ==
+                Graph{std::istringstream{"2\n"
+                                         "0 1\n"
+                                         "1 1"}});
+    }
+
+    SECTION(
+        "Approximate maximum induced subgraph of bidirectTwoGraph and "
+        "onedirectTwoGraph is "
+        "correct") {
+        REQUIRE(bidirectTwoGraph.maxSubgraph(onedirectTwoGraph,
+                                             AlgorithmAccuracy::APPROXIMATE) ==
+                Graph{std::istringstream{"2\n"
+                                         "0 1\n"
+                                         "0 0"}});
+    }
+
+    SECTION(
+        "Approximate maximum induced subgraph of wikiExampleA and wikiExampleB "
+        "is "
+        "correct") {
+        REQUIRE(modProductWikiExample.maxSubgraph(
+                    modProductWikiExample, AlgorithmAccuracy::APPROXIMATE) ==
+                Graph{std::istringstream{"3\n"
+                                         "0 1 0\n"
+                                         "1 0 1\n"
+                                         "0 1 0"}});
+    }
+
+    SECTION(
+        "Approximate maximum induced subgraph of isolated3Vert and "
+        "isolated2Vert is "
+        "correct") {
+        REQUIRE(isolatedThreeVert.maxSubgraph(isolatedTwoVert,
+                                              AlgorithmAccuracy::APPROXIMATE) ==
+                Graph{std::istringstream{"2\n"
+                                         "0 0\n"
+                                         "0 0"}});
+    }
+
+    SECTION(
+        "Approximate maximum induced subgraph of multiEdgeTriangleGraph and "
+        "multiEdge2Graph is correct") {
+        REQUIRE(multiEdgeTriangleGraph.maxSubgraph(
+                    multiEdgeTwoGraph, AlgorithmAccuracy::APPROXIMATE) ==
                 Graph{std::istringstream{"2\n"
                                          "0 1\n"
                                          "1 1"}});
