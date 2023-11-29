@@ -19,6 +19,11 @@ using std::string;
 using std::swap;
 using std::vector;
 
+using std::ranges::all_of;
+using std::ranges::any_of;
+using std::ranges::max_element;
+using std::ranges::next_permutation;
+
 Graph::Graph(const std::vector<std::vector<int>>&& adjacencyMatrix)
     : vertexCount{adjacencyMatrix.size()},
       vertexAndEdgeCount{adjacencyMatrix.size()},
@@ -108,6 +113,7 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     return outputStream;
 }
 
+// TODO: Remove me.
 [[nodiscard]] auto Graph::approxIsomorphicTo(const Graph& rhs) const -> bool {
     // Lambda function to generate degree frequency map
     auto generateDegreeSequenceMap = [](const Graph& graph) {
@@ -158,19 +164,16 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     vector<size_t> permutation(lhs.vertexCount);
     std::iota(permutation.begin(), permutation.end(), 0);
     auto isPermutationOf = [&permutation](const Graph& lhs, const Graph& rhs) {
-        return std::all_of(
-            permutation.begin(), permutation.end(), [&](size_t lhsPos) {
-                return std::all_of(
-                    permutation.begin(), permutation.end(), [&](size_t rhsPos) {
-                        return lhs[lhsPos][rhsPos] ==
-                               rhs[permutation[lhsPos]][permutation[rhsPos]];
-                    });
+        return all_of(permutation, [&](size_t lhsPos) {
+            return all_of(permutation, [&](size_t rhsPos) {
+                return lhs[lhsPos][rhsPos] ==
+                       rhs[permutation[lhsPos]][permutation[rhsPos]];
             });
+        });
     };
 
     bool permutationWasFound = isPermutationOf(lhs, rhs);
-    while (!permutationWasFound &&
-           std::next_permutation(permutation.begin(), permutation.end())) {
+    while (!permutationWasFound && next_permutation(permutation).found) {
         permutationWasFound = isPermutationOf(lhs, rhs);
     }
 
@@ -213,36 +216,208 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     size_t rhsVertexCount = rhs.vertexCount;
     size_t resultGraphVertexCount = vertexCount * rhsVertexCount;
     size_t minVertexCount = std::min(vertexCount, rhsVertexCount);
+    size_t maxVertexCount = std::max(vertexCount, rhsVertexCount);
 
     vector<vector<int>> adjacencyMatrixOfResultGraph(
         resultGraphVertexCount, vector<int>(resultGraphVertexCount));
 
-    for (size_t lhsRow = 0; lhsRow < vertexCount; lhsRow++) {
-        for (size_t lhsCol = 0; lhsCol < vertexCount; lhsCol++) {
-            for (size_t rhsRow = 0; rhsRow < rhsVertexCount; rhsRow++) {
-                for (size_t rhsCol = 0; rhsCol < rhsVertexCount; rhsCol++) {
-                    if (rhsRow == rhsCol || lhsRow == lhsCol) {
-                        continue;
-                    }
+    for (size_t row = 0; row < resultGraphVertexCount; ++row) {
+        for (size_t col = 0; col < resultGraphVertexCount; ++col) {
+            size_t lhsRow = 0;
+            size_t lhsCol = 0;
+            size_t rhsRow = 0;
+            size_t rhsCol = 0;
 
-                    if (adjacencyMatrix[lhsRow][lhsCol] > 0 &&
-                        rhs[rhsRow][rhsCol] > 0) {
-                        adjacencyMatrixOfResultGraph
-                            [lhsRow * minVertexCount + rhsRow]
-                            [lhsCol * minVertexCount + rhsCol] =
-                                std::min(adjacencyMatrix[lhsRow][lhsCol],
-                                         rhs[rhsRow][rhsCol]);
-                    } else if (adjacencyMatrix[lhsRow][lhsCol] == 0 &&
-                               rhs[rhsRow][rhsCol] == 0) {
-                        adjacencyMatrixOfResultGraph[lhsRow * minVertexCount +
-                                                     rhsRow]
-                                                    [lhsCol * minVertexCount +
-                                                     rhsCol] = 1;
-                    }
-                }
+            if (vertexCount == minVertexCount) {
+                lhsRow = row / maxVertexCount;
+                lhsCol = col / maxVertexCount;
+                rhsRow = row % maxVertexCount;
+                rhsCol = col % maxVertexCount;
+            } else {
+                lhsRow = row / minVertexCount;
+                lhsCol = col / minVertexCount;
+                rhsRow = row % minVertexCount;
+                rhsCol = col % minVertexCount;
+            }
+
+            if (row == col || rhsRow == rhsCol || lhsRow == lhsCol) {
+                continue;
+            }
+
+            adjacencyMatrixOfResultGraph[row][col] =
+                std::min(adjacencyMatrix[lhsRow][lhsCol], rhs[rhsRow][rhsCol]);
+
+            if (adjacencyMatrix[lhsRow][lhsCol] == 0 &&
+                rhs[rhsRow][rhsCol] == 0) {
+                adjacencyMatrixOfResultGraph[row][col] = 1;
             }
         }
     }
 
-    return Graph(std::move(adjacencyMatrixOfResultGraph));
+    return Graph{std::move(adjacencyMatrixOfResultGraph)};
+}
+
+[[nodiscard]] auto Graph::maxClique(AlgorithmAccuracy accuracy) const
+    -> std::vector<size_t> {
+    std::vector<size_t> currentClique;
+    std::vector<std::vector<size_t>> maxCliques{{}};
+    size_t currentExecution = 0;
+    size_t maxExecutionLimit = ESTIMATE_MULTIPLIER * vertexCount * vertexCount;
+
+    maxCliqueHelper(0, currentClique, maxCliques, accuracy, currentExecution,
+                    maxExecutionLimit, [&](int vertex, auto currentClique) {
+                        return all_of(currentClique, [&](int cliqueVertex) {
+                            return adjacencyMatrix[vertex][cliqueVertex] > 0 &&
+                                   adjacencyMatrix[cliqueVertex][vertex] > 0;
+                        });
+                    });
+
+    return maxCliques[0];
+}
+
+[[nodiscard]] auto Graph::modifiedMaxClique(AlgorithmAccuracy accuracy) const
+    -> std::vector<size_t> {
+    std::vector<size_t> currentClique;
+    std::vector<std::vector<size_t>> maxCliques{{}};
+    size_t currentExecution = 0;
+    size_t maxExecutionLimit = ESTIMATE_MULTIPLIER * vertexCount * vertexCount;
+
+    maxCliqueHelper(0, currentClique, maxCliques, accuracy, currentExecution,
+                    maxExecutionLimit, [&](int vertex, auto currentClique) {
+                        return all_of(currentClique, [&](int cliqueVertex) {
+                            return adjacencyMatrix[vertex][cliqueVertex] > 0 ||
+                                   adjacencyMatrix[cliqueVertex][vertex] > 0;
+                        });
+                    });
+
+    return *max_element(maxCliques, [this](const auto& lhs, const auto& rhs) {
+        auto lhsConnections = totalConnections(lhs);
+        auto rhsConnections = totalConnections(rhs);
+
+        return lhsConnections == rhsConnections
+                   ? edgeCount(lhs) < edgeCount(rhs)
+                   : lhsConnections < rhsConnections;
+    });
+}
+
+auto Graph::maxCliqueHelper(size_t currentVertex,
+                            std::vector<size_t>& currentClique,
+                            std::vector<std::vector<size_t>>& maxCliques,
+                            AlgorithmAccuracy accuracy,
+                            size_t& currentExecution, size_t executionLimit,
+                            auto adjacencyFunction) const -> void {
+    if (currentClique.size() > maxCliques[0].size()) {
+        maxCliques.clear();
+        maxCliques = {std::vector<size_t>(currentClique)};
+    } else if (currentClique.size() == maxCliques[0].size()) {
+        maxCliques.push_back(currentClique);
+    }
+
+    if (currentVertex == vertexCount) {
+        return;
+    }
+
+    if (accuracy == AlgorithmAccuracy::APPROXIMATE) {
+        if (++currentExecution >= executionLimit) {
+            return;
+        }
+    }
+
+    for (size_t i = currentVertex; i < vertexCount; ++i) {
+        if (adjacencyFunction(i, currentClique)) {
+            currentClique.push_back(i);
+            maxCliqueHelper(i + 1, currentClique, maxCliques, accuracy,
+                            currentExecution, executionLimit,
+                            adjacencyFunction);
+            currentClique.pop_back();
+        }
+    }
+}
+
+[[nodiscard]] auto Graph::maxSubgraph(const Graph& rhs,
+                                      AlgorithmAccuracy accuracy) -> Graph {
+    Graph modProd = modularProduct(rhs);
+    std::vector<size_t> maxClique = modProd.modifiedMaxClique(accuracy);
+    size_t maxCliqueSize = maxClique.size();
+
+    std::vector<size_t> lhsVerts(maxCliqueSize);
+    std::vector<size_t> rhsVerts(maxCliqueSize);
+
+    std::vector<std::vector<int>> maxSubgraphAdjacencyMatrix(
+        maxCliqueSize, std::vector<int>(maxCliqueSize));
+
+    for (size_t i = 0; i < maxCliqueSize; ++i) {
+        lhsVerts[i] = maxClique[i] / rhs.getVertexCount();
+        rhsVerts[i] = maxClique[i] % rhs.getVertexCount();
+    }
+
+    for (size_t row = 0; row < maxCliqueSize; ++row) {
+        for (size_t col = 0; col < maxCliqueSize; ++col) {
+            maxSubgraphAdjacencyMatrix[row][col] =
+                std::min(adjacencyMatrix[lhsVerts[row]][lhsVerts[col]],
+                         rhs[rhsVerts[row]][rhsVerts[col]]);
+        }
+    }
+
+    return Graph{std::move(maxSubgraphAdjacencyMatrix)};
+}
+
+[[nodiscard]] auto Graph::edgeCount(const std::vector<size_t>& clique) const
+    -> size_t {
+    size_t edgeCount = 0;
+
+    for (size_t i = 0; i < clique.size(); ++i) {
+        for (size_t j = i + 1; j < clique.size(); ++j) {
+            edgeCount +=
+                static_cast<size_t>(adjacencyMatrix[clique[i]][clique[j]] +
+                                    adjacencyMatrix[clique[j]][clique[i]]);
+        }
+    }
+
+    return edgeCount;
+}
+
+[[nodiscard]] auto Graph::totalConnections(
+    const std::vector<size_t>& clique) const -> size_t {
+    size_t totalWeight = 0;
+
+    for (size_t i = 0; i < clique.size(); ++i) {
+        for (size_t j = i + 1; j < clique.size(); ++j) {
+            totalWeight +=
+                static_cast<size_t>(adjacencyMatrix[clique[i]][clique[j]] > 0) +
+                static_cast<size_t>(adjacencyMatrix[clique[j]][clique[i]] > 0);
+        }
+    }
+
+    return totalWeight;
+}
+
+[[nodiscard]] auto Graph::subGraph(std::vector<size_t>& vertices) const
+    -> Graph {
+    std::vector<std::vector<int>> maxCliqueGraph(
+        vertices.size(), std::vector<int>(vertices.size(), 0));
+
+    for (size_t i = 0; i < vertices.size(); ++i) {
+        for (size_t j = i; j < vertices.size(); ++j) {
+            maxCliqueGraph[i][j] = adjacencyMatrix[vertices[i]][vertices[j]];
+
+            maxCliqueGraph[j][i] = adjacencyMatrix[vertices[j]][vertices[i]];
+        }
+    }
+
+    return Graph(std::move(maxCliqueGraph));
+}
+
+[[nodiscard]] auto Graph::maxCliqueGraph(AlgorithmAccuracy accuracy) const
+    -> Graph {
+    auto maxCliqueVertices = maxClique(accuracy);
+
+#ifdef DEBUG
+    for (auto& vertex : maxCliqueVertices) {
+        std::cerr << vertex << ' ';
+    }
+    std::cerr << '\n';
+#endif
+
+    return subGraph(maxCliqueVertices);
 }

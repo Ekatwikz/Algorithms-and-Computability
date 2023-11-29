@@ -10,3 +10,9 @@ docs
 
 # Mathematica stuff lol
 *.nb
+
+# CMake file
+CMakeLists.txt
+
+# VSCode stuff
+.vscode

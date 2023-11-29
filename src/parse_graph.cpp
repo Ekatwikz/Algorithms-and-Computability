@@ -19,7 +19,7 @@ using std::span;
  *
  * Takes a graph, reads it, spits it back out\n
  * Decent for some simple sanity tests\n
- * Can also be used to generate visuals\n
+ * Can also be used to generate visuals
  *
  * @param argc should be >=2
  * @param argv should have the filename to read at [1]\n

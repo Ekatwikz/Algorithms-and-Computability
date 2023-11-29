@@ -3,6 +3,7 @@
  * @brief Graph representation definitions
  */
 #include <fstream>
+#include <functional>
 #include <vector>
 
 /**
@@ -34,6 +35,54 @@ class Graph {
      * A size*size adjacency matrix representation of the graph
      */
     std::vector<std::vector<int>> adjacencyMatrix;
+
+    /**
+     * @brief constant used for finding estimate in maxClique.
+     */
+    static constexpr size_t ESTIMATE_MULTIPLIER = 10;
+
+    /**
+     * @brief Helper for maxClique, used for recursion.
+     *
+     * @param currentVertex Current vertex to check.
+     * @param currentClique Clique to check.
+     * @param maxCliques Maximum cliques of the graph.
+     * @param estimation To check if an estimation of max clique is
+     * required.
+     * @param currentExecution Keeps track of the current execution. Used for
+     * estimation.
+     * @param executionLimit Maximum executions allowed. Used for estimation.
+     * @param adajcencyFunction Checks if a vertex is adjacent to all the
+     * vertices in the clique.
+     */
+    auto maxCliqueHelper(size_t currentVertex,
+                         std::vector<size_t>& currentClique,
+                         std::vector<std::vector<size_t>>& maxCliques,
+                         AlgorithmAccuracy accuracy, size_t& currentExecution,
+                         size_t executionLimit, auto adjacencyFunction) const
+        -> void;
+
+    /**
+     * @brief Checks the number of connections in a clique. Used for
+     * finding max induced subgraph.
+     *
+     * @param clique The clique whose connections are being checked.
+     *
+     * @return Number of connections in the clique.
+     */
+    [[nodiscard]] auto totalConnections(const std::vector<size_t>& clique) const
+        -> size_t;
+
+    /**
+     * @brief Returns the sum of edge in the clique. Used for
+     * finding max induced subgraph.
+     *
+     * @param clique The clique whose connections are being checked.
+     *
+     * @return Number of edges in the clique.
+     */
+    [[nodiscard]] auto edgeCount(const std::vector<size_t>& clique) const
+        -> size_t;
 
    public:
     /**
@@ -89,6 +138,12 @@ class Graph {
      */
     [[nodiscard]] static auto fromFilename(const std::string& filename)
         -> Graph;
+
+    /**
+     * @brief Return vertex count.
+     * @return Number of vertices in the graph.
+     */
+    [[nodiscard]] auto getVertexCount() const -> size_t { return vertexCount; }
 
     /**
      * @brief returns string in DOT language
@@ -164,10 +219,10 @@ class Graph {
      * calculation,\n
      * this parameter is optional
      *
-     * "Distance" in this case is defined by d(G1, G2),\n
-     * where d (for now) is
-     * \f$ max(\big| \big|  G1 \big|  - \big| G2 \big| \big|, 1)
-     * * (1 - (G1 \cong G2)) \f$\n
+     * "Distance" in this case is defined by \f$d(G_1, G_2)\f$,\n
+     * where \f$d\f$ (for now) is
+     * \f$ max(\big| \big|  G_1 \big|  - \big| G_2 \big| \big|, 1)
+     * * (1 - (G_1 \cong G_2)) \f$\n
      * and \f$\cong\f$ checks for isomorphism between graphs and converts the\n
      * resulting bool to 0 or 1 respectively
      *
@@ -185,5 +240,64 @@ class Graph {
      *
      * @return The modular product of the graphs
      */
+
     [[nodiscard]] auto modularProduct(const Graph& rhs) -> Graph;
+
+    /**
+     * @brief Finds the maximum clique of the graph using Bron-Kerbosch
+     * algorithm.
+     *
+     * @param accuracy decides whether to use a simple approximation instead
+     *
+     * @return Vector of vertices that form the maximum clique.
+     */
+    [[nodiscard]] auto maxClique(
+        AlgorithmAccuracy accuracy = AlgorithmAccuracy::EXACT) const
+        -> std::vector<size_t>;
+
+    /**
+     * @brief modidfied max clique algorithm for finding maximum induced
+     * subgraphs.
+     *
+     * @param accuracy decides whether to use a simple approximation instead
+     *
+     * @return Vector of vertices that form the maximum clique.
+     */
+    [[nodiscard]] auto modifiedMaxClique(
+        AlgorithmAccuracy accuracy = AlgorithmAccuracy::EXACT) const
+        -> std::vector<size_t>;
+
+    /**
+     * @brief Returns maximum induced subgraph of two graphs
+     *
+     * @param rhs is the graph with which the maximum
+     * induced subgrraph should be applied
+     * @param accuracy decides whether to just use a simple approximation
+     * instead
+     *
+     * @return The maximum induced subgraph of the graphs
+     */
+    [[nodiscard]] auto maxSubgraph(
+        const Graph& rhs, AlgorithmAccuracy accuracy = AlgorithmAccuracy::EXACT)
+        -> Graph;
+
+    /**
+     * @brief Graph of max clique.
+     *
+     * @param accuracy Determines whether to return the approximation or exact
+     * solution.
+     *
+     * @return Vector of vertices that form the maximum clique.
+     */
+    [[nodiscard]] auto maxCliqueGraph(AlgorithmAccuracy accuracy) const
+        -> Graph;
+
+    /**
+     * @brief Gives the induced subgraph given by the vertices.
+     *
+     * @param vertices of the subgraph.
+     *
+     * @return Induced subgraph.
+     */
+    [[nodiscard]] auto subGraph(std::vector<size_t>& vertices) const -> Graph;
 };

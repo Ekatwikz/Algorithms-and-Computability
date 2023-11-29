@@ -94,11 +94,11 @@ TEST_CASE("Modular product tests") {
         "is correct") {
         REQUIRE(multiEdgeTriangleGraph.modularProduct(multiEdgeTwoGraph) ==
                 Graph{std::istringstream{"6\n"
-                                         "0 0 0 0 3 1\n"
+                                         "0 0 0 3 0 1\n"
+                                         "0 0 3 0 1 0\n"
                                          "0 0 0 0 0 0\n"
-                                         "0 0 0 1 0 0\n"
-                                         "0 3 1 0 0 0\n"
                                          "0 0 0 0 0 0\n"
+                                         "0 1 0 0 0 0\n"
                                          "1 0 0 0 0 0"}});
     }
 }
