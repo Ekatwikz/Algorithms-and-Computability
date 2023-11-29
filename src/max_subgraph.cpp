@@ -21,7 +21,7 @@ using std::span;
  * @param argv should have the filename to read at [1] and [2]\n
  * if either are "-", stdin will be read instead for that one\n
  * if [3] == "approx", an approximate algorithm will be used for the check
- * instead
+ * instead\n
  * if [4] is "dot", it'll convert the output to DOT language
  *
  * @return 0, or 1 for parse errors

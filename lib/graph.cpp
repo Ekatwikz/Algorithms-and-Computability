@@ -271,6 +271,7 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
                                    adjacencyMatrix[cliqueVertex][vertex] > 0;
                         });
                     });
+
     return maxCliques[0];
 }
 

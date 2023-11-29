@@ -219,10 +219,10 @@ class Graph {
      * calculation,\n
      * this parameter is optional
      *
-     * "Distance" in this case is defined by d(G1, G2),\n
-     * where d (for now) is
-     * \f$ max(\big| \big|  G1 \big|  - \big| G2 \big| \big|, 1)
-     * * (1 - (G1 \cong G2)) \f$\n
+     * "Distance" in this case is defined by \f$d(G_1, G_2)\f$,\n
+     * where \f$d\f$ (for now) is
+     * \f$ max(\big| \big|  G_1 \big|  - \big| G_2 \big| \big|, 1)
+     * * (1 - (G_1 \cong G_2)) \f$\n
      * and \f$\cong\f$ checks for isomorphism between graphs and converts the\n
      * resulting bool to 0 or 1 respectively
      *
@@ -272,6 +272,8 @@ class Graph {
      *
      * @param rhs is the graph with which the maximum
      * induced subgrraph should be applied
+     * @param accuracy decides whether to just use a simple approximation
+     * instead
      *
      * @return The maximum induced subgraph of the graphs
      */

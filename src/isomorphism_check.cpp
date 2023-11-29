@@ -32,7 +32,7 @@ using std::span;
 auto main(int argc, char* argv[]) -> int {
     auto args = span(argv, static_cast<size_t>(argc));
     if (argc < 3) {
-        cerr << "Usage: " << args[0] << " <filenam1> <filename2>\n";
+        cerr << "Usage: " << args[0] << " <filename1> <filename2>\n";
         return 1;
     }
 
