@@ -96,6 +96,39 @@ docs-clean:
 	rm -rfv $(DOCSDIR)
 
 .PHONY: clean
+# Yoinked+edited from: https://tex.stackexchange.com/a/40759
+
+SOURCEDIR:=.
+OUTPUTDIR:=./build
+SOURCES:=$(wildcard $(SOURCEDIR)/*.tex)
+DEFAULTTARGETS:=$(patsubst $(SOURCEDIR)/%.tex, $(OUTPUTDIR)/%.pdf, $(SOURCES))
+
+.PHONY: all clean
+
+#ifndef VERBOSE
+#.SILENT:
+#endif
+
+# MAIN LATEXMK RULE
+# -pdf tells latexmk to generate PDF directly (instead of DVI).
+# -pdflatex="" tells latexmk to call a specific backend with specific options.
+# -use-make tells latexmk to call make for generating missing files.
+
+# -interaction=nonstopmode keeps the pdflatex backend from stopping at a
+# missing file reference and interactively asking you for an alternative.
+all: $(DEFAULTTARGETS)
+$(OUTPUTDIR)/%.pdf: %.tex
+	mkdir -pv $(OUTPUTDIR)
+	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make -outdir=$(OUTPUTDIR) $<
+
+# CUSTOM BUILD RULES
+%.tex: %.raw
+	./raw2tex $< > $@
+
+%.tex: %.dat
+	./dat2tex $< > $@
 
 clean:
+	#rm -rfv $(OUTPUTDIR)
+	latexmk -CA -outdir=$(OUTPUTDIR)
 	rm -fv *.aux *.bit *.blg *.bbl *.lof *.log *.lot *.glo *.glx *.gxg *.gxs *.idx *.ilg *.ind *.out *.url *.svn *.toc

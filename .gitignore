@@ -42,3 +42,4 @@ CMakeLists.txt
 # idk
 *.synctex.gz
 *.run.xml
+*.fls
