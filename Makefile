@@ -1,5 +1,6 @@
 SOURCEDIR:=./src
 DOCSDIR:=./docs
+REPORTDIR:=./report
 OUTPUTDIR:=./build
 OBJECTDIR:=$(OUTPUTDIR)/obj
 INCLUDEDIR:=./include
@@ -43,7 +44,7 @@ TESTOBJECTS:=$(patsubst $(TESTLIBDIR)/%.cpp, $(TESTOBJECTDIR)/%.o, $(TESTLIBSOUR
 
 CXXFLAGS+=-I$(INCLUDEDIR) -I$(TESTLIBDIR) $(WARNINGS:%=-W%) $(FFLAGS:%=-f%) $(DEBUGFLAGS) -std=$(STANDARD)
 
-.PHONY: all clean docs docs-clean tests run-tests
+.PHONY: all clean report report-clean docs docs-clean tests run-tests
 .SECONDARY: $(TESTOBJECTS)
 .DELETE_ON_ERROR:
 
@@ -82,6 +83,12 @@ run-tests: tests
 		RESULT=$$((RESULT | $$?)) ; \
 	done ; \
 	exit $$RESULT
+
+report:
+	make -C $(REPORTDIR)
+
+report-clean:
+	make -C $(REPORTDIR) clean
 
 docs:
 	doxygen
