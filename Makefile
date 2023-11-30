@@ -98,16 +98,17 @@ docs-clean:
 .PHONY: clean
 # Yoinked+edited from: https://tex.stackexchange.com/a/40759
 
-SOURCEDIR:=.
+# NB: For now this has to be manually synced with the latexmkrc
 OUTPUTDIR:=./build
+SOURCEDIR:=.
 SOURCES:=$(wildcard $(SOURCEDIR)/*.tex)
 DEFAULTTARGETS:=$(patsubst $(SOURCEDIR)/%.tex, $(OUTPUTDIR)/%.pdf, $(SOURCES))
 
 .PHONY: all clean
 
-#ifndef VERBOSE
-#.SILENT:
-#endif
+ifndef VERBOSE
+.SILENT:
+endif
 
 # MAIN LATEXMK RULE
 # -pdf tells latexmk to generate PDF directly (instead of DVI).
@@ -119,7 +120,7 @@ DEFAULTTARGETS:=$(patsubst $(SOURCEDIR)/%.tex, $(OUTPUTDIR)/%.pdf, $(SOURCES))
 all: $(DEFAULTTARGETS)
 $(OUTPUTDIR)/%.pdf: %.tex
 	mkdir -pv $(OUTPUTDIR)
-	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make -outdir=$(OUTPUTDIR) $<
+	latexmk -use-make $<
 
 # CUSTOM BUILD RULES
 %.tex: %.raw
@@ -130,5 +131,4 @@ $(OUTPUTDIR)/%.pdf: %.tex
 
 clean:
 	#rm -rfv $(OUTPUTDIR)
-	latexmk -CA -outdir=$(OUTPUTDIR)
-	rm -fv *.aux *.bit *.blg *.bbl *.lof *.log *.lot *.glo *.glx *.gxg *.gxs *.idx *.ilg *.ind *.out *.url *.svn *.toc
+	latexmk -CA

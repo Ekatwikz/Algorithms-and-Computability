@@ -21,25 +21,14 @@ CMakeLists.txt
 
 # yoinked from internet
 *.aux
-*.bit
-*.blg
 *.bbl
-*.lof
+*.blg
 *.log
-*.lot
-*.glo
-*.glx
-*.gxg
-*.gxs
-*.idx
-*.ilg
-*.ind
-*.out
-*.url
-*.svn
 *.toc
 
 # idk
 *.synctex.gz
 *.run.xml
 *.fls
+*.fdb_latexmk
+*-blx.bib
