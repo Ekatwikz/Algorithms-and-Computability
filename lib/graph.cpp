@@ -154,11 +154,11 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
                                            AlgorithmAccuracy accuracy) const
     -> size_t {
     // No idea why std::abs is ambiguous here tbh
-    auto absSizeDiff =
+    int64_t absSizeDiff =
         std::abs(static_cast<int64_t>(rhs.getSize() - getSize()));
     return accuracy == AlgorithmAccuracy::APPROXIMATE
                ? absSizeDiff
-               : std::max(absSizeDiff, 1L) *
+               : std::max(absSizeDiff, static_cast<int64_t>(1)) *
                      (1 - static_cast<size_t>(*this == rhs));
 }
 
