@@ -130,7 +130,7 @@ $(OUTPUTDIR)/%.pdf: %.tex
 	./dat2tex $< > $@
 
 clean:
-	#rm -rfv $(OUTPUTDIR)
+	#rm -rfv $(OUTPUTDIR) # Might wanna just nuke everything
 	latexmk -CA
 	# There's also the files in the current directory that an editor might vomit out as intermediates
 	rm -fv *.pdf *.aux **/*.aux *.bbl *.blg *.log *.out *.toc *.synctex.gz *.run.xml *.fdb_latexmk *-blx.bib
