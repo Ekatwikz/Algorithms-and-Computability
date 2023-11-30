@@ -24,6 +24,7 @@ CMakeLists.txt
 *.bbl
 *.blg
 *.log
+*.out
 *.toc
 
 # idk
