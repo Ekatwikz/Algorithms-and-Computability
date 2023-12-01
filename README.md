@@ -1,5 +1,5 @@
 # Algorithms and Computability Labs
-Initial boilerplate for our AaC groupwork
+Our AaC groupwork repo
 
 ## Prerequisites
 - [make](https://www.gnu.org/software/make/)
@@ -8,6 +8,9 @@ Initial boilerplate for our AaC groupwork
 (Ubuntu: `sudo apt install clang-tidy`)
 - [clang-format](https://clang.llvm.org/docs/ClangFormat.html)  
 (Ubuntu: `sudo apt install clang-format`)
+- [GNU parallel](https://www.gnu.org/software/parallel) (optional)  
+(Ubuntu: `sudo apt install parallel`)  
+(NB: Not the moreutils version!)
 - [graphviz](https://www.graphviz.org/download/#executable-packages) (optional, but very recommended)
 - [doxygen](https://www.doxygen.nl/manual/install.html) (optional)  
 (Ubuntu: `sudo apt install doxygen doxygen-latex`)
@@ -30,8 +33,12 @@ If they pass, the CI checks will accept too :thumbsup:
 ## Lint
 - Run `./lint-helper.sh -c format` and `./lint-helper.sh -c lint`  
 If they all say `OKAY!`, the CI checks will accept too :thumbsup:  
-You can also do `./lint-helper.sh -a all` to try automatically fix formatting and linting issues  
-beware: this will modify your code!  
+
+- You can also do `./lint-helper.sh -a all` to try automatically fix formatting and linting issues  
+beware: this will modify your code!
+
+- Sprinkle in some `-j` for a bit of parallelism
+if things start to feel a little sluggish
 
 ![Deployment Script demo](./extra_stuff/lint-helper-demo.gif)
 

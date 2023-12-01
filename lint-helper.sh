@@ -1,23 +1,26 @@
 #!/usr/bin/env sh
 
-USAGE="Usage: $0 [-c [format|lint]] [-a [format|lint|all]]"
+USAGE="Usage: $0 [-j] [-c [format|lint]] [-a [format|lint|all]]"
 
 STARTDIR=$(dirname "$0")
-FORMAT_PATHS="$(echo "$STARTDIR"/src/*.cpp) $(echo "$STARTDIR"/lib/*.cpp) $(echo "$STARTDIR"/include/*.hpp) $(echo "$STARTDIR"/test/*.cpp)"
-CFLAGS="-I./include -I./test/catch2 -std=c++20"
+FORMAT_PATHS="$(echo "$STARTDIR"/lib/*.cpp) $(echo "$STARTDIR"/include/*.hpp) $(echo "$STARTDIR"/src/*.cpp) $(echo "$STARTDIR"/test/*.cpp)"
+CFLAGS="-I$STARTDIR/include -I$STARTDIR/test/catch2 -std=c++20"
 RET=0
 main() {
 	if [ "$1" = "format" ]; then
 		assert_exists "clang-format"
 
 		# shellcheck disable=SC2086
-		clang-format $FORMAT_ARGS $FORMAT_PATHS && say_ok
+		EVAL_STR="clang-format $FORMAT_ARGS"
+		parallel_or_eval "$EVAL_STR" "$EVAL_STR $FORMAT_PATHS" && say_ok
 		RET=$((RET | $?))
 	elif [ "$1" = "lint" ]; then
 		assert_exists "clang-tidy"
 
-		# shellcheck disable=SC2086
-		clang-tidy $TIDY_ARGS $FORMAT_PATHS -- $CFLAGS && say_ok
+		parallel_or_eval \
+			"clang-tidy $TIDY_ARGS {} -- $CFLAGS" \
+			"clang-tidy $TIDY_ARGS $FORMAT_PATHS -- $CFLAGS" \
+			&& say_ok
 		RET=$((RET | $?))
 	elif [ "$1" = "all" ]; then
 		main "format"
@@ -26,10 +29,22 @@ main() {
 	fi
 }
 
+parallel_or_eval() {
+	if [ -n "$PARALLEL" ]; then
+		# NB: make sure to NOT use the moreutils version!
+		assert_exists "parallel"
+
+		# shellcheck disable=SC2086
+		parallel "$1" ::: $FORMAT_PATHS
+	else
+		eval "$2"
+	fi
+}
+
 check_opts() {
 	[ $# -eq 0 ] && fail_msg "$USAGE"
 
-	while getopts ":c:a:h" opt; do
+	while getopts ":c:a:jh" opt; do
 		case "${opt}" in
 			c)
 				case "$OPTARG" in
@@ -57,6 +72,9 @@ check_opts() {
 				;;
 			h)
 				printf "%s\n" "$USAGE" && exit ;;
+			j)
+				PARALLEL=1
+				;;
 			*)
 				fail_msg "$USAGE" ;;
 		esac
