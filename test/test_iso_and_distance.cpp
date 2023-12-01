@@ -194,25 +194,13 @@ TEST_CASE("Graph construction, isomorphism and distance sanity checks") {
     }
 
     SECTION(
-        "isomorphic graphs are also approximately isomorphic to each other") {
-        REQUIRE(pentagon1.approxIsomorphicTo(pentagon2));
-        REQUIRE(pentagon1.approxIsomorphicTo(pentagonFromMatrix1));
-        REQUIRE(pentagon2.approxIsomorphicTo(pentagonFromMatrix2));
-        REQUIRE(pentagonFromMatrix1.approxIsomorphicTo(pentagonFromMatrix2));
-    }
-
-    SECTION(
-        "pair-of-multitriangles and multi-hexagon are approx isomorphic to "
-        "each other, have approx distance 0 to each other (but not exactly), "
-        "but are NOT isomorphic") {
-        REQUIRE(pairOfMultitriangles.approxIsomorphicTo(multiHexagon));
+        "pair-of-multitriangles and multi-hexagon have approx distance 0 to "
+        "each other (but not exactly) but are NOT isomorphic") {
         REQUIRE(pairOfMultitriangles.metricDistanceTo(
                     multiHexagon, AlgorithmAccuracy::APPROXIMATE) == 0);
         REQUIRE(pairOfMultitriangles.metricDistanceTo(multiHexagon) > 0);
         REQUIRE(pairOfMultitriangles != multiHexagon);
 
-        REQUIRE(pairOfMultitrianglesFromMatrix.approxIsomorphicTo(
-            multiHexagonFromMatrix));
         REQUIRE(pairOfMultitrianglesFromMatrix.metricDistanceTo(
                     multiHexagonFromMatrix, AlgorithmAccuracy::APPROXIMATE) ==
                 0);

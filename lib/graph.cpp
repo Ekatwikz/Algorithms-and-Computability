@@ -113,51 +113,10 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
     return outputStream;
 }
 
-// TODO: Remove me.
-[[nodiscard]] auto Graph::approxIsomorphicTo(const Graph& rhs) const -> bool {
-    // Lambda function to generate degree frequency map
-    auto generateDegreeSequenceMap = [](const Graph& graph) {
-        std::unordered_map<int, int> freqMap;
-
-        auto graphAdjacencies = graph.adjacencyMatrix;
-        for (size_t i = 0; i < graph.vertexCount; ++i) {
-            int rowSum = std::accumulate(graphAdjacencies[i].begin(),
-                                         graphAdjacencies[i].end(), 0);
-            int colSum = std::accumulate(
-                graphAdjacencies.begin(), graphAdjacencies.end(), 0,
-                [i](int accumulator, const std::vector<int>& row) {
-                    return accumulator + row[i];
-                });
-
-            ++freqMap[rowSum + colSum];
-        }
-        return freqMap;
-    };
-
-    std::unordered_map<int, int> freqMap1 = generateDegreeSequenceMap(*this);
-    std::unordered_map<int, int> freqMap2 = generateDegreeSequenceMap(rhs);
-
-#if DEBUG
-    for (const auto& entry : freqMap1) {
-        std::cerr << '(' << entry.first << ": " << entry.second << ") ";
-    }
-    std::cerr << '\n';
-
-    for (const auto& entry : freqMap2) {
-        std::cerr << '(' << entry.first << ": " << entry.second << ") ";
-    }
-    std::cerr << '\n';
-#endif
-
-    // Compare the frequency maps
-    return freqMap1 == freqMap2;
-}
-
 // We say that Graph equality is true for isomorphisms
 [[nodiscard]] auto operator==(const Graph& lhs, const Graph& rhs) -> bool {
-    // Right now the implementation of approxIsomorphism will always return true
-    // for isomorphic graphs
-    if (!lhs.approxIsomorphicTo(rhs)) {
+    // Different-sized graphs are trivially non-isomorphic
+    if (lhs.getSize() != rhs.getSize()) {
         return false;
     }
 
@@ -195,21 +154,12 @@ auto operator<<(std::ostream& outputStream, const Graph& graph)
                                            AlgorithmAccuracy accuracy) const
     -> size_t {
     // No idea why std::abs is ambiguous here tbh
-    auto absSizeDiff = std::abs(static_cast<int64_t>(
-        getSize() > rhs.getSize() ? getSize() - rhs.getSize()
-                                  : rhs.getSize() - getSize()));
-
-    // it's (maybe?) important to note that the compiler
-    // can't actually optimize for the case of sizeDiff>0, and that little
-    // isomorphism check for graphs is extremely expensive
-    if (absSizeDiff > 0) {
-        return absSizeDiff;
-    }
-
-    // 0 for ismorphisms, 1 otherwise if we get to this point
-    return 1 - static_cast<size_t>(accuracy == AlgorithmAccuracy::EXACT
-                                       ? *this == rhs
-                                       : approxIsomorphicTo(rhs));
+    int64_t absSizeDiff =
+        std::abs(static_cast<int64_t>(rhs.getSize() - getSize()));
+    return accuracy == AlgorithmAccuracy::APPROXIMATE
+               ? absSizeDiff
+               : std::max(absSizeDiff, static_cast<int64_t>(1)) *
+                     (1 - static_cast<size_t>(*this == rhs));
 }
 
 [[nodiscard]] auto Graph::modularProduct(const Graph& rhs) -> Graph {
