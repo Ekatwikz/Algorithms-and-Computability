@@ -14,8 +14,9 @@ Our AaC groupwork repo
 - [graphviz](https://www.graphviz.org/download/#executable-packages) (optional, but very recommended)
 - [doxygen](https://www.doxygen.nl/manual/install.html) (optional)  
 (Ubuntu: `sudo apt install doxygen doxygen-latex`)
-- [texlive](https://tug.org/texlive/) (optional)  
-(Ubuntu: `sudo apt install texlive`)
+- [latexmk](https://www.cantab.net/users/johncollins/latexmk) (optional)  
+(Ubuntu: `sudo apt install latexmk texlive-science texlive-bibtex-extra texlive-latex-extra`)
+- [TeXstudio](https://www.texstudio.org/#download) (optional)
 
 ## Build
 - `make` :thumbsup:
@@ -49,6 +50,5 @@ from the doxy comments
 It'd be nice if you could keep `make docs` final output as `OKAY!` as well,
 you only have to write some brief documentation for new function definitions
 - the CI also hosts the generated docs on [gh pages](https://ekatwikz.github.io/Algorithms-and-Computability)  
-it also uploads the generated refman.pdf artifact, in the summary of the latest [Documentation action](https://github.com/Ekatwikz/Algorithms-and-Computability/actions/workflows/documentation.yml)
-
-
+it also uploads some other useful generated files, in the summary of the latest
+[Build action](https://github.com/Ekatwikz/Algorithms-and-Computability/actions/workflows/build.yml)
