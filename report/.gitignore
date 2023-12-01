@@ -1,0 +1,17 @@
+# output
+*.pdf
+
+# yoinked from internet
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+
+# idk
+*.synctex.gz
+*.run.xml
+*.fls
+*.fdb_latexmk
+*-blx.bib

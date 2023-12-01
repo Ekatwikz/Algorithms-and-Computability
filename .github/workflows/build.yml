@@ -1,0 +1,132 @@
+name: Build
+run-name: Building ${{ github.actor }}'s ${{ github.event_name }} to ${{ github.ref_name }}
+on:
+  pull_request:
+  release:
+    types: [published]
+  push:
+    branches:
+    - main
+
+env:
+  CLANG_TIDY_VERSION: "16.0.4"
+  VERBOSE: 1
+
+jobs:
+  Build-and-Test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-22.04
+          - windows-2022
+        compiler:
+          - llvm-16.0.4
+          - gcc-11
+
+    steps:
+      - name: Check for llvm version mismatches
+        if: ${{ contains(matrix.compiler, 'llvm') && !contains(matrix.compiler, env.CLANG_TIDY_VERSION) }}
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('There is a mismatch between configured llvm compiler and clang-tidy version chosen')
+
+      - uses: actions/checkout@v3
+
+      # TODO: CACHE ME!!
+      - name: Setup Cpp
+        uses: aminya/setup-cpp@v1
+        with:
+          compiler: ${{ matrix.compiler }}
+          ccache: true # but are we even using it tho, lmao
+          clangtidy: ${{ env.CLANG_TIDY_VERSION }}
+
+      - name: Building Programs and Tests
+        run: make all tests VERBOSE=1
+
+      - name: Running Tests
+        run: make run-tests VERBOSE=1 TESTFLAGS="-sv high"
+
+      - name: Archive gcc Build Output
+        # Once for each OS, and only if on main branch?
+        if: ${{ startsWith(matrix.compiler, 'gcc') && github.ref == 'refs/heads/main' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Artifacts-${{ runner.OS }}-build-outputs-${{ matrix.compiler }}-${{ github.sha }}
+          path: build/*
+  Build-and-Deploy-Documentation:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use sed magic on the Doxyfile, so we don't stop for no reason
+        run: sed -i --debug 's/WARN_AS_ERROR\(.*\)=\(.*\)YES/WARN_AS_ERROR\1=\2NO/' Doxyfile
+
+      - name: Make HTML+Latex docs
+        uses: mattnotmitt/doxygen-action@v1.9.5
+        with:
+          enable-latex: true
+
+      - name: Archive Latex Documentation Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: Artifact-Documentation-Latex-Pdf-Build-${{ github.sha }}
+          path: ./docs/latex/refman.pdf
+
+      - name: Deploy 🚀
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs/html
+  Generate-Report:
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: ./report
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - uses: tecolicom/actions-use-apt-tools@v1
+        with:
+          tools: latexmk texlive-science texlive-bibtex-extra texlive-latex-extra
+          method: timestamp
+      - name: Build Report Doc
+        run: make VERBOSE=1
+      - name: Archive Report Doc Build
+        uses: actions/upload-artifact@v3
+        with:
+          name: Artifact-Report-Doc-Pdf-Build-${{ github.sha }}
+          path: ./report/build/*.pdf
+  Generate-Submission:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: [Build-and-Test, Generate-Report, Build-and-Deploy-Documentation]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - uses: tecolicom/actions-use-apt-tools@v1
+        with:
+          tools: rename tree
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        # TODO: its probably better to be explicit
+        # about WHICH artifacts here
+        with:
+          # TODO: use an env var here?
+          path: path/to/artifacts
+      - name: Rename artifact subfolders
+        # Gotta be a better way of doing this somehow...
+        run: ls && rename -v 's/^.*?-(.*)-.*$/$1/' ./Artifact*
+        working-directory: path/to/artifacts
+      - name: Add example graphs to submission
+        run: mv -v test/example-graphs path/to/artifacts
+      - name: Show le stuffs
+        run: tree
+        working-directory: path/to/artifacts
+      - name: Upload submission
+        uses: actions/upload-artifact@v3
+        with:
+          name: Artifact-Submission-${{ github.sha }}
+          path: path/to/artifacts/*
