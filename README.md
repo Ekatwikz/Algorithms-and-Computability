@@ -1,4 +1,7 @@
 # Algorithms and Computability Labs
+![Lint](https://github.com/ekatwikz/Algorithms-and-Computability/actions/workflows/lint.yml/badge.svg)
+![Build](https://github.com/ekatwikz/Algorithms-and-Computability/actions/workflows/build.yml/badge.svg)
+
 Our AaC groupwork repo
 
 ## Prerequisites
