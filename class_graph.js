@@ -4,7 +4,6 @@ var class_graph =
     [ "Graph", "class_graph.html#aff6daa56595b45d12fe83d56ad31bd69", null ],
     [ "Graph", "class_graph.html#a181250c124af8f543292385fc2878fcb", null ],
     [ "Graph", "class_graph.html#a15096e1bfeb998b97152f35b6b3201bb", null ],
-    [ "approxIsomorphicTo", "class_graph.html#a4196d717d61adcf708fbd33698af0740", null ],
     [ "getSize", "class_graph.html#a16b711f850fcb2d5468373ae813e3e5b", null ],
     [ "getVertexCount", "class_graph.html#abbf4aa7b886ced4ca7a34a0b8c9243af", null ],
     [ "maxClique", "class_graph.html#a16c34cab9ac808175cec5ec5ae64331e", null ],

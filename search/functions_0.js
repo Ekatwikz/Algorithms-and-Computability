@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['approxisomorphicto_0',['approxIsomorphicTo',['../class_graph.html#a4196d717d61adcf708fbd33698af0740',1,'Graph']]]
+  ['fromfilename_0',['fromFilename',['../class_graph.html#a80f5eebdf01db3f5be5e3def18706d35',1,'Graph']]]
 ];

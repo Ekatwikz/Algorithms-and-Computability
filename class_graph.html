@@ -127,11 +127,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3dc4bfc47771619240533ea5729eae9a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a3dc4bfc47771619240533ea5729eae9a">operator[]</a> (size_t row) const -&gt; std::vector&lt; int &gt;</td></tr>
 <tr class="memdesc:a3dc4bfc47771619240533ea5729eae9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">subscript operator, for convenience  <a href="class_graph.html#a3dc4bfc47771619240533ea5729eae9a">More...</a><br /></td></tr>
 <tr class="separator:a3dc4bfc47771619240533ea5729eae9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4196d717d61adcf708fbd33698af0740"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a4196d717d61adcf708fbd33698af0740">approxIsomorphicTo</a> (const <a class="el" href="class_graph.html">Graph</a> &amp;rhs) const -&gt; bool</td></tr>
-<tr class="memdesc:a4196d717d61adcf708fbd33698af0740"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks for <em>approximate</em> isomorphism between 2 graphs  <a href="class_graph.html#a4196d717d61adcf708fbd33698af0740">More...</a><br /></td></tr>
-<tr class="separator:a4196d717d61adcf708fbd33698af0740"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16b711f850fcb2d5468373ae813e3e5b"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a16b711f850fcb2d5468373ae813e3e5b">getSize</a> () const -&gt; size_t</td></tr>
-<tr class="memdesc:a16b711f850fcb2d5468373ae813e3e5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns size.  <a href="class_graph.html#a16b711f850fcb2d5468373ae813e3e5b">More...</a><br /></td></tr>
+<tr class="memdesc:a16b711f850fcb2d5468373ae813e3e5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns graph size.  <a href="class_graph.html#a16b711f850fcb2d5468373ae813e3e5b">More...</a><br /></td></tr>
 <tr class="separator:a16b711f850fcb2d5468373ae813e3e5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc93756c1b649190bb03781d2b7aa691"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#acc93756c1b649190bb03781d2b7aa691">metricDistanceTo</a> (const <a class="el" href="class_graph.html">Graph</a> &amp;rhs, <a class="el" href="graph_8hpp.html#a0954a5c4d6c206eddbc6c921e2d71070">AlgorithmAccuracy</a> accuracy=AlgorithmAccuracy::EXACT) const -&gt; size_t</td></tr>
 <tr class="memdesc:acc93756c1b649190bb03781d2b7aa691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns distance to another graph.  <a href="class_graph.html#acc93756c1b649190bb03781d2b7aa691">More...</a><br /></td></tr>
@@ -307,43 +304,6 @@ I can't remember if that's okay tbh</p>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4196d717d61adcf708fbd33698af0740" name="a4196d717d61adcf708fbd33698af0740"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4196d717d61adcf708fbd33698af0740">&#9670;&#160;</a></span>approxIsomorphicTo()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto Graph::approxIsomorphicTo </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_graph.html">Graph</a> &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const -&gt; bool</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>checks for <em>approximate</em> isomorphism between 2 graphs </p>
-<p >The current implementation <em>always returns true for isomorphic graphs</em>, but will return true for graphs with equal multisets of vertex degrees anyway</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">rhs</td><td>the rhs of A approx== B</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> iff the pair is "approximately isomorphic" </dd></dl>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_graph_a4196d717d61adcf708fbd33698af0740_icgraph.png" border="0" usemap="#aclass_graph_a4196d717d61adcf708fbd33698af0740_icgraph" alt=""/></div>
-<map name="aclass_graph_a4196d717d61adcf708fbd33698af0740_icgraph" id="aclass_graph_a4196d717d61adcf708fbd33698af0740_icgraph">
-<area shape="rect" title="checks for approximate isomorphism between 2 graphs" alt="" coords="104,5,284,31"/>
-<area shape="rect" href="isomorphism__check_8cpp.html#a7114aa2dd6837734db57667a298dfcc4" title="Isomorphism checker." alt="" coords="5,5,56,31"/>
-</map>
-</div>
-
-</div>
-</div>
 <a id="a80f5eebdf01db3f5be5e3def18706d35" name="a80f5eebdf01db3f5be5e3def18706d35"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a80f5eebdf01db3f5be5e3def18706d35">&#9670;&#160;</a></span>fromFilename()</h2>
 
@@ -405,7 +365,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>Returns size. </p>
+<p>Returns graph size. </p>
 <p >NB: This is <em><b>NOT</b></em> necessarily == vertex count nor edge count</p>
 <dl class="section return"><dt>Returns</dt><dd>The size of the graph, whichever way we end up defining it </dd></dl>
 

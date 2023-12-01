@@ -1,6 +1,10 @@
 var searchData=
 [
-  ['getsize_0',['getSize',['../class_graph.html#a16b711f850fcb2d5468373ae813e3e5b',1,'Graph']]],
-  ['getvertexcount_1',['getVertexCount',['../class_graph.html#abbf4aa7b886ced4ca7a34a0b8c9243af',1,'Graph']]],
-  ['graph_2',['Graph',['../class_graph.html#ae4c72b8ac4d693c49800a4c7e273654f',1,'Graph::Graph()'],['../class_graph.html#aff6daa56595b45d12fe83d56ad31bd69',1,'Graph::Graph(const std::vector&lt; std::vector&lt; int &gt; &gt; &amp;&amp;adjacencyMatrix)'],['../class_graph.html#a181250c124af8f543292385fc2878fcb',1,'Graph::Graph(std::istream &amp;graphStream)'],['../class_graph.html#a15096e1bfeb998b97152f35b6b3201bb',1,'Graph::Graph(std::istream &amp;&amp;graphStream)']]]
+  ['main_0',['main',['../graph__distance_8cpp.html#a7114aa2dd6837734db57667a298dfcc4',1,'main(int argc, char *argv[]) -&gt; int:&#160;graph_distance.cpp'],['../isomorphism__check_8cpp.html#a7114aa2dd6837734db57667a298dfcc4',1,'main(int argc, char *argv[]) -&gt; int:&#160;isomorphism_check.cpp'],['../max__clique_8cpp.html#a7114aa2dd6837734db57667a298dfcc4',1,'main(int argc, char *argv[]) -&gt; int:&#160;max_clique.cpp'],['../max__subgraph_8cpp.html#a7114aa2dd6837734db57667a298dfcc4',1,'main(int argc, char *argv[]) -&gt; int:&#160;max_subgraph.cpp'],['../modular__product_8cpp.html#a7114aa2dd6837734db57667a298dfcc4',1,'main(int argc, char *argv[]) -&gt; int:&#160;modular_product.cpp'],['../parse__graph_8cpp.html#a7114aa2dd6837734db57667a298dfcc4',1,'main(int argc, char *argv[]) -&gt; int:&#160;parse_graph.cpp']]],
+  ['maxclique_1',['maxClique',['../class_graph.html#a16c34cab9ac808175cec5ec5ae64331e',1,'Graph']]],
+  ['maxcliquegraph_2',['maxCliqueGraph',['../class_graph.html#ab88dba54f5ff6e5131d9adeaf8fa6192',1,'Graph']]],
+  ['maxsubgraph_3',['maxSubgraph',['../class_graph.html#a97e2ef69e56a58c7e7b1ad0854f10492',1,'Graph']]],
+  ['metricdistanceto_4',['metricDistanceTo',['../class_graph.html#acc93756c1b649190bb03781d2b7aa691',1,'Graph']]],
+  ['modifiedmaxclique_5',['modifiedMaxClique',['../class_graph.html#a47376e6f3ce1726b882052598028440c',1,'Graph']]],
+  ['modularproduct_6',['modularProduct',['../class_graph.html#aa4f63359371f69aaccbd281ee96f04ec',1,'Graph']]]
 ];

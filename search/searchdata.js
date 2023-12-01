@@ -3,7 +3,7 @@ var indexSectionsWithContent =
   0: "afgimopst",
   1: "g",
   2: "gimp",
-  3: "afgmost",
+  3: "fgmost",
   4: "a",
   5: "o"
 };
