@@ -104,6 +104,9 @@ jobs:
     needs: [Build-and-Test, Generate-Report, Build-and-Deploy-Documentation]
     runs-on: ubuntu-22.04
     steps:
+      - uses: tecolicom/actions-use-apt-tools@v1
+        with:
+          tools: rename tree
       - name: Download artifacts
         uses: actions/download-artifact@v3
         # TODO: its probably better to be explicit
@@ -112,10 +115,10 @@ jobs:
           path: path/to/artifacts
       - name: Rename artifact subfolders
         # Gotta be a better way of doing this somehow...
-        run: sudo apt install -y rename && ls && rename -v 's/^.*?-(.*)-.*$/$1/' ./Artifact*
+        run: ls && rename -v 's/^.*?-(.*)-.*$/$1/' ./Artifact*
         working-directory: path/to/artifacts
       - name: Show le stuffs
-        run: sudo apt install -y tree && tree # TODO: mayyybe cache the install?
+        run: tree
         working-directory: path/to/artifacts
       - name: Upload submission
         uses: actions/upload-artifact@v3
