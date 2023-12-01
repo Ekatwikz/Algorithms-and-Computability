@@ -1,0 +1,113 @@
+\section{Max Subgraph}
+We decided to go with Maximum Induced Subgraph as our Max Subgraph method. The main priority is given to a subgraph with higher number of vertices. In case, several such graphs are found, the priority is given to the one with the highest number of connections and then to the one with higher number of edges.
+
+\subsection{The Method}
+For the method of finding Max Subgraph, we decided to implement the Modular Product of two graphs and run the Max Clique method on it, with the small changes made for both of these methods. The changes were required to work with the multi-graphs:
+\begin{enumerate}
+    \item In the Max Clique method [\ref{alg:modmaxclique}], one way connections are also considered, so that the Max Subgraph will not lack any one way connected vertices.
+    \item In the Modular Product graph, the minimum of weights of vertices from provided graphs are taken.
+\end{enumerate}
+
+\subsubsection{The modular product}
+The Modular  Product of graphs $G$ and $H$ is a graph formed by combining $G$ and $H$. The vertex set of the modular product of $G$ and $H$ is the cartesian product {$V(G)$} × {$V(H)$}. Any two vertices {$(u, v)$} and {$(u' , v' )$} are adjacent in the modular product of $G$ and $H$ if and only if $u$ is distinct from $u'$, $v$ is distinct from $v'$, and either:
+\begin{itemize}
+    \item $u$ is adjacent with $u'$ and $v$ is adjacent with $v'$, or
+    \item $u$ is not adjacent with $u'$ and $v$ is not adjacent with $v'$.
+\end{itemize}
+The ${weight(uv, u'v')}$ is equal to either:
+\begin{itemize}
+    \item ${min(weight(u, u'), weight(v, v'))}$ if the first condition of the above statement is hold, or
+    \item $1$, otherwise.
+\end{itemize}
+
+
+\subsubsection{The Max Subgraph}
+As you may have noticed, The Modular Product of graphs $G$ and $H$ does not contain self loops, because of how vertex adjacency was defined for it. Therefore, additional logic has to be implemented to include the self looped vertices.\newline
+Knowing the vertices that are given by The Max Clique method, it is easy to recover the original vertices from both provided graphs, since the adjacency matrix for The Modular Product graph is constructed the following way:\newline
+Given $V(G)=\{G_1, G_2, G_3, ...\}$ and $V(H)=\{H_1, H_2, H_3, ...\}$, the adjacency matrix is as follows
+\begin{center}
+\begin{tabular}{c|c c c c c c c}
+              & $G_1H_1$ & $G_1H_2$ & $G_1H_3$ & \dots & $G_2H_1$ & $G_2H_2$ & \dots \\
+    \hline
+     $G_1H_1$ &  \\
+     $G_1H_2$ &  \\
+     $G_1H_3$ &  \\
+     \vdots   &  \\
+     $G_2H_1$ &  \\
+     $G_2H_2$ &  \\
+     \vdots   & 
+\end{tabular}
+\end{center}
+Therefore, to retrieve the original vertices of graph $G$, we simply need to divide by $|V(H)|$, whereas to retrieve the original vertices of graph $H$, we need to modulo by $|V(H)|$.
+
+\newpage
+\subsection{The Algorithm}
+\begin{algorithm}
+    \caption{Our Modular Product}\label{alg:modprod}
+    \begin{algorithmic}
+		\Procedure{ModularProduct}{$G$, $H$}
+            \State $n \gets |V(G)| * |V(H)|$
+            \State $resultMat \gets [][]$ \Comment{Size of the matrix is $n \times n$} \\
+    
+            \For{$row \gets 0, n-1$}
+                \For{$col \gets 0, n-1$}
+                    \State $Grow \gets row / |V(H)|$
+                    \State $Gcol \gets col / |V(H)|$
+                    \State $Hrow \gets row \pmod {|V(H)|}$
+                    \State $Hcol \gets col \pmod {|V(H)|}$
+                    \\
+                    \If{$row == col \lor Grow == Gcol \lor Hrow == Hcol$}
+                        \State $continue$
+                    \EndIf
+                    \\
+                    \State $resultMat[row][col] \gets min(G[Grow][Gcol], H[Hrow][Hcol])$
+                    \\
+                    \If{$G[Grow][Gcol] == 0 \land H[Hrow][Hcol] == 0$}
+                        \State $resultMat[row][col] \gets 1$
+                    \EndIf
+                \EndFor
+            \EndFor
+            \\
+            \State \textbf{return $resultMat$}
+            \\
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\newpage
+
+\begin{algorithm}
+    \caption{Our Max Subgraph}\label{alg:maxsubgraph}
+    \begin{algorithmic}
+		\Procedure{MaxSubgraph}{$G$, $H$, $justApprox$}
+            \State $modProd \gets ModularProduct(G, H)$
+            \State $maxClique \gets ModifiedMaxClique(modProd, justApprox)$
+            \State $n \gets |V(maxClique)|$
+            \State $resultMat \gets [][]$ \Comment{Size of the matrix is $n \times n$} 
+            \State $Gverts \gets []$ \Comment{Size of the array is $n$}
+            \State $Hverts \gets []$ \Comment{Size of the array is $n$}
+            \\
+            \For{$i \gets 0, n-1$}
+                \State $Gverts[i] \gets maxClique[i] / |V(H)|$
+                \State $Hverts[i] \gets maxClique[i] \pmod {|V(H)|}$
+            \EndFor
+    
+            \For{$row \gets 0, n-1$}
+                \For{$col \gets 0, n-1$}
+                    \State $resultMat[row][col] \gets min(G[Grow][Gcol], H[Hrow][Hcol])$
+                \EndFor
+            \EndFor
+            \\
+            \State \textbf{return $resultMat$}
+            \\
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\newpage
+
+\subsection{Time and Space complexity}
+The time complexity of the $Modular Product$ method is $O((n*m)^2)$, where $n$ is the number of vertices of the first graph and $m$ is the number of vertices of the second graph. \\
+The space complexity of the $Modular Product$ method is $O(G + H + (n*m)^2)$, where $n$ is the number of vertices of G and $m$ is the number of vertices of H. Assuming that the most space is taken by the adjacency matrix in the graphs G and H, we can write the space complexity as $O((n*m)^2)$.\\
+The time complexity of the $Max Subgaph$ method is dependant on the $Modified Max Clique$ method and $Modular Product$ method. In case no $justApprox$ value is passed or in case $justApprox$ is equal to exact, the time complexity is $O(n*2^n)$, due to $Modified Max Clique$ time complexity being $O(2^n)$. However, if approximation is used instead, which means the time complexity of the $Modified Max Clique$ method goes to $O(n^3)$, the time complexity of $Max Subgraph$ method will be $O((n*m)^2)$, where $n$ is the number of vertices of the first graph and $m$ is the number of vertices of the second graph.\\
+The space complexity of the $Max Subgraph$ method is $O((n*m)^2)$, for the same reason as in $Modular Product$.

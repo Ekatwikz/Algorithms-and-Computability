@@ -1,0 +1,113 @@
+\section{Max Clique}
+A clique, \(C\), in a graph \(G = (V, E)\) is a subset of vertices in a graph, \(C \subseteq V\), such that every pair of distinct vertices are adjacent, i.e., each vertex in the pair has a directed edge to the other. The maximum clique is the clique containing the most number of vertices. This algorithm for the maximum clique has been kept the same for single and multi-edged graphs due to the way we define the maximum clique.
+\subsection{Description of algorithm}
+We use a simple recursive backtracking algorithm for finding the maximum clique of a graph. It initially starts with an empty list denoting the current clique. It proceeds to check if the current node being examined is adjacent to all the other nodes and if so, it adds it to the current clique set and then recursively calls the same function for the next node. It does this for all the nodes and hence checks all the different combinations of the nodes to see if it forms the maximum clique.
+\subsection{Time and Space Complexity of algorithm}
+The algorithm's time complexity is $O(n*2^n)$ since it recursively explores all possible cliques of the graph. The space complexity is $O(n)$ if we only store only one set of vertices and $O(2^n)$ if we store all the vertices forming the maximum clique.
+
+Since this is an exponential time algorithm, we create a polynomial time approximation for it by stopping the algorithm after $O(n^2)$ executions of the recursive function.
+
+\newpage
+
+\subsection{Algorithm}
+    \begin{algorithm}
+    \caption{Max Clique Algorithm}
+    \begin{algorithmic}[1]
+    \Procedure{MaxClique}{G, justApprox}
+        \State $\text{currentClique} \gets \emptyset$
+        \State $\text{maxCliques} \gets \emptyset$
+        \If{\text{justApprox}}
+            \State $\text{maxExecutions} \gets |G|^2$
+        \EndIf
+        \State \Call{MaxCliqueHelper}{0, \text{currentClique}, \text{maxCliques}, \text{justApprox}}
+        \State \textbf{return} \text{maxClique}
+    \EndProcedure
+    
+    \\
+    
+    \Procedure{MaxCliqueHelper}{curVertex, curClique, maxCliques, justApprox}
+        \If{$|\text{currentClique}| > |\text{maxCliques[0]}|$}
+            \State $\text{maxCliques} \gets \{\text{curClique}\}$
+        \EndIf
+        \If{$|\text{currentClique}| == |\text{maxCliques[0]}|$}
+            \State $\text{maxCliques}\text{.insert(curClique)}$
+        \EndIf
+    
+        \If{\text{curVertex} == \text{vertexCount}}
+            \State \textbf{return}
+        \EndIf
+        
+        \If{\text{justApprox}}
+            \If{++currentExecution >= maxExecutions}
+                \State \textbf{return}
+            \EndIf
+        \EndIf
+    
+        \For{$i \gets \text{curVertex}$ \textbf{to} \text{vertexCount} \textbf{step} 1}
+            \If{\Call{IsAdjacentToAllNodesInClique}{$i, \text{curClique}$}}
+                \State $\text{currentClique}.\text{push\_back}(i)$
+                \State \Call{MaxCliqueHelper}{$i + 1, \text{curClique}, \text{maxCliques}$}
+                \State $\text{curClique}.\text{pop\_back}()$
+            \EndIf
+        \EndFor
+    \EndProcedure
+    \end{algorithmic}
+    \end{algorithm}
+
+
+\subsection{Modified Max Clique for Max Induced Subgraph}
+The algorithm presented below is designed for finding max induced subgraph. It leverages the same helper method, albeit with a different definition of adjacency. In this context, adjacency is determined by checking if there is at least a single-sided edge between the vertices in the clique, as opposed to a double-sided edge. Once it has found all the maximum cliques, it returns the maximum clique which has the highest number of double sided edges and then then highest number of total edges. 
+
+\begin{algorithm}
+    \caption{Modified Max Clique For Induced Subgraph}\label{alg:modmaxclique}
+    \begin{algorithmic}[1]
+    \Procedure{ModifiedMaxClique}{$\text{G}, \text{justApprox}$}
+        \State $\text{currentClique} \gets \emptyset$
+        \State $\text{maxCliques} \gets \{\{\}\}$
+        \If{\text{justApprox}}
+            \State $\text{maxExecutions} \gets |G|^2$
+        \EndIf
+    
+        \State $\text{MaxCliqueHelper}(0, \text{currentClique}, \text{maxCliques}, \text{accuracy})$
+    
+        \State \textbf{return} $\text{CliqueWithMaxSize}(\text{maxCliques})$
+    \EndProcedure
+    \\
+    \Procedure{EdgeCount}{$\text{clique}$}
+        \State $\text{edgeCount} \gets 0$
+        \For{$i \gets 0$ \textbf{to} $\text{clique.size()} - 1$}
+            \For{$j \gets i + 1$ \textbf{to} $\text{clique.size()} - 1$}
+                \State $\text{edgeCount} \gets \text{edgeCount} + \text{adjacencyMatrix}[\text{clique}[i]][\text{clique}[j]] + \text{adjacencyMatrix}[\text{clique}[j]][\text{clique}[i]]$
+            \EndFor
+        \EndFor
+        \State \textbf{return} $\text{edgeCount}$
+    \EndProcedure
+    \\
+    \Procedure{TotalConnections}{$\text{clique}$}
+        \State $\text{totalWeight} \gets 0$
+        \For{$i \gets 0$ \textbf{to} $\text{clique.size()} - 1$}
+            \For{$j \gets i + 1$ \textbf{to} $\text{clique.size()} - 1$}
+                \State $\text{totalWeight} \gets \text{totalWeight} + (\text{adjacencyMatrix}[\text{clique}[i]][\text{clique}[j]] > 0) + (\text{adjacencyMatrix}[\text{clique}[j]][\text{clique}[i]] > 0)$
+            \EndFor
+        \EndFor
+        \State \textbf{return} $\text{totalWeight}$
+    \EndProcedure
+    \\
+    \Procedure{CliqueWithMaxSize}{$\text{maxCliques}$}
+        \State $\text{maxClique} \gets \text{maxCliques}[0]$
+        
+        \For{$\text{clique} \gets \text{maxCliques}[1, \ldots \text{maxCliques.size()}-1]$}
+            \If{$\text{TotalConnections}(\text{clique}) > \text{TotalConnections}(\text{maxClique})$}
+                \State $\text{maxClique} \gets \text{clique}$
+            \ElsIf{$\text{TotalConnections}(\text{clique}) == \text{TotalConnections}(\text{maxClique})$}
+                \If{$\text{EdgeCount}(\text{clique}) < \text{EdgeCount}(\text{maxClique})$}
+                    \State $\text{maxClique} \gets \text{clique}$
+                \EndIf
+            \EndIf
+        \EndFor
+        
+        \State \textbf{return} $\text{maxClique}$
+    \EndProcedure
+
+    \end{algorithmic}
+\end{algorithm}
