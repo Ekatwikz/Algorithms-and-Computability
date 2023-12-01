@@ -54,7 +54,7 @@ jobs:
         if: ${{ startsWith(matrix.compiler, 'gcc') && github.ref == 'refs/heads/main' }}
         uses: actions/upload-artifact@v3
         with:
-          name: Artifacts-${{ runner.OS }}-build-outputs-${{ matrix.compiler }}
+          name: Artifacts-${{ runner.OS }}-build-outputs-${{ matrix.compiler }}-${{ github.sha }}
           path: build/*
   Build-and-Deploy-Documentation:
     runs-on: ubuntu-22.04
@@ -72,7 +72,7 @@ jobs:
       - name: Archive Latex Documentation Build
         uses: actions/upload-artifact@v3
         with:
-          name: Artifact-Documentation-Latex-Pdf-Build
+          name: Artifact-Documentation-Latex-Pdf-Build-${{ github.sha }}
           path: ./docs/latex/refman.pdf
 
       - name: Deploy 🚀
@@ -97,7 +97,7 @@ jobs:
       - name: Archive Report Doc Build
         uses: actions/upload-artifact@v3
         with:
-          name: Artifact-Report-Doc-Pdf-Build
+          name: Artifact-Report-Doc-Pdf-Build-${{ github.sha }}
           path: ./report/build/*.pdf
   Generate-Submission:
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -110,8 +110,9 @@ jobs:
         # about WHICH artifacts here
         with:
           path: path/to/artifacts
-      - name: Remove the Artifact{s}?- prefix from folders
-        run: sudo apt install -y rename && ls && rename -v "s/^Artifacts?-//" *
+      - name: Rename artifact subfolders
+        # Gotta be a better way of doing this somehow...
+        run: sudo apt install -y rename && ls && rename -v 's/^.*?-(.*)-.*$/$1/' ./Artifact*
         working-directory: path/to/artifacts
       - name: Show le stuffs
         run: sudo apt install -y tree && tree # TODO: mayyybe cache the install?
@@ -119,5 +120,5 @@ jobs:
       - name: Upload submission
         uses: actions/upload-artifact@v3
         with:
-          name: Artifact-Submission
+          name: Artifact-Submission-${{ github.sha }}
           path: path/to/artifacts/*
