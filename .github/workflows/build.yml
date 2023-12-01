@@ -12,6 +12,9 @@ env:
   CLANG_TIDY_VERSION: "16.0.4"
   VERBOSE: 1
 
+permissions:
+  contents: write
+
 jobs:
   Build-and-Test:
     runs-on: ${{ matrix.os }}
